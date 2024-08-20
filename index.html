@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>Call of Cthulhu</title>
+		<link rel="icon" href="img/favicon.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 1em;
+      }
+      header {
+        display: block;
+        width: 100%;
+        height: 100px;
+        box-shadow: 0 0 8px #000000;
+        margin-bottom: 14px;
+
+        background-color: #382F2F;
+        background-image: url(img/logo.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 200px;
+      }
+
+      main {
+        display: block;
+        width: 600px;
+        max-width: 95%;
+        box-shadow: 0 0 15px #C0C0C0;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 0 auto;
+      }
+      main::after {
+        display: block;
+        height: 0;
+        content: '';
+        clear: both;
+      }
+
+      select {
+				display: block;
+				float: left;
+				box-sizing: border-box;
+
+        width: 100%;
+        border: 1px solid #C0C0C0;
+        padding: 4px;
+        margin-bottom: 2px;
+      }
+
+      span {
+				display: block;
+				float: left;
+				box-sizing: border-box;
+
+        width: 50%;
+				margin-bottom: 14px;
+				margin-top: 5px;
+      }
+			span::after {
+				content: '';
+				display: block;
+				clear: both;
+				height: 0;
+			}
+
+      input[type=checkbox] {
+				display: block;
+				float: left;
+				margin-top: 2px;
+				margin-right: 4px;
+				margin-left: 8px;
+      }
+			label {
+				display: block;
+				float: left;
+				padding: 0;
+			}
+
+      button.primary {
+        padding: 4px 8px;
+        float: right;
+        margin-left: 5px;
+        background-color: #b71c1c;
+        color: #ffffff;
+        font-weight: bold;
+      }
+      button.second {
+        padding: 4px 8px;
+        float: right;
+        margin-left: 3px;
+				margin-top: 5px;
+        font-weight: bold;
+        background-color: #cccccc;
+      }
+      br {
+        clear: both;
+      }
+      div.botoes {
+        display: block;
+        margin-top: 5px;
+        clear: both;
+      }
+      div.botoes::after {
+        display: block;
+        height: 0;
+        content: '';
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <select id="opcao">
+      </select>
+			<span>
+				<input type="checkbox" checked id="incomum">
+				<label>Perícias Incomuns</label>
+			</span>
+			<span>
+				<input type="checkbox" id="mythos">
+				<label>Conhecer Mythos</label>
+			</span>
+
+      <div class="botoes">
+        <button class="primary" type="button" id="rolar">Rolar</button>
+        <button class="primary" type="button" id="salvar">Salvar</button>
+      </div>
+    </main>
+
+		<script type="text/javascript" src="scripts/script.js"></script>
+    <script type="text/javascript">
+      let buttonRolar = document.getElementById('rolar');
+      let buttonSalvar = document.getElementById('salvar');
+      let selectOpcao = document.getElementById('opcao');
+
+			preencherSelectOcupacoes(()=>{
+
+			});
+
+      buttonRolar.addEventListener('click',event=>{
+        event.preventDefault();
+        executar();
+      });
+      buttonSalvar.addEventListener('click',event=>{
+        event.preventDefault();
+
+      });
+
+      executar();
+    </script>
+
+
+</body></html>
