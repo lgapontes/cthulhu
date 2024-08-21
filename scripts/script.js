@@ -2635,27 +2635,57 @@ function definirAntecedentes(callback) {
   });
 }
 
-function definirNomeENascimento(idade,callback) {
+function definirNomeENascimento(genero,idade,callback) {
+  /*
   let index_nome = Math.floor(Math.random() * NOMES.length);
   let nome = NOMES[index_nome];
 
   let index_sobrenome = Math.floor(Math.random() * SOBRENOMES.length);
   let sobrenome = SOBRENOMES[index_sobrenome];
 
-  let ano_nascimento = 1920 - idade;
-  let start = new Date(ano_nascimento, 0, 1);
-  let end = new Date(ano_nascimento, 11, 31)
-  let data_nascimento = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-
-  const yyyy = data_nascimento.getFullYear();
-  let mm = data_nascimento.getMonth() + 1;
-  let dd = data_nascimento.getDate();
-  if (dd < 10) dd = '0' + dd;
-  if (mm < 10) mm = '0' + mm;
-  let formattedToday = dd + '/' + mm + '/' + yyyy;
-
   callback(`${nome} ${sobrenome}`,formattedToday);
+  */
+
+  nameGen(genero,nome=>{
+    let ano_nascimento = 1920 - idade;
+    let start = new Date(ano_nascimento, 0, 1);
+    let end = new Date(ano_nascimento, 11, 31)
+    let data_nascimento = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+
+    const yyyy = data_nascimento.getFullYear();
+    let mm = data_nascimento.getMonth() + 1;
+    let dd = data_nascimento.getDate();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    let formattedToday = dd + '/' + mm + '/' + yyyy;
+
+    callback(nome,formattedToday);
+  });
 }
+
+/* ----------------------------------------------------------- */
+
+/*
+  https://donjon.bin.sh/blade_runner/npc/rpc.cgi
+  https://donjon.bin.sh/
+*/
+
+function obterImagem(callback) {
+  try {
+    fetch('https://flechamagica.com.br/fotos/api.php', { method: 'GET' })
+    .then(function(response) { return response.json(); })
+    .then(function(json) {
+      callback(json.url,json.genero);
+    })
+    .catch((error) => {
+      console.error(error);
+      callback('img/default_user.jpg','Masculino');
+    });
+  } catch (error) {
+    console.error(error);
+    callback('img/default_user.jpg','Masculino');
+  }
+};
 
 /* ----------------------------------------------------------- */
 
@@ -2673,20 +2703,30 @@ function rolarPersonagem(callback) {
               definirPadraoDeVida(atributos,pericias,(nivel_credito)=>{
                 definirEquipamentos(pericias,ocupacao,(equipamentos,armas)=>{
                   definirAntecedentes(antecedentes=>{
-                    definirNomeENascimento(atributos['Informações']['Idade'],(nome,data_nascimento)=>{
-                      let personagem = atributos;
-                      atributos['Informações']['Nome'] = nome;
-                      atributos['Informações']['Data de Nascimento'] = data_nascimento;
-                      personagem['Perícias'] = pericias;
-                      personagem['Equipamentos'] = equipamentos;
-                      personagem['Armas'] = armas;
-                      personagem['Antecedentes'] = antecedentes;
 
-                      console.log('Personagem:');
-                      console.log(JSON.stringify(personagem, null, 2));
+                    obterImagem((url,genero)=>{
 
-                      callback(personagem);
+                      definirNomeENascimento(genero,atributos['Informações']['Idade'],(nome,data_nascimento)=>{
+
+                        let personagem = atributos;
+                        atributos['Informações']['Imagem'] = url;
+                        atributos['Informações']['Gênero'] = genero;
+                        atributos['Informações']['Nome'] = nome;
+                        atributos['Informações']['Data de Nascimento'] = data_nascimento;
+                        personagem['Perícias'] = pericias;
+                        personagem['Equipamentos'] = equipamentos;
+                        personagem['Armas'] = armas;
+                        personagem['Antecedentes'] = antecedentes;
+
+                        console.log('Personagem:');
+                        console.log(JSON.stringify(personagem, null, 2));
+
+                        callback(personagem);
+
+                      });
+
                     });
+
                   });
                 });
               });
@@ -2702,7 +2742,9 @@ function rolarPersonagem(callback) {
 /* ----------------------------------------------------------- */
 
 function preencherTela() {
+  document.getElementById('loading').style.display = 'block';
   rolarPersonagem(personagem=>{
     document.getElementById('nome_personagem').value = personagem['Informações']['Nome'];
+    document.getElementById('loading').style.display = 'none';
   });
 }
