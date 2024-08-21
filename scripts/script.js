@@ -1,4 +1,10 @@
 
+const LOG = false;
+
+function logger(msg) {
+  if (LOG) console.log(msg);
+}
+
 /* ----------------------------------------------------------- */
 
 const PERICIAS = {
@@ -606,6 +612,27 @@ const PERICIAS_INTERPESSOAIS = [
   'Persuasão',
 ];
 
+const PERICIAS_IMPORTANTES = [
+  'Armas de Fogo (Pistolas)',
+  'Lutar (Briga)',
+  'Charme',
+  'Chaveiro',
+  'Consertos Mecânicos',
+  'Direito',
+  'Dirigir Automóveis',
+  'Encontrar',
+  'Escutar',
+  'Esquivar',
+  'Furtividade',
+  'História',
+  'Intimidação',
+  'Nível de Crédito',
+  'Persuasão',
+  'Primeiros Socorros',
+  'Psicologia',
+  'Usar Bibliotecas'
+];
+
 const OCUPACOES = {
   'Advogado': {
     pericias: ['Contabilidade','Direito','Psicologia','Usar Bibliotecas'],
@@ -620,6 +647,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['armas_fogo','ferramentas','ferramentas_investigadores'],
+    chances_equipamentos: [40,30,100],
   },
 
   'Andarilho': {
@@ -647,6 +676,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_comuns','ferramentas','ferramentas_investigadores'],
+    chances_equipamentos: [100,100,60],
   },
 
   'Antiquário': {
@@ -662,6 +693,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [50,50,50],
   },
 
   'Artista': {
@@ -688,6 +721,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [50,50,50],
   },
 
   'Atleta': {
@@ -714,6 +749,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,60,60,30],
   },
 
   'Autor': {
@@ -729,6 +766,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['armas_fogo','ferramentas','ferramentas_investigadores'],
+    chances_equipamentos: [50,50,100],
   },
 
   'Bibliotecário': {
@@ -744,6 +783,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['armas_comuns','ferramentas','ferramentas_investigadores'],
+    chances_equipamentos: [50,50,100],
   },
 
   'Membro do Clero': {
@@ -759,6 +800,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [80,100,50],
   },
 
   'Criminoso': {
@@ -793,6 +836,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,100,50,50,50],
   },
 
   'Detetive Particular': {
@@ -822,6 +867,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,30,50,100,30],
   },
 
   'Diletante': {
@@ -838,6 +885,8 @@ const OCUPACOES = {
       let pontos = (atributos['Atributos']['EDU (Educação)']['Atributo'] * 2) + (atributos['Atributos']['APA (Aparência)']['Atributo'] * 2);
       return pontos;
     },
+    equipamentos: ['armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [50,70,100,30],
   },
 
   'Engenheiro': {
@@ -857,6 +906,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['armas_comuns','ferramentas','ferramentas_investigadores'],
+    chances_equipamentos: [80,100,100],
   },
 
   'Fanático': {
@@ -883,6 +934,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [50,50,50,50,50],
   },
 
   'Fazendeiro': {
@@ -909,6 +962,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [70,70,100,50,70],
   },
 
   'Investigador de Polícia': {
@@ -938,6 +993,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,30,70,100,30],
   },
 
   'Jornalista': {
@@ -956,6 +1013,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [60,40,40,100,30],
   },
 
   'Médico': {
@@ -981,6 +1040,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [50,50,100],
   },
 
   'Membro de Tribo': {
@@ -1007,6 +1068,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores'],
+    chances_equipamentos: [60,60,100,60],
   },
 
   'Missionário': {
@@ -1022,6 +1085,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,100,100],
   },
 
   'Músico': {
@@ -1048,6 +1113,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [30,50,50,80,30],
   },
 
   'Oficial de Polícia': {
@@ -1074,6 +1141,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,50,50,100,20],
   },
 
   'Oficial Militar': {
@@ -1100,6 +1169,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,50,50,100,30],
   },
 
   'Parapsicólogo': {
@@ -1117,6 +1188,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [50,100,80],
   },
 
   'Piloto': {
@@ -1135,6 +1208,8 @@ const OCUPACOES = {
       let pontos = (atributos['Atributos']['EDU (Educação)']['Atributo'] * 2) + (atributos['Atributos']['DES (Destreza)']['Atributo'] * 2);
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [50,30,50,50,40],
   },
 
   'Professor': {
@@ -1161,6 +1236,8 @@ const OCUPACOES = {
     pontos_pericias_ocupacionais: (atributos) => {
       return atributos['Atributos']['EDU (Educação)']['Atributo'] * 4;
     },
+    equipamentos: ['ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [60,60,30],
   },
 
   'Profissional de Entretenimento': {
@@ -1177,6 +1254,8 @@ const OCUPACOES = {
       let pontos = (atributos['Atributos']['EDU (Educação)']['Atributo'] * 2) + (atributos['Atributos']['APA (Aparência)']['Atributo'] * 2);
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [30,50,50,50,20],
   },
 
   'Soldado': {
@@ -1207,6 +1286,8 @@ const OCUPACOES = {
 
       return pontos;
     },
+    equipamentos: ['armas_fogo','armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,80,60,30,50],
   },
 
 };
@@ -1345,125 +1426,701 @@ function obterPericiasIniciais(atributos,ocupacao,callback) {
   });
 }
 
+function pontuarPericia(pontos,pericia_da_vez,nivel_credito_maximo,estou_na_ocupacao,callback) {
+  let valor_maximo = estou_na_ocupacao ? 99 : 60;
+  let valor_inicial = pericia_da_vez['Regular'];
+  let pontos_inicial = pontos;
+
+  if (pericia_da_vez['Regular'] < valor_maximo) {
+
+    let pontuar = Math.floor(Math.random() * 10);
+    let valor_pontuar = 0;
+
+    if (pontuar < 4) {
+
+      valor_pontuar = (10 - ( pericia_da_vez['Regular'] % 10 ));
+      if (valor_pontuar == 0) {
+        valor_pontuar = 10;
+      }
+      logger(`Completando valor da perícia: ${valor_pontuar}`);
+
+    } else if (pontuar < 7) {
+
+      valor_pontuar = Math.floor(Math.random() * 10) + 5;
+      logger(`Valor aleatório da perícia: ${valor_pontuar}`);
+
+    } else {
+
+      valor_pontuar = 20;
+      logger(`Valor fixo para a perícia: ${valor_pontuar}`);
+
+    }
+
+    if ((pontos - valor_pontuar) >= 0) {
+      pontos = pontos - valor_pontuar;
+    } else {
+      pontos = pontos - valor_pontuar;
+      let reduzir = (pontos * -1);
+      valor_pontuar = valor_pontuar - reduzir;
+      pontos = 0;
+    }
+    logger(`Valor realmente pontuado: ${valor_pontuar}`);
+
+    pericia_da_vez['Regular'] = pericia_da_vez['Regular'] + valor_pontuar;
+
+    if (pericia_da_vez['Perícia'] == 'Nível de Crédito') {
+      valor_maximo = nivel_credito_maximo;
+    }
+
+    if (pericia_da_vez['Regular'] > valor_maximo) {
+      pontos = pericia_da_vez['Regular'] - valor_maximo;
+      pericia_da_vez['Regular'] = valor_maximo;
+    }
+
+    logger(`Perícia ${pericia_da_vez['Perícia']}: ${valor_inicial} >> ${pericia_da_vez['Regular']}`);
+    logger(`Pontuação ${pontos_inicial} >> ${pontos}`);
+    logger('');
+  }
+
+  callback(pericia_da_vez, pontos);
+}
+
+function segurancaNomePericia(nome_pericia) {
+  let array = nome_pericia.split(' (');
+  let temEspecializacao = false;
+
+  if (array.length == 0) {
+
+    console.error(`Ocorreu um erro ao assegurar o nome da perícia ${nome_pericia}`);
+    return {
+      nome_pericia_completo: nome_pericia,
+      tem_especializacao: temEspecializacao,
+      nome_pericia: nome_pericia,
+      nome_especializacao: '',
+    };
+
+  } else if (array.length == 1) {
+
+    return {
+      nome_pericia_completo: nome_pericia,
+      tem_especializacao: temEspecializacao,
+      nome_pericia: array[0],
+      nome_especializacao: '',
+    };
+
+  } else if (array.length == 2) {
+    if (array[0] == 'Língua') {
+      if ( (array[1] == 'Nativa)') || (array[1] == 'Outra)') ) {
+
+        return {
+          nome_pericia_completo: nome_pericia,
+          tem_especializacao: temEspecializacao,
+          nome_pericia: nome_pericia,
+          nome_especializacao: '',
+        };
+
+      } else {
+
+        temEspecializacao = true;
+        let especializacao = array[1].slice(0, -1);  // COPIAR sem último caracter
+        return {
+          nome_pericia_completo: nome_pericia,
+          tem_especializacao: temEspecializacao,
+          nome_pericia: `${array[0]} (Outra)`,
+          nome_especializacao: especializacao,
+        };
+
+      }
+    } else {
+
+      temEspecializacao = true;
+      let especializacao = array[1].slice(0, -1);  // COPIAR sem último caracter
+      return {
+        nome_pericia_completo: nome_pericia,
+        tem_especializacao: temEspecializacao,
+        nome_pericia: array[0],
+        nome_especializacao: especializacao,
+      };
+
+    }
+  } else {
+    console.error(`Ocorreu um erro ao assegurar o nome da perícia ${nome_pericia}`);
+    return {
+      nome_pericia_completo: nome_pericia,
+      tem_especializacao: temEspecializacao,
+      nome_pericia: nome_pericia,
+      nome_especializacao: '',
+    };
+  }
+}
+
+function sortearPericia(atributos,pontos,pericias,lista,lista_seletiva,pode_usar_geral,estou_na_ocupacao,callback) {
+  logger(`Sortear Perícias ${estou_na_ocupacao ? 'da Ocupação' : 'Pessoais'}`);
+
+  let usei_geral = false;
+  let pericia_sorteada = '';
+
+  let lista_da_vez = lista_seletiva;
+  if (pode_usar_geral) {
+    usei_geral = (Math.floor(Math.random() * 10) > 4);
+    if (usei_geral) {
+      lista_da_vez = lista;
+    }
+  }
+
+  if (usei_geral) {
+    logger(`Lista Geral: ${lista}`);
+  } else {
+    logger(`Lista Seletiva: ${lista_seletiva}`);
+  }
+
+  let index_pericia = Math.floor(Math.random() * lista_da_vez.length);
+  let nome_pericia = lista_da_vez[index_pericia];
+
+  /*
+    meta_nome_pericia = {
+      nome_pericia_completo: nome_pericia,
+      tem_especializacao: temEspecializacao,
+      nome_pericia: array[0],
+      nome_especializacao: especializacao,
+    };
+  */
+
+  let meta_nome_pericia = segurancaNomePericia(nome_pericia);
+  let nome_pericia_completo = meta_nome_pericia.nome_pericia;
+  let valor = 0;
+
+  if (meta_nome_pericia.tem_especializacao) {
+
+    valor = PERICIAS[meta_nome_pericia.nome_pericia][meta_nome_pericia.nome_especializacao];
+    nome_pericia_completo = meta_nome_pericia.nome_pericia_completo;
+
+  } else {
+    valor = PERICIAS[meta_nome_pericia.nome_pericia].minimo;
+
+    if (PERICIAS[meta_nome_pericia.nome_pericia].varias_individual) {
+      let array_varias = Object.keys(PERICIAS[meta_nome_pericia.nome_pericia].varias);
+      let index_varias = Math.floor(Math.random() * array_varias.length);
+      valor = PERICIAS[meta_nome_pericia.nome_pericia].varias[array_varias[index_varias]];
+
+      let nome_alterado = nome_pericia;
+      if (nome_pericia == 'Língua (Outra)') {
+        nome_alterado = 'Língua';
+      }
+
+      nome_pericia_completo = `${nome_alterado} (${array_varias[index_varias]})`;
+    }
+  }
+
+  if (!estou_na_ocupacao) {
+    lista_da_vez.splice(index_pericia, 1);
+  }
+
+  let pericia_da_vez = {
+    'Perícia': nome_pericia_completo,
+    'Regular': valor,
+    'Difícil': 0,
+    'Extremo': 0,
+  };
+
+  // Altera valor para perícia já sorteada
+  let index_pericias_iniciais = pericias.map((e) => { return e['Perícia']; }).indexOf(nome_pericia_completo);
+  if (index_pericias_iniciais >= 0) {
+    pericia_da_vez['Regular'] = pericias[index_pericias_iniciais]['Regular'];
+  } else {
+    pericias.push(pericia_da_vez);
+  }
+
+  let nivel_credito_maximo = OCUPACOES[atributos['Informações']['Ocupação']].nivel_credito_maximo;
+  pontuarPericia(pontos,pericia_da_vez,nivel_credito_maximo,estou_na_ocupacao,(r_pericia_da_vez,r_pontos)=>{
+    pericia_da_vez - r_pericia_da_vez;
+    pontos = r_pontos;
+
+    index_pericias_iniciais = pericias.map((e) => { return e['Perícia']; }).indexOf(nome_pericia_completo);
+    pericias[index_pericias_iniciais]['Regular'] = pericia_da_vez['Regular'];
+
+    callback(pontos);
+  });
+}
+
 function pontuarInteressesPessoais(atributos,pericias_iniciais,callback) {
+  logger('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  logger('>> Pontuando Interesses Pessoais');
+  logger('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  logger('');
 
   let pontos = atributos['Pontos de Perícia']['Interesses Pessoais'];
   let pericias = JSON.parse(JSON.stringify(pericias_iniciais));
+  let pericias_importantes = PERICIAS_IMPORTANTES.slice(); // COPIAR
 
   obterListaPericias(lista=>{
     do {
-      let index_pericia = Math.floor(Math.random() * lista.length);
-      let nome_pericia = lista[index_pericia];
-      let nome_pericia_completo = nome_pericia;
-      let valor = PERICIAS[nome_pericia].minimo;
-      lista.splice(index_pericia, 1);
+      sortearPericia(atributos,pontos,pericias,lista,pericias_importantes,true,false,(r_pontos)=>{
+        pontos = r_pontos;
 
-      if (PERICIAS[nome_pericia].varias_individual) {
-        let array_varias = Object.keys(PERICIAS[nome_pericia].varias);
-        let index_varias = Math.floor(Math.random() * array_varias.length);
-        valor = PERICIAS[nome_pericia].varias[array_varias[index_varias]];
-
-        let nome_alterado = nome_pericia;
-        if (nome_pericia == 'Língua (Outra)') {
-          nome_alterado = 'Língua';
+        if (pontos <= 0) {
+          callback(pericias);
         }
+      });
 
-        nome_pericia_completo = `${nome_alterado} (${array_varias[index_varias]})`;
-      }
-
-      let pericia_da_vez = {
-        'Perícia': nome_pericia_completo,
-        'Regular': valor,
-        'Difícil': 0,
-        'Extremo': 0,
-      };
-
-      let index_pericias_iniciais = pericias.map((e) => { return e['Perícia']; }).indexOf(nome_pericia_completo);
-      if (index_pericias_iniciais >= 0) {
-        pericia_da_vez['Regular'] = pericias[index_pericias_iniciais]['Regular'];
-      } else {
-        pericias.push(pericia_da_vez);
-      }
-
-      let completar = (Math.floor(Math.random() * 10) > 3);
-      let valor_completar = 0;
-
-      if (completar) {
-        valor_completar = ( pericia_da_vez['Regular'] % 10 );
-        if (valor_completar == 0) {
-          valor_completar = 10;
-        }
-      } else {
-        valor_completar = Math.floor(Math.random() * 10);
-      }
-
-      if ((pontos - valor_completar) >= 0) {
-        pontos = pontos - valor_completar;
-      } else {
-        pontos = 0;
-      }
-      pericia_da_vez['Regular'] = pericia_da_vez['Regular'] + valor_completar;
-
-      if (pericia_da_vez['Regular'] > 99) {
-        pontos = pericia_da_vez['Regular'] - 99;
-        pericia_da_vez['Regular'] = 99;
-      }
-
-      index_pericias_iniciais = pericias.map((e) => { return e['Perícia']; }).indexOf(nome_pericia_completo);
-      pericias[index_pericias_iniciais]['Regular'] = pericia_da_vez['Regular'];
-
-      if (pontos <= 0) {
-        callback(pericias);
-      }
     } while (pontos > 0);
   });
 
-  /*
+}
 
-  'Sobrevivência': {
-    minimo: 0,
-    incomum: true,
-    varias_individual: true,
-    varias_unica: true,
-    varias: {
-      'Deserto': 10,
-      'Mar': 10,
-      'Ártico': 10,
-      'Floresta': 10,
-      'Pântano': 10,
-      'Semiárido': 10,
-    },
-    mythos: false,
+function obterEspecializacoesPericiasOcupacionais(ocupacao,callback) {
+  let array_especializacoes = Object.keys(ocupacao.especializacoes);
+  let especializacoes = [];
+
+  if (array_especializacoes.length > 0) {
+
+    array_especializacoes.forEach((especializacao, index) => {
+
+      if (especializacao == 'Língua (Outra)') {
+        especializacoes.push(`Língua (${ocupacao.especializacoes[especializacao]})`);
+      } else {
+        especializacoes.push(`${especializacao} (${ocupacao.especializacoes[especializacao]})`);
+      }
+
+      if (index == (array_especializacoes.length - 1)) {
+        callback(especializacoes);
+      }
+    });
+
+  } else {
+    callback(especializacoes);
+  }
+}
+
+function obterOutrasPericiasOcupacionais(ocupacao,callback) {
+  let outras = [];
+  if (ocupacao.qtde_outras_especificas > 0) {
+
+    let array_outras_especificas = ocupacao.outras_especificas.slice(); // COPIAR
+
+    if (array_outras_especificas.length > 0) {
+
+      array_outras_especificas.forEach((outra, index) => {
+        // { pericia: 'Consertos Mecânicos', temEspecializacao: false, especializacao: null },
+        // { pericia: 'Língua (Outra)', temEspecializacao: false, especializacao: null },
+
+        if (outra.temEspecializacao) {
+          outras.push(`${outra.pericia} (${outra.especializacao})`);
+        } else {
+          outras.push(outra.pericia);
+        }
+
+        if (index == (array_outras_especificas.length - 1)) {
+          callback(outras);
+        }
+      });
+
+    } else {
+      callback(outras);
+    }
+
+  } else {
+    callback(outras);
+  }
+}
+
+function obterListaPericiasReduzida(ocupacao,lista_completa,callback) {
+  logger(`Quantidade de perícias interpessoais: ${ocupacao.interpessoais}`);
+
+  let lista_reduzida = lista_completa.slice(); // COPIAR
+  let interpessoais = ocupacao.interpessoais;
+  let lista_interpessoais = PERICIAS_INTERPESSOAIS.slice(); // COPIAR
+
+  if (ocupacao.interpessoais > 0) {
+
+    let temp_array = [...new Array(interpessoais).keys()];
+    temp_array.forEach((numero, index_interpessoal) => {
+
+      let index_sorteada = Math.floor(Math.random() * lista_interpessoais.length);
+      let interpessoal = lista_interpessoais[index_sorteada];
+
+      lista_interpessoais = lista_interpessoais.splice(index_sorteada, 1);
+
+      let index_para_remover = lista_reduzida.indexOf(interpessoal);
+      if (index_para_remover > -1) {
+        lista_reduzida = lista_reduzida.splice(index_para_remover, 1);
+      }
+
+      if (index_interpessoal == (temp_array.length - 1)) {
+        callback(lista_reduzida);
+      }
+    });
+
+  } else {
+    callback(lista_reduzida);
+  }
+}
+
+function pontuarPericiasOcupacionais(ocupacao_original,atributos,pericias_pessoais,callback) {
+  logger('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  logger('>> Pontuando Perícias Ocupacionais');
+  logger('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  logger('');
+
+  let pontos = atributos['Pontos de Perícia']['Perícias Ocupacionais'];
+  let pericias = JSON.parse(JSON.stringify(pericias_pessoais));
+  let ocupacao = JSON.parse(JSON.stringify(ocupacao_original));
+  let outras_pericias = ocupacao.outras_pericias;
+
+  /* Organizando perícias da ocupação */
+  let pericias_importantes = ocupacao.pericias;
+
+  if (ocupacao.alternativas.length > 0) {
+    let index_alternativas = Math.floor(Math.random() * ocupacao.alternativas.length);
+    pericias_importantes.push(ocupacao.alternativas[index_alternativas]);
+  }
+
+  obterEspecializacoesPericiasOcupacionais(ocupacao,(especializacoes)=>{
+    pericias_importantes.push(...especializacoes);
+
+    obterOutrasPericiasOcupacionais(ocupacao,(outras)=>{
+      pericias_importantes.push(...outras);
+
+      obterListaPericias(lista_completa=>{
+        obterListaPericiasReduzida(ocupacao,lista_completa,(lista_reduzida)=>{
+
+          // pericias_importantes -> perícias da ocupação
+          // lista_reduzida -> gerais
+
+          do {
+
+            let pode_usar_geral = false;
+            if (outras_pericias > 0) {
+              pode_usar_geral = (Math.floor(Math.random() * 10) > 5);
+              outras_pericias = outras_pericias - 1;
+            }
+
+            sortearPericia(atributos,pontos,pericias,lista_reduzida,pericias_importantes,pode_usar_geral,true,(r_pontos)=>{
+              pontos = r_pontos;
+
+              if (pontos <= 0) {
+                callback(pericias);
+              }
+            });
+
+          } while (pontos > 0);
+
+        });
+      });
+    });
+  });
+
+}
+
+function ajusteFinalPericiais(pericias_calculadas,callback) {
+  let pericias = {};
+  let pericias_ordenadas = {};
+
+  pericias_calculadas.forEach((pericia, index_pericia) => {
+    pericias[pericia['Perícia']] = dividirPericia(pericia['Regular']);
+
+    if (index_pericia == (pericias_calculadas.length - 1)) {
+
+      let lista_nomes = pericias_calculadas.map(entry => entry['Perícia']);
+      lista_nomes.sort();
+
+      lista_nomes.forEach((nome, index_nome) => {
+        pericias_ordenadas[nome] = pericias[nome];
+
+        if (index_nome == (lista_nomes.length - 1)) {
+          callback(pericias_ordenadas);
+        }
+      });
+    }
+  });
+}
+
+/* ----------------------------------------------------------- */
+
+const EQUIPAMENTOS = {
+  armas_fogo: {
+    'Armas de Fogo (Pistolas)': [
+      { 'Nome': '.22 Curta Automática', 'Dano': '1D6', 'Alcance Base': '10 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '6', 'Defeito': '100' },
+      { 'Nome': '.25 Derringer (1C)', 'Dano': '1D6', 'Alcance Base': '3 metros', 'Usos por Rodada': '1', 'Munição na Arma': '1', 'Defeito': '100' },
+      { 'Nome': 'Revólver .32', 'Dano': '1D8', 'Alcance Base': '15 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '6', 'Defeito': '100' },
+      { 'Nome': 'Revólver 7.65mm', 'Dano': '1D8', 'Alcance Base': '15 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '6', 'Defeito': '100' },
+      { 'Nome': 'Revólver .38', 'Dano': '1D10', 'Alcance Base': '15 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '6', 'Defeito': '100' },
+      { 'Nome': 'Revólver 9mm', 'Dano': '1D10', 'Alcance Base': '15 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '6', 'Defeito': '100' },
+      { 'Nome': 'Luger Modelo P08', 'Dano': '1D10', 'Alcance Base': '15 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '8', 'Defeito': '99' },
+      { 'Nome': 'Revólver .41', 'Dano': '1D10', 'Alcance Base': '15 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '8', 'Defeito': '100' },
+    ],
+    'Armas de Fogo (Espingardas)': [
+      { 'Nome': 'Espingarda Calibre 20 (2C)', 'Dano': '2D6/1D6/1D3', 'Alcance Base': '10/20/50 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+      { 'Nome': 'Espingarda Calibre 16 (2C)', 'Dano': '2D6+2/1D6+1/1D4', 'Alcance Base': '10/20/50 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+      { 'Nome': 'Espingarda Calibre 12 (2C)', 'Dano': '4D6/2D6/1D6', 'Alcance Base': '10/20/50 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+      { 'Nome': 'Escopeta Calibre 12 (2C serrada)', 'Dano': '4D6/1D6', 'Alcance Base': '5/10 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+    ]
   },
-
-  'Pontos de Perícia': {
-    'Interesses Pessoais': (atributosComIdade['INT (Inteligência)'] * 2),
-    'Perícias Ocupacionais': 0, // Depende da Ocupação
-  },
-
-  // 'Esquivar' - metade de DES
-  // Língua (Nativa) (EDU)
-  // 'Nível de Crédito'
-  // 'Mythos de Cthulhu'
-
-  ocupacao = JSON.parse(JSON.stringify(OCUPACOES[nome_ocupacao]));
-  ZZZ
-
-  pericias: ['Armas de Fogo','Esquivar','Furtividade','Lutar','Sobrevivência'],
-  alternativas: ['Escalar','Natação'],
-  especializacoes: {},
-  interpessoais: 0,
-  outras_pericias: 0,
-  qtde_outras_especificas: 2,
-  outras_especificas: [
-    { pericia: 'Consertos Mecânicos', temEspecializacao: false, especializacao: null },
-    { pericia: 'Língua (Outra)', temEspecializacao: false, especializacao: null },
-    { pericia: 'Primeiros Socorros', temEspecializacao: false, especializacao: null },
+  armas_comuns: [
+    { 'Nome': 'Soqueira', 'Dano': '1D3+1+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Cassetete', 'Dano': '1D8+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Porrete grande', 'Dano': '1D8+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Bastão de baseball', 'Dano': '1D8+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Bastão de críquete', 'Dano': '1D8+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Porrete pequeno', 'Dano': '1D6+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Facão', 'Dano': '1D8+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Faca de Acampamento', 'Dano': '1D4+2+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
+    { 'Nome': 'Canivete', 'Dano': '1D4+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' },
   ],
-  nivel_credito_minimo: 9,
-  nivel_credito_maximo: 30,
-  pontos_pericias_ocupacionais: (atributos)
-  */
+  ferramentas: [
+    'Kit de Ferramentas (20 ferramentas)',
+    'Broca Manual (mais 8 brocas)',
+    'Polia Grande de Aço',
+    'Cadeado',
+    'Corda (15 metros)',
+    'Corrente Leve (1 metro)',
+    'Kit de Ferramentas de Relojoeiro',
+    'Pé-de-cabra',
+    'Serra de Mão',
+    'Maçarico à Gasolina',
+    'Luvas de Eletricista',
+    'Cinto de Ferramentas',
+    'Alça de Segurança',
+    'Talabarte e cinto',
+    'Conjunto de 48 ferramentas de Joalheria',
+    'Lixadeira',
+    'Pá',
+    'Caixa de Ferramentas',
+    'Ferramentas Caseiras',
+  ],
+  ferramentas_investigadores: [
+    'Algemas',
+    'Chave Extra de Algema',
+    'Apito de Polícia',
+    'Ditafone',
+    'Gravador Magnético',
+    'Relógio de Pulso',
+    'Relógio de Bolso de Ouro',
+    'Caneta Tinteiro de Auto-enchimento',
+    'Lapiseira',
+    'Quadro Negro Portátil',
+    'Camisa de Força',
+    'Caderno de Rascunho',
+    'Trajes Completos de Mergulho',
+    'Máquina de Escrever Remington',
+    'Máquina de Escrever Harris',
+    'Microscópio de Bolso',
+    'Microscópio de Mesa de 110x',
+    'Cofre de Chão (450 kg)',
+    'Guarda-chuva',
+    'Narguilé (cachimbo oriental)',
+    'Cigarros (maço)',
+    'Caixa de Charutos',
+    'Dicionário Completo',
+    'Enciclopédia de 10 volumes',
+    'Respirador de Espuma',
+    'Lupa de Bolso',
+    'Bíblia',
+    'Maleta',
+    'Globo Terrestre em Suporte',
+    'Mesa de Escrita Dobrável',
+    'Estante de Carvalho com Porta de Vidro',
+    'Carrinho de Bebê',
+    'Extintor de Incêndio',
+    'Químico',
+    'Óculos de Relojoeiro',
+    'Kit de Cozinha',
+    'Fogão de Acampamento',
+    'Garrafa Térmica',
+    'Banheira Dobrável',
+    'Cobertor Impermeável',
+    'Cama Dobrável',
+    'Lâmpada de Carbeto',
+    'Lata de Carbeto (1 kg)',
+    'Holofote',
+    'Lanterna à Gasolina',
+    'Lanterna à Querosene',
+    'Lanterna Furta-Fogo',
+    'Tocha Elétrica',
+    'Baterias',
+    'Lanterna Caneta Elétrica',
+    'Sinalizador (Descartável)',
+    'Telescópio',
+    'Binóculo Simples (3x)',
+    'Binóculo Simples (6x)',
+    'Binóculos de Qualidade',
+    'Bússola de Bolso',
+    'Bússola com Tampa',
+    'Faca de Caça',
+    'Faca de Bolso',
+    'Machadinha',
+    'Armadilha de Captura de Pequenos Animais',
+    'Armadilha De Mola Para Animais',
+    'Armadilha de Ursos',
+    'Vara de Pesca e Roldana',
+    'Barbante de Cânhamo',
+    'Pedômetro',
+    'Mala de Ombro Pesada',
+    'Velas de Quinze Horas (12)',
+    'Caixa de Fósforos à Prova d\'Água',
+  ],
+  equipamento_medico: [
+    'Aspirina (12 comprimidos)',
+    'Sais de Epsom',
+    'Remédio para Indigestão',
+    'Laxante, Remédio Natural',
+    'Valise Médica',
+    'Fórceps',
+    'Conjunto de Bisturis',
+    'Seringas Hipodérmicas',
+    'Atomizador',
+    'Ataduras de Gaze (5 Metros)',
+    'Termômetro Clínico',
+    'Álcool (meio galão)',
+    'Seringa de Borracha',
+    'Penico',
+    'Cadeira de Rodas',
+    'Bengala',
+    'Emplastro Adesivo',
+    'Cinta Anatômica Metálica',
+    'Tornozeleira de Couro',
+  ],
+};
+
+function definirPadraoDeVida(atributos,pericias,callback) {
+  let nivel_credito = pericias['Nível de Crédito']['Regular'];
+
+  atributos['Padrão de Vida'] = {};
+  atributos['Padrão de Vida']['Nível de Crédito'] = nivel_credito;
+
+  if (nivel_credito == 0) {
+    atributos['Padrão de Vida']['Nível de Gastos'] = '$0,50 (Pobretão)';
+    atributos['Padrão de Vida']['Dinheiro'] = '$0,50';
+    atributos['Padrão de Vida']['Patrimônio'] = 'Nenhum';
+    atributos['Padrão de Vida']['Descrição'] = 'Uma pessoa que sequer pode pagar pelo nível de “pobre” é considerada um pobretão.';
+    atributos['Padrão de Vida']['Acomodações'] = 'Essa pessoa viveria na rua.';
+    atributos['Padrão de Vida']['Viagem'] = 'A pé, pegando carona ou clandestino em um trem ou navio.';
+    atributos['Padrão de Vida']['Hospedagem'] = 'Sem residência';
+    atributos['Padrão de Vida']['Transporte'] = 'Sem transporte';
+  } else if (nivel_credito <= 9) {
+    atributos['Padrão de Vida']['Nível de Gastos'] = '$2 (Pobre)';
+    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 1}`;
+    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 10}`;
+    atributos['Padrão de Vida']['Descrição'] = 'Capaz de pagar por um teto qualquer sobre a cabeça e pelo menos uma parca refeição por dia.';
+    atributos['Padrão de Vida']['Acomodações'] = 'Restrito ao aluguel mais barato ou a um albergue sujo.';
+    atributos['Padrão de Vida']['Viagem'] = 'Transporte público do tipo mais barato. Qualquer veículo possuído será barato e não confiável.';
+    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa ($55,00 aluguel por mês)': 'Flat ($12,50 de aluguel por semana)';
+    atributos['Padrão de Vida']['Hospedagem'] = residencia;
+    atributos['Padrão de Vida']['Transporte'] = 'Sem transporte';
+  } else if (nivel_credito <= 49) {
+    atributos['Padrão de Vida']['Nível de Gastos'] = '$10 (Médio)';
+    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 2}`;
+    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 50}`;
+    atributos['Padrão de Vida']['Descrição'] = 'Um nível razoável de conforto, três refeições por dia e uma diversão ocasional.';
+    atributos['Padrão de Vida']['Acomodações'] = 'Uma casa ou apartamento comum, alugado ou não. Pode ficar em hotéis com preços moderados.';
+    atributos['Padrão de Vida']['Viagem'] = 'Formas padrão de viagem podem ser usadas, mas não de primeira classe. Em tempos modernos, esta pessoa provavelmente possuiria um carro confiável.';
+    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa ($55,00 aluguel por mês)': 'Casa Mediana';
+    atributos['Padrão de Vida']['Hospedagem'] = residencia;
+    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Sem transporte': 'Motocicleta Norton';
+    atributos['Padrão de Vida']['Transporte'] = transporte;
+  } else if (nivel_credito <= 89) {
+    atributos['Padrão de Vida']['Nível de Gastos'] = '$50 (Abastado)';
+    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 5}`;
+    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 500}`;
+    atributos['Padrão de Vida']['Descrição'] = 'Este nível de riqueza oferece luxo e conforto.';
+    atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de tamanho considerável, talvez com alguma ajuda doméstica (mordomo, governanta, faxineiro, jardineiro etc.). Possivelmente uma segunda casa no interior ou em outro país. Hospeda-se em hotéis caros.';
+    atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Esta pessoa poderia ser proprietária de um carro caro ou equivalente.';
+    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa de Campo': 'Casa Grande';
+    atributos['Padrão de Vida']['Hospedagem'] = residencia;
+    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Ford Modelo A': 'Cadillac Type 55';
+    atributos['Padrão de Vida']['Transporte'] = transporte;
+  } else if (nivel_credito <= 98) {
+    atributos['Padrão de Vida']['Nível de Gastos'] = '$250 (Rico)';
+    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 20}`;
+    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 2000}`;
+    atributos['Padrão de Vida']['Descrição'] = 'Este nível de riqueza proporciona grande luxo e conforto. Não há necessidade de se contabilizar gastos com acomodações, comida ou despesas de viagem, desde que os gastos do investigador estejam dentro dos limites de seu padrão de vida. Consulte a Tabela II: Dinheiro e Patrimônio (página 47) caso o investigador deseje fazer compras mais significativas.';
+    atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de luxo ou propriedade com abundante ajuda doméstica (mordomo, serviçais, faxineiro, jardineiro etc.). Outras residências no interior e em outros países. Fica nos melhores hotéis.';
+    atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Em tempos modernos, essa pessoa seria proprietária de vários carros de luxo.';
+    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Mansão': 'Hotel de Luxo';
+    atributos['Padrão de Vida']['Hospedagem'] = residencia;
+    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Oldsmobile 43-AT': 'Chrysler Modelo F-58';
+    atributos['Padrão de Vida']['Transporte'] = transporte;
+  } else if (nivel_credito <= 99) {
+    atributos['Padrão de Vida']['Nível de Gastos'] = '$5000 (Ricaço)';
+    atributos['Padrão de Vida']['Dinheiro'] = '$50.000';
+    atributos['Padrão de Vida']['Patrimônio'] = `$${4 * Math.floor(Math.random() * 4)} milhões`;
+    atributos['Padrão de Vida']['Descrição'] = 'Como o Rico, mas dinheiro realmente não é problema. Os indivíduos desta categoria estão entre os mais ricos do mundo.';
+    atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de luxo ou propriedade com abundante ajuda doméstica (mordomo, serviçais, faxineiro, jardineiro etc.). Outras residências no interior e em outros países. Fica nos melhores hotéis.';
+    atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Em tempos modernos, essa pessoa seria proprietária de vários carros de luxo.';
+    atributos['Padrão de Vida']['Hospedagem'] = 'Mansão';
+    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Hudson Super Six Series J': 'Duesenberg J';
+    atributos['Padrão de Vida']['Transporte'] = transporte;
+  } else {
+    console.error(`Ocorreu um erro ao assegurar o nome da perícia ${nome_pericia}`);
+    atributos['Padrão de Vida']['Nível de Gastos'] = 'Pobre';
+    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 1}`;
+    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 10}`;
+    atributos['Padrão de Vida']['Descrição'] = 'Capaz de pagar por um teto qualquer sobre a cabeça e pelo menos uma parca refeição por dia.';
+    atributos['Padrão de Vida']['Acomodações'] = 'Restrito ao aluguel mais barato ou a um albergue sujo.';
+    atributos['Padrão de Vida']['Viagem'] = 'Transporte público do tipo mais barato. Qualquer veículo possuído será barato e não confiável.';
+    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa ($55,00 aluguel por mês)': 'Flat ($12,50 de aluguel por semana)';
+    atributos['Padrão de Vida']['Hospedagem'] = residencia;
+    atributos['Padrão de Vida']['Transporte'] = 'Sem transporte';
+  }
+
+  callback();
+}
+
+function definirEquipamentos(pericias,ocupacao,callback) {
+  let equipamentos = [];
+  let armas = [];
+
+  ocupacao.equipamentos.forEach((tipo_equipamento, index_tipo_equipamento) => {
+    let chance = ocupacao.chances_equipamentos[index_tipo_equipamento];
+
+    let pegar_equipamento = (chance >= Math.floor(Math.random() * 100));
+
+    if (pegar_equipamento) {
+
+      if (tipo_equipamento == 'armas_fogo') {
+
+        let qual_arma = 'Armas de Fogo (Pistolas)';
+
+        let pistolas = 0;
+        if ('Armas de Fogo (Pistolas)' in pericias) {
+          pistolas = pericias['Armas de Fogo (Pistolas)']['Regular'];
+        }
+
+        let espingardas = 0;
+        if ('Armas de Fogo (Espingardas)' in pericias) {
+          espingardas = pericias['Armas de Fogo (Espingardas)']['Regular'];
+        }
+
+        if (espingardas > pistolas) {
+          qual_arma = 'Armas de Fogo (Espingardas)';
+        }
+
+        let array_armas = EQUIPAMENTOS[tipo_equipamento][qual_arma].slice();
+        let index_arma = Math.floor(Math.random() * array_armas.length);
+        let arma = JSON.parse(JSON.stringify(array_armas[index_arma]));
+        armas.push(arma);
+
+      } else if (tipo_equipamento == 'armas_comuns') {
+
+        let array_armas = EQUIPAMENTOS[tipo_equipamento].slice();
+        let index_arma = Math.floor(Math.random() * array_armas.length);
+        let arma = JSON.parse(JSON.stringify(array_armas[index_arma]));
+        armas.push(arma);
+
+      } else {
+
+        let itens = EQUIPAMENTOS[tipo_equipamento].slice();
+        let index_item = Math.floor(Math.random() * itens.length);
+        equipamentos.push(itens[index_item]);
+
+      }
+
+    }
+
+    if (index_tipo_equipamento == (ocupacao.equipamentos.length - 1)) {
+      callback(equipamentos,armas);
+    }
+  });
 }
 
 function selecionarOcupacao(callback) {
@@ -1713,6 +2370,12 @@ function dividirAtributo(atributo) {
   return { 'Atributo': atributo, 'Metade': metade, 'Quinto': quinto };
 }
 
+function dividirPericia(valor) {
+  let metade = Math.floor(valor / 2);
+  let quinto = Math.floor(valor / 5);
+  return { 'Regular': valor, 'Difícil': metade, 'Extremo': quinto };
+}
+
 function rolarAtributosComIdade(callback) {
   rolarAtributosSemIdade(atributos=>{
     atributos['Idade'] = (Math.floor(Math.random() * 75) + 15);
@@ -1845,18 +2508,190 @@ function rolarAtributos(callback) {
 
 /* ----------------------------------------------------------- */
 
-function executar() {
+const ANTECEDENTES = {
+  'Descrição Pessoal': [
+    'Grosseiro',
+    'Bonito',
+    'Desagradável',
+    'Simpático',
+    'Glamoroso',
+    'Cara de bebê',
+    'Esperto',
+    'Desleixado',
+    'Chato',
+    'Sujo',
+    'Estonteante',
+    'Reservado',
+    'Juvenil',
+    'Cansado',
+    'Roliço',
+    'Robusto',
+    'Peludo',
+    'Magro',
+    'Elegante',
+    'Desonesto',
+    'Atarracado',
+    'Pálido',
+    'Carrancudo',
+    'Ordinário',
+    'Rosado',
+    'Bronzeado',
+    'Enrugado',
+    'Estufado',
+    'Tímido',
+    'Perspicaz',
+    'Forte',
+    'Delicado',
+    'Musculoso',
+    'Encorpado',
+    'Desajeitado',
+    'Frágil',
+  ],
+  'Ideologia/Crenças': [
+    'Existe um poder superior que você venera e para o qual ora (por exemplo, Vishnu, Jesus Cristo, Haile Selassie I).',
+    'A humanidade pode viver bem sem religiões (por exemplo, ateu convicto, humanista, secularista).',
+    'A ciência tem todas as respostas. Escolha um aspecto particular de interesse (por exemplo, evolução, criogenia, exploração espacial).',
+    'Acredita no destino (por exemplo, carma, sistema de classes, supersticioso).',
+    'Membro de uma sociedade ou sociedade secreta (por exemplo, Maçom, Instituto das Mulheres, Anonymous).',
+    'Há um mal da sociedade que deve ser eliminado. Que mal é este? (por exemplo, drogas, violência, racismo).',
+    'O oculto (por exemplo, astrologia, espiritualismo, tarô).',
+    'Política (por exemplo, conservador, socialista, liberal).',
+    'Dinheiro é poder, e vou conseguir tanto quanto puder (por exemplo, ganancioso, empreendedor, implacável).',
+    'Militante/Ativista (por exemplo, feminismo, direitos iguais, poder sindical).',
+  ],
+  'Pessoas Significativas': [
+    'Pais (por exemplo, mãe, pai, madrasta).',
+    'Avós (por exemplo, avó materna, avô paterno).',
+    'Irmão (por exemplo, irmão, meio-irmão, irmã de criação).',
+    'Filho ou filha.',
+    'Companheiro (por exemplo, cônjuge, noivo, amante).',
+    'Pessoa que lhe ensinou sua mais alta perícia ocupacional. Identifique a perícia e pondere sobre quem lhe ensinou (por exemplo, uma professora, um tutor, seu pai).',
+    'Amigo de infância (por exemplo, colega de classe, vizinho, amigo imaginário).',
+    'Uma pessoa famosa. Seu ídolo ou herói. Vocês podem jamais ter sequer se encontrado (por exemplo, estrela de cinema, político, músico).',
+    'Um colega investigador em seu jogo. Escolha um ou determine aleatoriamente.',
+    'Um personagem não-jogador (PNJ) do jogo. Peça ao Guardião para escolher um para você.',
+  ],
+  'Por que essa pessoa é importante?': [
+    'Você está em dívida para com eles. Como lhe ajudaram? (por exemplo, financeiramente, eles o protegeram em momentos difíceis, arranjaram-lhe seu primeiro emprego).',
+    'Eles te ensinaram algo. O quê? (por exemplo, uma perícia, amar, ser um homem).',
+    'Eles dão significado à sua vida. Como? (por exemplo, você aspira ser como eles, você procura estar com eles, você deseja fazê-los felizes).',
+    'Você os prejudicou e busca a reconciliação. O que você fez? (por exemplo, roubou dinheiro deles, informou a polícia sobre eles, recusou-se a ajudar quando estavam desesperados).',
+    'Vivência compartilhada. O quê? (por exemplo, vocês viveram momentos difíceis juntos, cresceram juntos, serviram juntos na guerra).',
+    'Você procura se provar para eles. Como? (por exemplo, conseguindo um bom trabalho, encontrando um bom cônjuge, entrando em uma boa universidade).',
+    'Você os idolatra (por exemplo, por sua fama, por sua beleza, por seu trabalho).',
+    'Um sentimento de arrependimento (por exemplo, você deveria ter morrido em seu lugar, você se arrependeu de algo que disse, você não se prestou a ajudá-los quando teve a chance).',
+    'Você quer provar que é melhor do que eles. Qual o defeito deles? (por exemplo, preguiçoso, bêbado, desamoroso).',
+    'Eles o traíram e você busca vingança. Pelo que você os culpa? (por exemplo, morte de um ente querido, sua ruína financeira, ruptura conjugal).',
+  ],
+  'Locais Importantes': [
+    'Seu lugar de aprendizagem (por exemplo, escola, universidade, tutelagem).',
+    'Sua cidade natal (por exemplo, vila rural, cidade mercantil, cidade grande).',
+    'O lugar em que você conheceu seu primeiro amor (por exemplo, um concerto de música, viagem de férias, um abrigo antibombas).',
+    'Um lugar para contemplação silenciosa (por exemplo, a biblioteca, caminhadas em sua propriedade no interior, pescar).',
+    'Um lugar para se socializar (por exemplo, clube de cavalheiros, bar local, casa do tio).',
+    'Um lugar relacionado com a sua ideologia/crença (por exemplo, igreja paroquial, Meca, Stonehenge).',
+    'O túmulo de uma pessoa significativa. Quem? (por exemplo, seu pai ou sua mãe, um filho, um amante).',
+    'A casa de sua família (por exemplo, uma propriedade rural, um apartamento alugado, o orfanato onde você foi criado).',
+    'O lugar onde você foi mais feliz em sua vida (por exemplo, o banco do parque onde você deu seu primeiro beijo, sua universidade).',
+    'Seu local de trabalho (por exemplo, o escritório, biblioteca, banco).',
+  ],
+  'Pertences Queridos': [
+    'Um item conectado com sua perícia mais alta (por exemplo, terno caro, identidade falsa, soqueira de bronze).',
+    'Um item essencial para a sua ocupação (por exemplo, maleta de médico, carro, gazuas).',
+    'Uma lembrança de sua infância (por exemplo, quadrinhos, canivete, moeda de sorte).',
+    'Uma lembrança de uma pessoa que partiu (por exemplo, joias, uma fotografia em sua carteira, uma carta).',
+    'Algo que lhe foi dado por sua Pessoa Significativa (por exemplo, um anel, um diário, um mapa).',
+    'Sua coleção. O que ela é? (por exemplo, passagens de ônibus, bichos de pelúcia, discos de música).',
+    'Algo que você encontrou, mas não sabe o que é – você procura respostas (por exemplo, uma carta escrita em idioma desconhecido que você encontrou em um armário, um tubo curioso de origem desconhecida encontrado entre os pertences do seu falecido pai, uma curiosa bola prateada que você desencavou em seu jardim).',
+    'Um item esportivo (por exemplo, um bastão de críquete, bola de beisebol autografada, uma vara de pesca).',
+    'Uma arma (por exemplo, revólver de serviço, seu antigo rifle de caça, a faca escondida em sua bota).',
+    'Um animal de estimação (por exemplo, um cão, um gato, um cágado).',
+  ],
+  'Características': [
+    'Generoso (por exemplo, generoso com gorjetas, ajuda sempre uma pessoa necessitada, filantropo).',
+    'Bom com Animais (por exemplo, ama gatos, cresceu em uma fazenda, bom com cavalos).',
+    'Sonhador (por exemplo, viaja para o mundo da lua, visionário, altamente criativo).',
+    'Hedonista (por exemplo, vida e alma das festas, bêbado divertido, viva rápido e morra jovem).',
+    'Apostador e amante do perigo (por exemplo, jogador de pôquer, experimenta de tudo, vive no limite).',
+    'Bom Cozinheiro (por exemplo, assa bolos maravilhosos, consegue fazer uma refeição com quase nada, paladar refinado).',
+    'Galanteador(a) (por exemplo, voz charmosa, olhos encantadores).',
+    'Leal (por exemplo, fica ao lado dos amigos, nunca quebra uma promessa, morreria pelo que acredita).',
+    'Uma boa reputação (por exemplo, o melhor orador em festas de gala do país, o mais piedoso dos homens, não teme o perigo).',
+    'Ambicioso (por exemplo, alcançar um objetivo, tornar-se o chefe, ter de tudo).',
+  ]
+};
+
+function definirAntecedentes(callback) {
+  let array_antecedentes = Object.keys(ANTECEDENTES);
+  let antecedentes = {};
+
+  array_antecedentes.forEach((antecedente, index_antecedente) => {
+    let index_sorteado = Math.floor(Math.random() * ANTECEDENTES[antecedente].length);
+    antecedentes[antecedente] = ANTECEDENTES[antecedente][index_sorteado];
+
+    if (index_antecedente == (array_antecedentes.length - 1)) {
+      callback(antecedentes);
+    }
+  });
+}
+
+function definirNomeENascimento(idade,callback) {
+  let index_nome = Math.floor(Math.random() * NOMES.length);
+  let nome = NOMES[index_nome];
+
+  let index_sobrenome = Math.floor(Math.random() * SOBRENOMES.length);
+  let sobrenome = SOBRENOMES[index_sobrenome];
+
+  let ano_nascimento = 1920 - idade;
+  let start = new Date(ano_nascimento, 0, 1);
+  let end = new Date(ano_nascimento, 11, 31)
+  let data_nascimento = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+
+  const yyyy = data_nascimento.getFullYear();
+  let mm = data_nascimento.getMonth() + 1;
+  let dd = data_nascimento.getDate();
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+  let formattedToday = dd + '/' + mm + '/' + yyyy;
+
+  callback(`${nome} ${sobrenome}`,formattedToday);
+}
+
+/* ----------------------------------------------------------- */
+
+function rolarPersonagem(callback) {
   rolarAtributos((atributos)=>{
     selecionarOcupacao((nome_ocupacao,ocupacao)=>{
       atributos['Informações']['Ocupação'] = nome_ocupacao;
       atributos['Pontos de Perícia']['Perícias Ocupacionais'] = ocupacao.pontos_pericias_ocupacionais(atributos);
+      logger(`Ocupação: ${atributos['Informações']['Ocupação']}`);
 
       obterPericiasIniciais(atributos,ocupacao,(pericias_iniciais)=>{
-        pontuarInteressesPessoais(atributos,pericias_iniciais,(pericias)=>{
-          console.log(nome_ocupacao);
-          console.log(ocupacao);
-          console.log(pericias_iniciais);
-          console.log(pericias);
+        pontuarInteressesPessoais(atributos,pericias_iniciais,(pericias_pessoais)=>{
+          pontuarPericiasOcupacionais(ocupacao,atributos,pericias_pessoais,(pericias_calculadas)=>{
+            ajusteFinalPericiais(pericias_calculadas,(pericias)=>{
+              definirPadraoDeVida(atributos,pericias,(nivel_credito)=>{
+                definirEquipamentos(pericias,ocupacao,(equipamentos,armas)=>{
+                  definirAntecedentes(antecedentes=>{
+                    definirNomeENascimento(atributos['Informações']['Idade'],(nome,data_nascimento)=>{
+                      let personagem = atributos;
+                      atributos['Informações']['Nome'] = nome;
+                      atributos['Informações']['Data de Nascimento'] = data_nascimento;
+                      personagem['Perícias'] = pericias;
+                      personagem['Equipamentos'] = equipamentos;
+                      personagem['Armas'] = armas;
+                      personagem['Antecedentes'] = antecedentes;
+
+                      console.log('Personagem:');
+                      console.log(JSON.stringify(personagem, null, 2));
+
+                      callback(personagem);
+                    });
+                  });
+                });
+              });
+            });
+          });
         });
       });
 
@@ -1866,12 +2701,8 @@ function executar() {
 
 /* ----------------------------------------------------------- */
 
-/* ----------------------------------------------------------- */
-
-/* ----------------------------------------------------------- */
-
-/* ----------------------------------------------------------- */
-
-/* ----------------------------------------------------------- */
-
-/* ----------------------------------------------------------- */
+function preencherTela() {
+  rolarPersonagem(personagem=>{
+    document.getElementById('nome_personagem').value = personagem['Informações']['Nome'];
+  });
+}
