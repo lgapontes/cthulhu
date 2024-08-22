@@ -176,6 +176,38 @@ div.ficha::after {
   clear: both;
 }
 
+div.ficha > div.fotografia {
+  display: block;
+  float: right;
+  box-sizing: border-box;
+
+  width: 270px;
+  height: 273px;
+}
+
+div.ficha > div.fotografia > div.fotografia-interna {
+  display: block;
+  position: absolute;
+
+  width: 270px;
+  height: 273px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 270px 273px;
+}
+
+div.ficha > div.fotografia > div.moldura {
+  background-image: url(../img/moldura.png);
+  background-size: 270px 273px;
+  z-index: 1;
+}
+
+div.ficha > div.fotografia > div.foto {
+  background-image: url(../img/default_user.jpg);
+  background-size: 256px 256px;
+  z-index: 0;
+}
+
 div.ficha > div.bloco_M100_PC50 {
 
 }

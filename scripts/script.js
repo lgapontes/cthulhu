@@ -2741,10 +2741,22 @@ function rolarPersonagem(callback) {
 
 /* ----------------------------------------------------------- */
 
+function carregarImagem(url,callback) {
+  var img = new Image();
+  img.onload = function() {
+    document.getElementById('fotografia').style.backgroundImage = `url(${img.src})`;
+    callback();
+  }
+  img.src = url;
+}
+
 function preencherTela() {
   document.getElementById('loading').style.display = 'block';
   rolarPersonagem(personagem=>{
-    document.getElementById('nome_personagem').value = personagem['Informações']['Nome'];
-    document.getElementById('loading').style.display = 'none';
+    carregarImagem(personagem['Informações']['Imagem'],()=>{
+      document.getElementById('nome_personagem').value = personagem['Informações']['Nome'];
+
+      document.getElementById('loading').style.display = 'none';
+    });
   });
 }
