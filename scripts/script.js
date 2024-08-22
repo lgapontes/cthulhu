@@ -2762,6 +2762,12 @@ document.getElementById('nome_personagem').addEventListener('input',(event)=>{
   document.getElementById('personagem').innerHTML = document.getElementById('nome_personagem').value;
 });
 
+function definirAtributo(personagem,id,atributo) {
+  document.querySelector(`#${id} label.regular`).innerHTML = personagem['Atributos'][atributo]['Atributo'];
+  document.querySelector(`#${id} label.dificil`).innerHTML = personagem['Atributos'][atributo]['Metade'];
+  document.querySelector(`#${id} label.extremo`).innerHTML = personagem['Atributos'][atributo]['Quinto'];
+}
+
 function preencherTela() {
   document.getElementById('loading').style.display = 'block';
   rolarPersonagem(personagem=>{
@@ -2784,6 +2790,61 @@ function preencherTela() {
       document.getElementById('ocupacao').innerHTML = ocupacao;
       document.getElementById('idade').innerHTML = personagem['Informações']['Idade'];
       document.getElementById('nascimento').innerHTML = personagem['Informações']['Data de Nascimento'];
+
+      definirAtributo(personagem,'atributo-forca','FOR (Força)');
+      definirAtributo(personagem,'atributo-destreza','DES (Destreza)');
+      definirAtributo(personagem,'atributo-inteligencia','INT (Inteligência)');
+      definirAtributo(personagem,'atributo-constituicao','CON (Constituição)');
+      definirAtributo(personagem,'atributo-aparencia','APA (Aparência)');
+      definirAtributo(personagem,'atributo-poder','POD (Poder)');
+      definirAtributo(personagem,'atributo-tamanho','TAM (Tamanho)');
+      definirAtributo(personagem,'atributo-educacao','EDU (Educação)');
+
+
+      /*
+      "Atributos": {
+    "FOR (Força)": {
+      "Atributo": 60,
+      "Metade": 30,
+      "Quinto": 12
+    },
+    "CON (Constituição)": {
+      "Atributo": 60,
+      "Metade": 30,
+      "Quinto": 12
+    },
+    "TAM (Tamanho)": {
+      "Atributo": 65,
+      "Metade": 32,
+      "Quinto": 13
+    },
+    "DES (Destreza)": {
+      "Atributo": 60,
+      "Metade": 30,
+      "Quinto": 12
+    },
+    "APA (Aparência)": {
+      "Atributo": 80,
+      "Metade": 40,
+      "Quinto": 16
+    },
+    "INT (Inteligência)": {
+      "Atributo": 65,
+      "Metade": 32,
+      "Quinto": 13
+    },
+    "POD (Poder)": {
+      "Atributo": 35,
+      "Metade": 17,
+      "Quinto": 7
+    },
+    "EDU (Educação)": {
+      "Atributo": 50,
+      "Metade": 25,
+      "Quinto": 10
+    }
+  },
+      */
 
       document.getElementById('loading').style.display = 'none';
     });
