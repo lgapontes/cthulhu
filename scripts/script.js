@@ -2750,11 +2750,40 @@ function carregarImagem(url,callback) {
   img.src = url;
 }
 
+document.getElementById('nome_jogador').addEventListener('input',(event)=>{
+  event.preventDefault();
+  let nome = document.getElementById('nome_jogador').value;
+  document.getElementById('jogador').innerHTML = nome;
+  localStorage.setItem('nome_jogador', nome);
+});
+
+document.getElementById('nome_personagem').addEventListener('input',(event)=>{
+  event.preventDefault();
+  document.getElementById('personagem').innerHTML = document.getElementById('nome_personagem').value;
+});
+
 function preencherTela() {
   document.getElementById('loading').style.display = 'block';
   rolarPersonagem(personagem=>{
     carregarImagem(personagem['Informações']['Imagem'],()=>{
       document.getElementById('nome_personagem').value = personagem['Informações']['Nome'];
+
+      let nome = localStorage.getItem('nome_jogador');
+      if (nome === null) {
+        nome = '';
+      }
+      document.getElementById('jogador').innerHTML = nome;
+      document.getElementById('nome_jogador').value = nome;
+      document.getElementById('personagem').innerHTML = document.getElementById('nome_personagem').value;
+
+      let ocupacao = personagem['Informações']['Ocupação'];
+      if (ocupacao == 'Profissional de Entretenimento') {
+        ocupacao = 'Entretenimento';
+      }
+
+      document.getElementById('ocupacao').innerHTML = ocupacao;
+      document.getElementById('idade').innerHTML = personagem['Informações']['Idade'];
+      document.getElementById('nascimento').innerHTML = personagem['Informações']['Data de Nascimento'];
 
       document.getElementById('loading').style.display = 'none';
     });
