@@ -2394,11 +2394,14 @@ function rolarAtributosComIdade(callback) {
       let atributosCalculados = {
         'Informações': {
           'Idade': atributosComIdade['Idade'],
-          'Sorte': atributosComIdade['Sorte'],
-          'SAN (Sanidade)': atributosComIdade['POD (Poder)'],
           'Graduação': graduacao,
         },
         'Atributos': {},
+        'Atributos Secundários': {
+          'SAN (Sanidade)': atributosComIdade['POD (Poder)'],
+          'Sanidade Máxima': 99,
+          'Sorte': atributosComIdade['Sorte'],
+        },
         'Pontos de Perícia': {
           'Interesses Pessoais': (atributosComIdade['INT (Inteligência)'] * 2),
           'Perícias Ocupacionais': 0, // Depende da Ocupação
@@ -2440,7 +2443,7 @@ function rolarAtributos(callback) {
   rolarAtributosComIdade((atributosCalculados)=>{
 
       // Atributos Secundários
-      atributosCalculados['Atributos Secundários'] = {};
+      //atributosCalculados['Atributos Secundários'] = {};
       let FOR_mais_TAM = atributosCalculados['Atributos']['FOR (Força)']['Atributo'] + atributosCalculados['Atributos']['TAM (Tamanho)']['Atributo'];
 
       if (FOR_mais_TAM <= 64) {
@@ -2708,6 +2711,10 @@ function rolarPersonagem(callback) {
 
                       definirNomeENascimento(genero,atributos['Informações']['Idade'],(nome,data_nascimento)=>{
 
+                        if ('Mythos de Cthulhu' in pericias) {
+                          atributos['Atributos Secundários']['Sanidade Máxima'] = atributos['Atributos Secundários']['Sanidade Máxima'] - pericias['Mythos de Cthulhu']['Regular'];
+                        }
+
                         let personagem = atributos;
                         atributos['Informações']['Imagem'] = url;
                         atributos['Informações']['Gênero'] = genero;
@@ -2722,7 +2729,6 @@ function rolarPersonagem(callback) {
                         console.log(JSON.stringify(personagem, null, 2));
 
                         callback(personagem);
-
                       });
 
                     });
@@ -2799,52 +2805,14 @@ function preencherTela() {
       definirAtributo(personagem,'atributo-poder','POD (Poder)');
       definirAtributo(personagem,'atributo-tamanho','TAM (Tamanho)');
       definirAtributo(personagem,'atributo-educacao','EDU (Educação)');
+      document.querySelector(`#atributo-movimento`).innerHTML = personagem['Atributos Secundários']['Taxa de Movimento (MOV)'];
 
+      document.querySelector(`#atributo-pontos-de-vida`).innerHTML = personagem['Atributos Secundários']['Pontos de Vida'];
 
-      /*
-      "Atributos": {
-    "FOR (Força)": {
-      "Atributo": 60,
-      "Metade": 30,
-      "Quinto": 12
-    },
-    "CON (Constituição)": {
-      "Atributo": 60,
-      "Metade": 30,
-      "Quinto": 12
-    },
-    "TAM (Tamanho)": {
-      "Atributo": 65,
-      "Metade": 32,
-      "Quinto": 13
-    },
-    "DES (Destreza)": {
-      "Atributo": 60,
-      "Metade": 30,
-      "Quinto": 12
-    },
-    "APA (Aparência)": {
-      "Atributo": 80,
-      "Metade": 40,
-      "Quinto": 16
-    },
-    "INT (Inteligência)": {
-      "Atributo": 65,
-      "Metade": 32,
-      "Quinto": 13
-    },
-    "POD (Poder)": {
-      "Atributo": 35,
-      "Metade": 17,
-      "Quinto": 7
-    },
-    "EDU (Educação)": {
-      "Atributo": 50,
-      "Metade": 25,
-      "Quinto": 10
-    }
-  },
-      */
+      document.querySelector(`#atributo-sanidade-inicial`).innerHTML = personagem['Atributos Secundários']['SAN (Sanidade)'];
+      document.querySelector(`#atributo-sanidade-maxima`).innerHTML = personagem['Atributos Secundários']['Sanidade Máxima'];
+
+      document.querySelector(`#atributo-sorte-inicial`).innerHTML = personagem['Atributos Secundários']['Sorte'];
 
       document.getElementById('loading').style.display = 'none';
     });
