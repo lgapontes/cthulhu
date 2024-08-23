@@ -48,12 +48,14 @@
 			<div class="bloco50">
 				<div class="informacoes">
 					<label class="sobrecampo jogador">Jogador</label>
-					<label class="valor" id="jogador"></label>
+					<!--<label class="valor" id="jogador"></label>-->
+					<input type="text" class="valor" id="jogador">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo personagem">Personagem</label>
-					<label class="valor" id="personagem"></label>
+					<!--<label class="valor" id="personagem"></label>-->
+					<input type="text" class="valor" id="personagem">
 				</div>
 
 				<div class="informacoes">
@@ -194,11 +196,12 @@
 						</div>
 
 						<div class="campo">
-							<label class="secundario">Atual</label>
-							<label class="valor-secundario"></label>
+							<label class="secundario secundario-color">Atual</label>
+							<input type="number" class="valor-secundario" id="atributo-pontos-de-vida-atual" value="">
+							<!--<label class="valor-secundario" id="atributo-pontos-de-vida-atual"></label>-->
 						</div>
 
-						<div class="campo">
+						<div class="campo campo-flags">
 							<div class="flags">
 								<input type="checkbox">
 								<span class="flag">Lesão Grave</span>
@@ -234,12 +237,13 @@
 						</div>
 
 						<div class="campo">
-							<label class="secundario">Atual</label>
-							<label class="valor-secundario"></label>
+							<label class="secundario secundario-color">Atual</label>
+							<!--<label class="valor-secundario"></label>-->
+							<input type="number" class="valor-secundario" id="atributo-sanidade-atual" value="">
 						</div>
 
-						<div class="campo">
-							<div class="flags flags-margin">
+						<div class="campo campo-flags flags-margin">
+							<div class="flags">
 								<input type="checkbox">
 								<span class="flag">Ins. Temporária</span>
 							</div>
@@ -253,20 +257,59 @@
 				</div>
 			</div>
 
-			<div class="bloco33">
+			<div class="bloco66">
 				<div class="bloco">
 					<label class="sobrecampo atributos-sorte">Sorte</label>
 					<div class="container">
 
 						<div class="campo">
+							<label class="secundario">Inicial</label>
+							<label class="valor-secundario" id="atributo-sorte-inicial">0</label>
+						</div>
+
+						<div class="campo">
+							<label class="secundario secundario-color">Atual</label>
+							<input type="number" class="valor-secundario" id="atributo-sorte-atual" value="">
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="bloco33">
+				<div class="bloco">
+					<label class="sobrecampo atributos-magia">Pontos de Magia</label>
+					<div class="container">
+
+						<div class="campo">
 							<label class="conjunto">
-								<span class="nome">Inicial</span>
-								<span class="valor" id="atributo-sorte-inicial">0</span>
+								<span class="nome">Máximo</span>
+								<span class="valor" id="atributo-magia-maxima">0</span>
 							</label>
 							<label class="conjunto">
 								<span class="nome">Atual</span>
-								<span class="valor"></span>
+								<!--<span class="valor"></span>-->
+								<input type="number" class="valor" id="atributo-magia-atual">
 							</label>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="bloco100-fluido">
+				<div class="bloco">
+					<label class="sobrecampo atributos-combate">Combate</label>
+					<div class="container">
+
+						<div class="campo">
+							<label class="secundario secundario-margin">Dano Extra</label>
+							<label class="valor-secundario" id="atributo-combate-dano-extra">0</label>
+						</div>
+
+						<div class="campo">
+							<label class="secundario">Corpo</label>
+							<label class="valor-secundario" id="atributo-combate-corpo">0</label>
 						</div>
 
 					</div>

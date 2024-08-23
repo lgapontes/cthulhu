@@ -5,6 +5,8 @@ function logger(msg) {
   if (LOG) console.log(msg);
 }
 
+const OBTER_IMAGEM = false;
+
 /* ----------------------------------------------------------- */
 
 const PERICIAS = {
@@ -2416,7 +2418,7 @@ function rolarAtributosComIdade(callback) {
       atributosCalculados['Atributos']['POD (Poder)'] = dividirAtributo(atributosComIdade['POD (Poder)']);
       atributosCalculados['Atributos']['EDU (Educação)'] = dividirAtributo(atributosComIdade['EDU (Educação)']);
 
-      atributosCalculados['Informações']['Pontos de Magia'] = atributosCalculados['Atributos']['POD (Poder)']['Quinto'];
+      atributosCalculados['Atributos Secundários']['Pontos de Magia'] = atributosCalculados['Atributos']['POD (Poder)']['Quinto'];
 
       callback(atributosCalculados);
     });
@@ -2674,18 +2676,22 @@ function definirNomeENascimento(genero,idade,callback) {
 */
 
 function obterImagem(callback) {
-  try {
-    fetch('https://flechamagica.com.br/fotos/api.php', { method: 'GET' })
-    .then(function(response) { return response.json(); })
-    .then(function(json) {
-      callback(json.url,json.genero);
-    })
-    .catch((error) => {
+  if (OBTER_IMAGEM) {
+    try {
+      fetch('https://flechamagica.com.br/fotos/api.php', { method: 'GET' })
+      .then(function(response) { return response.json(); })
+      .then(function(json) {
+        callback(json.url,json.genero);
+      })
+      .catch((error) => {
+        console.error(error);
+        callback('img/default_user.jpg','Masculino');
+      });
+    } catch (error) {
       console.error(error);
       callback('img/default_user.jpg','Masculino');
-    });
-  } catch (error) {
-    console.error(error);
+    }
+  } else {
     callback('img/default_user.jpg','Masculino');
   }
 };
@@ -2757,15 +2763,19 @@ function carregarImagem(url,callback) {
 }
 
 document.getElementById('nome_jogador').addEventListener('input',(event)=>{
+  /*
   event.preventDefault();
   let nome = document.getElementById('nome_jogador').value;
-  document.getElementById('jogador').innerHTML = nome;
+  document.getElementById('jogador').value = nome;
   localStorage.setItem('nome_jogador', nome);
+  */
 });
 
 document.getElementById('nome_personagem').addEventListener('input',(event)=>{
+  /*
   event.preventDefault();
   document.getElementById('personagem').innerHTML = document.getElementById('nome_personagem').value;
+  */
 });
 
 function definirAtributo(personagem,id,atributo) {
@@ -2784,9 +2794,9 @@ function preencherTela() {
       if (nome === null) {
         nome = '';
       }
-      document.getElementById('jogador').innerHTML = nome;
+      document.getElementById('jogador').value = nome;
       document.getElementById('nome_jogador').value = nome;
-      document.getElementById('personagem').innerHTML = document.getElementById('nome_personagem').value;
+      document.getElementById('personagem').value = document.getElementById('nome_personagem').value;
 
       let ocupacao = personagem['Informações']['Ocupação'];
       if (ocupacao == 'Profissional de Entretenimento') {
@@ -2813,6 +2823,15 @@ function preencherTela() {
       document.querySelector(`#atributo-sanidade-maxima`).innerHTML = personagem['Atributos Secundários']['Sanidade Máxima'];
 
       document.querySelector(`#atributo-sorte-inicial`).innerHTML = personagem['Atributos Secundários']['Sorte'];
+
+      document.querySelector(`#atributo-magia-maxima`).innerHTML = personagem['Atributos Secundários']['Pontos de Magia'];
+
+      document.querySelector(`#atributo-combate-dano-extra`).innerHTML = personagem['Atributos Secundários']['Dano Extra'];
+      if (personagem['Atributos Secundários']['Dano Extra'] == 'Nenhum') {
+        document.querySelector(`#atributo-combate-dano-extra`).style.fontSize = '0.7em';
+      }
+
+      document.querySelector(`#atributo-combate-corpo`).innerHTML = personagem['Atributos Secundários']['Corpo'];
 
       document.getElementById('loading').style.display = 'none';
     });

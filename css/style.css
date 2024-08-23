@@ -157,6 +157,7 @@ div.ficha {
   box-sizing: border-box;
   padding: 10px;
   margin: 20px auto;
+  margin-bottom: 400px;
   position: relative;
 
   border-radius: 0;
@@ -235,7 +236,7 @@ div.bloco100-fluido::after {
 
 div.bloco33 {
   display: block;
-  float: left;
+  float: right;
   width: 33%;
   box-sizing: border-box;
   margin: 0;
@@ -244,6 +245,23 @@ div.bloco33 {
 }
 
 div.bloco33::after {
+  display: block;
+  height: 0;
+  content: '';
+  clear: both;
+}
+
+div.bloco66 {
+  display: block;
+  float: left;
+  width: 65%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+div.bloco66::after {
   display: block;
   height: 0;
   content: '';
@@ -332,6 +350,21 @@ div.ficha div.informacoes > label.valor {
   overflow: auto;
 }
 
+div.ficha div.informacoes > input[type=text].valor {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2px;
+
+  height: 29px;
+  margin-top: 12px;
+  padding-top: 6px;
+  font-style: italic;
+  border: 1px solid #E59700;
+  background-color: #FCFAE1;
+  text-indent: 2px;
+}
+
 div.ficha div.informacoes > label.sobrecampo {
   display: block;
   position: absolute;
@@ -349,10 +382,14 @@ div.ficha div.informacoes > label.sobrecampo {
 
 div.ficha div.informacoes > label.jogador {
   width: 50px;
+  background-color: #CCCAB1;
+  color: #726E54;
 }
 
 div.ficha div.informacoes > label.personagem {
   width: 74px;
+  background-color: #CCCAB1;
+  color: #726E54;
 }
 
 div.ficha div.informacoes > label.ocupacao {
@@ -404,7 +441,9 @@ div.ficha div.bloco > div.container {
   overflow: hidden;
 }
 
-div.ficha div.bloco100-fluido div.bloco > div.container, div.ficha div.bloco33 div.bloco > div.container {
+div.ficha div.bloco100-fluido div.bloco > div.container,
+div.ficha div.bloco33 div.bloco > div.container,
+div.ficha div.bloco66 div.bloco > div.container {
   height: 64px;
 }
 
@@ -438,12 +477,20 @@ div.ficha div.bloco > label.atributos-pontos-de-vida {
   width: 90px;
 }
 
+div.ficha div.bloco > label.atributos-combate {
+  width: 58px;
+}
+
 div.ficha div.bloco > label.atributos-sanidade {
   width: 60px;
 }
 
 div.ficha div.bloco > label.atributos-sorte {
-  width: 36px;
+  width: 42px;
+}
+
+div.ficha div.bloco > label.atributos-magia {
+  width: 96px;
 }
 
 div.ficha div.bloco > div.container > div.campo {
@@ -455,13 +502,22 @@ div.ficha div.bloco > div.container > div.campo {
   margin: 1%;
 }
 
+div.ficha div.bloco66 div.bloco > div.container > div.campo {
+  width: 48%;
+  margin-left: -0.5%;
+}
+
+div.ficha div.bloco66 div.bloco > div.container > div.campo:last-child {
+  margin-left: 1%;
+}
+
 div.ficha div.bloco33 div.bloco > div.container > div.campo {
   display: block;
   float: left;
-  width: 98%;
+  width: 96%;
   box-sizing: border-box;
   padding: 0;
-  margin: 1%;
+  margin: 2%;
   margin-top: 6px;
 }
 
@@ -525,6 +581,15 @@ div.ficha div.bloco > div.container > div.campo > label.secundario {
   margin-top: 2px;
 }
 
+div.ficha div.bloco > div.container > div.campo > label.secundario-margin {
+  margin-top: -6px;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.secundario-color {
+  font-weight: bold;
+  color: #726E54;
+}
+
 div.ficha div.bloco > div.container > div.campo > label.valor-secundario {
   width: 44%;
   margin-left: 2%;
@@ -532,6 +597,30 @@ div.ficha div.bloco > div.container > div.campo > label.valor-secundario {
   font-size: 1.2em;
   text-align: center;
   border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0;
+  padding-top: -1px;
+  text-indent: -2px;
+
+  margin-top: 2px;
+}
+
+div.ficha div.bloco > div.container > div.campo > input[type=number].valor-secundario {
+  display: block;
+  float: left;
+  height: 40px;
+  box-sizing: border-box;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+
+  width: 44%;
+  margin-left: 2%;
+  line-height: 38px;
+  font-size: 1.2em;
+  text-align: center;
+  border: 1px solid #E59700;
+  background-color: #FCFAE1;
   border-radius: 10px;
   padding: 0;
   padding-top: -1px;
@@ -604,6 +693,32 @@ div.ficha div.bloco > div.container > div.campo > label.conjunto > span.valor {
   font-size: 1em;
 }
 
+div.ficha div.bloco > div.container > div.campo > label.conjunto > input[type=number].valor {
+  display: block;
+  float: left;
+  text-align: center;
+
+  font-weight: normal;
+  text-indent: -2px;
+  text-transform: none;
+
+  font-size: 1em;
+  width: 100%;
+  padding-bottom: 1px;
+  padding-right: 0.5px;
+  margin-left: -1px;
+
+  border: 1px solid #E59700;
+  border-bottom-right-radius: 10px;
+  background-color: #FCFAE1;
+}
+
+div.ficha div.bloco > div.container > div.campo-flags {
+  padding: 4px 2px;
+  background-color: #FCFAE1;
+  margin-top: -4px;
+}
+
 div.ficha div.bloco > div.container > div.campo > div.flags {
   display: block;
   float: left;
@@ -615,11 +730,7 @@ div.ficha div.bloco > div.container > div.campo > div.flags {
   border: 0;
 }
 
-div.ficha div.bloco > div.container > div.campo > div.flags:first-child {
-  margin-top: -6px;
-}
-
-div.ficha div.bloco > div.container > div.campo > div.flags-margin:first-child {
+div.ficha div.bloco > div.container > div.flags-margin {
   margin-top: 4px;
 }
 
@@ -635,6 +746,7 @@ div.ficha div.bloco > div.container > div.campo > div.flags > span.flag {
   float: left;
   margin-left: 4px;
   padding-top: 2px;
+  color: #726E54;
 }
 
 div.ficha div.bloco > div.container > div.campo > div.flags > input[type=checkbox] {
@@ -785,5 +897,15 @@ div.loading {
 
   div.bloco100-fluido-right {
     float: right;
+  }
+
+  div.bloco66 {
+    width: 29%;
+  }
+
+  div.bloco33 {
+    float: left;
+    margin-left: 1%;
+    width: 19%;
   }
 }
