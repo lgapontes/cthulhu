@@ -2451,30 +2451,39 @@ function rolarAtributos(callback) {
       if (FOR_mais_TAM <= 64) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '–2';
         atributosCalculados['Atributos Secundários']['Corpo'] = (0 - 2);
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = true;
       } else if (FOR_mais_TAM <= 84) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '–1';
         atributosCalculados['Atributos Secundários']['Corpo'] = (0 - 1);
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = true;
       } else if (FOR_mais_TAM <= 124) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = 'Nenhum';
         atributosCalculados['Atributos Secundários']['Corpo'] = 0;
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = false;
       } else if (FOR_mais_TAM <= 164) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '+1D4';
         atributosCalculados['Atributos Secundários']['Corpo'] = 1;
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = false;
       } else if (FOR_mais_TAM <= 204) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '+1D6';
         atributosCalculados['Atributos Secundários']['Corpo'] = 2;
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = false;
       } else if (FOR_mais_TAM <= 284) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '+2D6';
         atributosCalculados['Atributos Secundários']['Corpo'] = 3;
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = false;
       } else if (FOR_mais_TAM <= 364) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '+3D6';
         atributosCalculados['Atributos Secundários']['Corpo'] = 4;
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = false;
       } else if (FOR_mais_TAM <= 444) {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '+4D6';
         atributosCalculados['Atributos Secundários']['Corpo'] = 5;
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = false;
       } else {
         atributosCalculados['Atributos Secundários']['Dano Extra'] = '+5D6';
         atributosCalculados['Atributos Secundários']['Corpo'] = 6;
+        atributosCalculados['Atributos Secundários']['Dano Extra Negativo'] = false;
       }
 
       let CON_mais_TAM = atributosCalculados['Atributos']['CON (Constituição)']['Atributo'] + atributosCalculados['Atributos']['TAM (Tamanho)']['Atributo'];
@@ -2784,6 +2793,12 @@ function definirAtributo(personagem,id,atributo) {
   document.querySelector(`#${id} label.extremo`).innerHTML = personagem['Atributos'][atributo]['Quinto'];
 }
 
+function definirPericia(personagem,id,pericia) {
+  document.querySelector(`#${id} label.regular`).innerHTML = personagem['Perícias'][pericia]['Regular'];
+  document.querySelector(`#${id} label.dificil`).innerHTML = personagem['Perícias'][pericia]['Difícil'];
+  document.querySelector(`#${id} label.extremo`).innerHTML = personagem['Perícias'][pericia]['Extremo'];
+}
+
 function preencherTela() {
   document.getElementById('loading').style.display = 'block';
   rolarPersonagem(personagem=>{
@@ -2827,12 +2842,14 @@ function preencherTela() {
       document.querySelector(`#atributo-magia-maxima`).innerHTML = personagem['Atributos Secundários']['Pontos de Magia'];
 
       document.querySelector(`#atributo-combate-dano-extra`).innerHTML = personagem['Atributos Secundários']['Dano Extra'];
-      if (personagem['Atributos Secundários']['Dano Extra'] == 'Nenhum') {
+      if (!personagem['Atributos Secundários']['Dano Extra Negativo']) {
         document.querySelector(`#atributo-combate-dano-extra`).style.fontSize = '0.7em';
       }
 
       document.querySelector(`#atributo-combate-corpo`).innerHTML = personagem['Atributos Secundários']['Corpo'];
 
+      definirPericia(personagem,'atributo-secundario-esquivar','Esquivar');
+      
       document.getElementById('loading').style.display = 'none';
     });
   });

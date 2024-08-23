@@ -502,6 +502,16 @@ div.ficha div.bloco > div.container > div.campo {
   margin: 1%;
 }
 
+div.ficha div.bloco > div.container > div.campo-menor {
+  width: 29%;
+  margin: 0;
+  margin-top: 1%;
+}
+
+div.ficha div.bloco > div.container > div.campo-maior {
+  width: 36%;
+}
+
 div.ficha div.bloco66 div.bloco > div.container > div.campo {
   width: 48%;
   margin-left: -0.5%;
@@ -539,6 +549,10 @@ div.ficha div.bloco > div.container > div.campo > label {
   text-transform: uppercase;
   font-style: normal;
   font-weight: bold;
+}
+
+div.ficha div.bloco > div.container > div.campo-maior > label {
+  width: 52%;
 }
 
 div.ficha div.bloco > div.container > div.campo > label::after {
@@ -704,8 +718,8 @@ div.ficha div.bloco > div.container > div.campo > label.conjunto > input[type=nu
 
   font-size: 1em;
   width: 100%;
-  padding-bottom: 1px;
-  padding-right: 0.5px;
+  padding-bottom: 0px;
+  padding-right: 0px;
   margin-left: -1px;
 
   border: 1px solid #E59700;
@@ -771,6 +785,10 @@ div.ficha div.bloco > div.container > div.campo > label > span.nome {
   line-height: 40px;
 }
 
+div.ficha div.bloco > div.container > div.campo > label > span.nome-menor {
+  font-size: .7em;
+}
+
 div.ficha div.bloco > div.container > div.campo > label > span.nome-parcial {
   display: block;
   float: left;
@@ -799,6 +817,10 @@ div.ficha div.bloco > div.container > div.campo > div.valores {
 
   border: 1px solid #000;
   border-top-right-radius: 10px;
+}
+
+div.ficha div.bloco > div.container > div.campo-maior > div.valores {
+  width: 48%;
 }
 
 div.ficha div.bloco > div.container > div.campo > div.valores::after {
