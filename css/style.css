@@ -157,7 +157,7 @@ div.ficha {
   box-sizing: border-box;
   padding: 10px;
   margin: 20px auto;
-  margin-bottom: 400px;
+  margin-bottom: 600px;
   position: relative;
 
   border-radius: 0;
@@ -575,12 +575,12 @@ div.ficha div.bloco > div.container > div.campo > label {
   font-weight: bold;
 }
 
-div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label {
+div.ficha div.bloco > div.container > div.campo-maior > label {
   width: 52%;
 }
 
-div.ficha div.bloco > div.container > div.campo-maior > label {
-  width: 52%;
+div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label {
+  width: 53%;
 }
 
 div.ficha div.bloco > div.container > div.campo > label::after {
@@ -849,7 +849,7 @@ div.ficha div.bloco100-pericias div.bloco > div.container > div.carregando-peric
 }
 
 div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label.uma-palavra > span.nome {
-  margin-top: 12px;
+  margin-top: 13px;
   line-height: 14px;
 }
 
@@ -875,12 +875,22 @@ div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label.tr
   margin-top: 1px;
 }
 
-div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label > span.nome > span.menor {
+div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label > span.nome > span.menor1 {
+  font-size: .9em;
+  line-height: 14px;
+}
+
+div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label > span.nome > span.menor2 {
+  font-size: .8em;
+  line-height: 14px;
+}
+
+div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label > span.nome > span.menor3 {
   font-size: .7em;
   line-height: 14px;
 }
 
-div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label > span.nome > span.muito-menor {
+div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label > span.nome > span.menor4 {
   font-size: .6em;
   line-height: 12px;
 }
@@ -920,7 +930,7 @@ div.ficha div.bloco > div.container > div.campo > div.valores {
 }
 
 div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > div.valores {
-  width: 48%;
+  width: 47%;
 }
 
 div.ficha div.bloco > div.container > div.campo-maior > div.valores {

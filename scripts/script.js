@@ -1,11 +1,14 @@
 
 const LOG = false;
+const LOG_TEXTO = false;
+const VERSAO = `0.0.1 ${LOG ? '(debug)' : '(beta)'}`;
 
 function logger(msg) {
-  if (LOG) console.log(msg);
+  if ( LOG && LOG_TEXTO ) console.log(msg);
 }
 
 const OBTER_IMAGEM = false;
+const MAXIMO_INTERACOES = 1000;
 
 /* ----------------------------------------------------------- */
 
@@ -1294,6 +1297,126 @@ const OCUPACOES = {
 
 };
 
+if (LOG) {
+  OCUPACOES['Ocupação de Teste'] = {
+    pericias: ['Antropologia', 'Armas de Fogo', 'Arqueologia', 'Arremessar', 'Arte e Ofício', 'Artilharia', 'Ciência', 'Avaliação', 'Lutar', 'Cavalgar', 'Charme', 'Chaveiro', 'Conhecimento', 'Consertos Elétricos', 'Consertos Mecânicos', 'Contabilidade', 'Demolições', 'Direito', 'Dirigir Automóveis', 'Disfarce', 'Encontrar', 'Escalar', 'Escutar', 'Esquivar', 'Furtividade', 'Hipnose', 'História', 'Intimidação', 'Lábia', 'Leitura Labial', 'Língua (Nativa)', 'Língua (Outra)', 'Medicina', 'Mergulho', 'Mundo Natural', 'Mythos de Cthulhu', 'Natação', 'Navegação', 'Nível de Crédito', 'Ocultismo', 'Operar Maquinário Pesado', 'Persuasão', 'Pilotar', 'Prestidigitação', 'Primeiros Socorros', 'Psicanálise', 'Veterinária', 'Ortopedista', 'Psicologia', 'Rastrear', 'Saltar', 'Sobrevivência', 'Treinar Animais', 'Usar Bibliotecas'],
+    alternativas: [],
+    especializacoes: {
+      'Armas de Fogo': 'Arcos',
+      'Armas de Fogo': 'Armas Pesadas',
+      'Armas de Fogo': 'Espingardas',
+      'Armas de Fogo': 'Lança-Chamas',
+      'Armas de Fogo': 'Metralhadoras',
+      'Armas de Fogo': 'Pistolas',
+      'Armas de Fogo': 'Rifles',
+      'Armas de Fogo': 'Submetralhadoras',
+      'Arte e Ofício': 'Literatura',
+      'Arte e Ofício': 'Atuação',
+      'Arte e Ofício': 'Barbeiro',
+      'Arte e Ofício': 'Cabeleireiro',
+      'Arte e Ofício': 'Sapateiro',
+      'Arte e Ofício': 'Carroceiro',
+      'Arte e Ofício': 'Alfaiate',
+      'Arte e Ofício': 'Engraxate',
+      'Arte e Ofício': 'Caligrafa',
+      'Arte e Ofício': 'Carpintaria',
+      'Arte e Ofício': 'Cozinheiro',
+      'Arte e Ofício': 'Dança',
+      'Arte e Ofício': 'Belas artes',
+      'Arte e Ofício': 'Falsificação',
+      'Arte e Ofício': 'Escritor',
+      'Arte e Ofício': 'Cantor',
+      'Arte e Ofício': 'Pintor',
+      'Arte e Ofício': 'Decorador',
+      'Arte e Ofício': 'Fotografia',
+      'Arte e Ofício': 'Oleiro',
+      'Arte e Ofício': 'Escultor',
+      'Arte e Ofício': 'Instrumento',
+      'Arte e Ofício': 'Maestro',
+      'Arte e Ofício': 'Desenho Técnico',
+      'Arte e Ofício': 'Fazenda',
+      'Ciência': 'Astronomia',
+      'Ciência': 'Biologia',
+      'Ciência': 'Botânica',
+      'Ciência': 'Química',
+      'Ciência': 'Engenharia',
+      'Ciência': 'Geologia',
+      'Ciência': 'Matemática',
+      'Ciência': 'Meteorologia',
+      'Ciência': 'Farmácia',
+      'Ciência': 'Física',
+      'Ciência': 'Zoologia',
+      'Lutar': 'Briga',
+      'Lutar': 'Chicotes',
+      'Lutar': 'Espadas',
+      'Lutar': 'Garrote',
+      'Lutar': 'Lanças',
+      'Lutar': 'Machados',
+      'Lutar': 'Manguais',
+      'Lutar': 'Motosserras',
+      'Conhecimento': 'Sonhos',
+      'Conhecimento': 'Necronomicon',
+      'Conhecimento': 'Ufológico',
+      'Conhecimento': 'Vampiros',
+      'Conhecimento': 'Lobisomens',
+      'Conhecimento': 'Yaddithiano',
+      'Conhecimento': 'Mythos',
+      'Conhecimento': 'Hastur',
+      'Conhecimento': 'Nyarlathotep',
+      'Conhecimento': 'Zhar',
+      'Conhecimento': 'Lloigor',
+      'Conhecimento': 'Cyäegha',
+      'Conhecimento': 'Nyogtha',
+      'Conhecimento': 'Tsathoggua',
+      'Conhecimento': 'Aphoom-Zhah',
+      'Conhecimento': 'Cthugha',
+      'Conhecimento': 'Cthulhu',
+      'Conhecimento': 'Dagon',
+      'Conhecimento': 'Hydra',
+      'Conhecimento': 'Azathoth',
+      'Conhecimento': 'Nyctelios',
+      'Conhecimento': 'Shub-Niggurath',
+      'Conhecimento': 'Yog-Sothoth',
+      'Conhecimento': 'Yidhra',
+      'Língua (Outra)': 'Mandarim',
+      'Língua (Outra)': 'Espanhol',
+      'Língua (Outra)': 'Português',
+      'Língua (Outra)': 'Árabe',
+      'Língua (Outra)': 'Hindi',
+      'Língua (Outra)': 'Bengalês',
+      'Língua (Outra)': 'Russo',
+      'Língua (Outra)': 'Japonês',
+      'Língua (Outra)': 'Alemão',
+      'Língua (Outra)': 'Francês',
+      'Língua (Outra)': 'Coreano',
+      'Língua (Outra)': 'Latim',
+      'Pilotar': 'Monomotor',
+      'Pilotar': 'Avião de Carga',
+      'Pilotar': 'Avião de Passageiros',
+      'Pilotar': 'Avião Militar',
+      'Pilotar': 'Dirigível',
+      'Pilotar': 'Balão de Passeio',
+      'Sobrevivência': 'Deserto',
+      'Sobrevivência': 'Mar',
+      'Sobrevivência': 'Ártico',
+      'Sobrevivência': 'Floresta',
+      'Sobrevivência': 'Pântano',
+      'Sobrevivência': 'Semiárido',
+    },
+    interpessoais: 4,
+    outras_pericias: 20,
+    qtde_outras_especificas: 0,
+    outras_especificas: [],
+    nivel_credito_minimo: 10,
+    nivel_credito_maximo: 70,
+    pontos_pericias_ocupacionais: (atributos) => {
+      return 1000;
+    },
+    equipamentos: ['armas_comuns','ferramentas','ferramentas_investigadores','equipamento_medico'],
+    chances_equipamentos: [100,100,100,100],
+  };
+}
+
 function obterOcupacoes() {
   let array_ocupacoes = Object.keys(OCUPACOES);
   return array_ocupacoes;
@@ -1303,6 +1426,11 @@ function createOption(select,value) {
   let option = document.createElement('option');
   option.value = value;
   option.innerHTML = value;
+
+  if ( (LOG) && (value == 'Ocupação de Teste') ) {
+    option.selected = 'selected';
+  }
+
   select.add(option);
 }
 
@@ -1488,6 +1616,18 @@ function pontuarPericia(pontos,pericia_da_vez,nivel_credito_maximo,estou_na_ocup
 }
 
 function segurancaNomePericia(nome_pericia) {
+
+  if ( (nome_pericia === null) || (nome_pericia === undefined) || (nome_pericia === '') ) {
+    console.error(`Ocorreu um erro ao assegurar o nome da perícia ${nome_pericia}`);
+    return {
+      nome_pericia_completo: 'Antropologia',
+      tem_especializacao: false,
+      nome_pericia: 'Antropologia',
+      nome_especializacao: '',
+      falha: true,
+    };
+  }
+
   let array = nome_pericia.split(' (');
   let temEspecializacao = false;
 
@@ -1499,6 +1639,7 @@ function segurancaNomePericia(nome_pericia) {
       tem_especializacao: temEspecializacao,
       nome_pericia: nome_pericia,
       nome_especializacao: '',
+      falha: true,
     };
 
   } else if (array.length == 1) {
@@ -1508,6 +1649,7 @@ function segurancaNomePericia(nome_pericia) {
       tem_especializacao: temEspecializacao,
       nome_pericia: array[0],
       nome_especializacao: '',
+      falha: false,
     };
 
   } else if (array.length == 2) {
@@ -1519,6 +1661,7 @@ function segurancaNomePericia(nome_pericia) {
           tem_especializacao: temEspecializacao,
           nome_pericia: nome_pericia,
           nome_especializacao: '',
+          falha: false,
         };
 
       } else {
@@ -1530,6 +1673,7 @@ function segurancaNomePericia(nome_pericia) {
           tem_especializacao: temEspecializacao,
           nome_pericia: `${array[0]} (Outra)`,
           nome_especializacao: especializacao,
+          falha: false,
         };
 
       }
@@ -1543,6 +1687,7 @@ function segurancaNomePericia(nome_pericia) {
         tem_especializacao: temEspecializacao,
         nome_pericia: array[0],
         nome_especializacao: especializacao,
+        falha: false,
       };
     }
   } else {
@@ -1552,6 +1697,7 @@ function segurancaNomePericia(nome_pericia) {
       tem_especializacao: temEspecializacao,
       nome_pericia: nome_pericia,
       nome_especializacao: '',
+      falha: true,
     };
   }
 }
@@ -1561,6 +1707,7 @@ function sortearPericia(atributos,pontos,pericias,lista,lista_seletiva,pode_usar
 
   let usei_geral = false;
   let pericia_sorteada = '';
+  let falha = false;
 
   let lista_da_vez = lista_seletiva;
   if (pode_usar_geral) {
@@ -1589,6 +1736,8 @@ function sortearPericia(atributos,pontos,pericias,lista,lista_seletiva,pode_usar
   */
 
   let meta_nome_pericia = segurancaNomePericia(nome_pericia);
+  falha = meta_nome_pericia.falha;
+
   let nome_pericia_completo = meta_nome_pericia.nome_pericia;
   let valor = 0;
 
@@ -1641,7 +1790,7 @@ function sortearPericia(atributos,pontos,pericias,lista,lista_seletiva,pode_usar
     index_pericias_iniciais = pericias.map((e) => { return e['Perícia']; }).indexOf(nome_pericia_completo);
     pericias[index_pericias_iniciais]['Regular'] = pericia_da_vez['Regular'];
 
-    callback(pontos);
+    callback(pontos,falha);
   });
 }
 
@@ -1652,15 +1801,23 @@ function pontuarInteressesPessoais(atributos,pericias_iniciais,callback) {
   logger('');
 
   let pontos = atributos['Pontos de Perícia']['Interesses Pessoais'];
+  let interacoes_seguranca = 0;
+  if (LOG) pontos = 1000;
+
   let pericias = JSON.parse(JSON.stringify(pericias_iniciais));
   let pericias_importantes = PERICIAS_IMPORTANTES.slice(); // COPIAR
 
   obterListaPericias(lista=>{
     do {
-      sortearPericia(atributos,pontos,pericias,lista,pericias_importantes,true,false,(r_pontos)=>{
+      sortearPericia(atributos,pontos,pericias,lista,pericias_importantes,true,false,(r_pontos,falha)=>{
+        interacoes_seguranca += 1;
         pontos = r_pontos;
+        if (falha) {
+          pontos = 0;
+        }
 
-        if (pontos <= 0) {
+        if ( (pontos <= 0) || (interacoes_seguranca > MAXIMO_INTERACOES) ) {
+          pontos = 0;
           callback(pericias);
         }
       });
@@ -1765,6 +1922,9 @@ function pontuarPericiasOcupacionais(ocupacao_original,atributos,pericias_pessoa
   logger('');
 
   let pontos = atributos['Pontos de Perícia']['Perícias Ocupacionais'];
+  let interacoes_seguranca = 0;
+  if (LOG) { pontos = 1000; }
+
   let pericias = JSON.parse(JSON.stringify(pericias_pessoais));
   let ocupacao = JSON.parse(JSON.stringify(ocupacao_original));
   let outras_pericias = ocupacao.outras_pericias;
@@ -1797,10 +1957,15 @@ function pontuarPericiasOcupacionais(ocupacao_original,atributos,pericias_pessoa
               outras_pericias = outras_pericias - 1;
             }
 
-            sortearPericia(atributos,pontos,pericias,lista_reduzida,pericias_importantes,pode_usar_geral,true,(r_pontos)=>{
+            sortearPericia(atributos,pontos,pericias,lista_reduzida,pericias_importantes,pode_usar_geral,true,(r_pontos,falha)=>{
+              interacoes_seguranca += 1;
               pontos = r_pontos;
+              if (falha) {
+                pontos = 0;
+              }
 
-              if (pontos <= 0) {
+              if ( (pontos <= 0) || (interacoes_seguranca > MAXIMO_INTERACOES) ) {
+                pontos = 0;
                 callback(pericias);
               }
             });
@@ -2742,8 +2907,10 @@ function rolarPersonagem(callback) {
                         personagem['Armas'] = armas;
                         personagem['Antecedentes'] = antecedentes;
 
-                        console.log('Personagem:');
-                        console.log(JSON.stringify(personagem, null, 2));
+                        if (LOG) {
+                          console.log('Personagem:');
+                          console.log(JSON.stringify(personagem, null, 2));
+                        }
 
                         callback(personagem);
                       });
@@ -2802,7 +2969,6 @@ function definirPericia(personagem,id,pericia) {
 }
 
 function renderPericia(nome_pericia,pericia,callback) {
-  console.log(pericia);
   let qtde_espacos = (nome_pericia.match(new RegExp(" ", "g")) || []).length;
   let class_label = 'uma-palavra';
   if (qtde_espacos == 2) {
@@ -2827,7 +2993,7 @@ function renderPericia(nome_pericia,pericia,callback) {
   partes.forEach((parte, index_parte) => {
 
     if ((nome_pericia == 'Armas de Fogo (Submetralhadoras)') && (parte == '(Submetralhadoras)')) {
-      nome_formatado_partes += `<span class="muito-menor">${parte}</span>`;
+      nome_formatado_partes += `<span class="menor4">${parte}</span>`;
     } else {
       if (parte == '(Lança-Chamas)') {
         parte = '<br>(Lança-Chamas)';
@@ -2836,7 +3002,15 @@ function renderPericia(nome_pericia,pericia,callback) {
       if (parte == 'Maquinário') {
         nome_formatado_partes += parte;
       } else {
-        nome_formatado_partes += (parte.length > 9) ? `<span class="menor">${parte}</span>` : parte;
+        if (parte.length > 13) {
+          nome_formatado_partes += `<span class="menor3">${parte}</span>`;
+        } else if (parte.length > 11) {
+          nome_formatado_partes += `<span class="menor2">${parte}</span>`;
+        } else if (parte.length > 9) {
+          nome_formatado_partes += `<span class="menor1">${parte}</span>`;
+        } else {
+          nome_formatado_partes += parte;
+        }
       }
     }
 
@@ -2874,7 +3048,6 @@ function renderPericiais(personagem,callback) {
 
   array_pericias.forEach((nome_pericia, index_pericia) => {
     renderPericia(nome_pericia,personagem['Perícias'][nome_pericia],(innerHTML)=>{
-      console.log(innerHTML);
       tags_pericias = tags_pericias + innerHTML;
 
       if (index_pericia == (array_pericias.length - 1)) {
@@ -2885,7 +3058,13 @@ function renderPericiais(personagem,callback) {
 }
 
 function preencherTela() {
+  console.log(VERSAO);
   document.getElementById('loading').style.display = 'block';
+
+  if (LOG) {
+    document.getElementById('mythos').checked = true;
+  }
+
   rolarPersonagem(personagem=>{
     carregarImagem(personagem['Informações']['Imagem'],()=>{
       document.getElementById('nome_personagem').value = personagem['Informações']['Nome'];
