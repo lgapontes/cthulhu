@@ -512,6 +512,51 @@ div.ficha div.bloco > label.sobrecampo-pericias {
   width: 136px;
 }
 
+div.ficha div.bloco > label.atributos-dinheiro-e-recursos {
+  width: 120px;
+}
+
+div.ficha div.bloco > label.atributos-patrimonios {
+  width: 70px;
+}
+
+div.ficha div.bloco > div.container > div.horizontal-texto {
+  display: block;
+  float: left;
+  box-sizing: border-box;
+
+  width: 98%;
+  text-align: left;
+  border: 0;
+  padding: 0;
+  margin: 1%;
+  margin-top: 1.5%;
+
+  font-size: .8em;
+  font-style: normal;
+  font-weight: normal;
+}
+
+div.ficha div.bloco > div.container > div.horizontal-texto > span.bold {
+  display: block;
+  float: left;
+  font-weight: bold;
+  margin-right: 3px;
+}
+
+div.ficha div.bloco > div.container > div.horizontal-texto > span.valor {
+  display: block;
+  float: left;
+  font-weight: normal;
+}
+
+div.ficha div.bloco > div.container > div.horizontal-texto::after {
+  display: block;
+  height: 0;
+  content: '';
+  clear: both;
+}
+
 div.ficha div.bloco > div.container > div.campo {
   display: block;
   float: left;
@@ -669,6 +714,62 @@ div.ficha div.bloco > div.container > div.campo > input[type=number].valor-secun
   text-indent: -2px;
 
   margin-top: 2px;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.horizontal {
+  width: 100%;
+  font-size: 1.2em;
+  text-align: center;
+  border: 1px solid #000;
+  padding: 0;
+  padding-top: -1px;
+  text-indent: -2px;
+  margin-top: 6px;
+
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.horizontal::after {
+  display: block;
+  height: 0;
+  content: '';
+  clear: both;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.horizontal > span.nome {
+  display: block;
+  float: left;
+  line-height: 15px;
+  text-align: center;
+
+  font-weight: normal;
+  background-color: #ccc;
+  text-indent: 0;
+  text-transform: none;
+
+  font-size: .6em;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.horizontal > span.valor {
+  display: block;
+  float: left;
+  text-align: center;
+
+  font-weight: normal;
+  text-transform: none;
+
+  font-size: 1em;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.horizontal > span.valor-menor {
+  padding-top: 2px;
+  font-size: .8em;
 }
 
 div.ficha div.bloco > div.container > div.campo > label.conjunto {

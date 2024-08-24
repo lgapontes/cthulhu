@@ -2149,88 +2149,236 @@ const EQUIPAMENTOS = {
   ],
 };
 
+let HOSPEDAGENS = {
+  'Sem residência': 0,
+  'Hotel Mediano ($4,50/noite)': 9,
+  'Hotel Mediano com serviço ($10,00/semana)': 49,
+  'Hotel Pulgueiro (75¢/noite)': 9,
+  'Hotel Bom ($9,00/noite)': 49,
+  'Hotel Bom com serviço ($24,00/semana)': 89,
+  'Hotel de Luxo ($30,00/semana)': 89,
+  'Casa alugada ($55,00/mês)': 49,
+  'Casa alugada de Verão ($350,00/temporada)': 89,
+  'Flat alugado ($12,50/semana)': 9,
+  'Apartamento mediano alugado ($10,00/semana)': 49,
+  'Apartamento bom alugado ($40,00/semana)': 89,
+  'Casa de Campo ($20.000,00)': 89,
+  'Casa Grande ($7.000,00)': 89,
+  'Casa na Cidade ($5.000,00)': 49,
+  'Casa Mediana ($2.900,00)': 89,
+  'Bangalô ($3.100,00)': 89,
+  'Casas Pré-Fabricadas Pequena ($1.175,00)': 9,
+  'Casas Pré-Fabricadas Média ($2.135,00)': 49,
+  'Casas Pré-Fabricadas Grande ($3.278,00)': 49,
+  'Casas Pré-Fabricadas Imensa ($4.492,00)': 89,
+  'Mansão ($50.000,00)': 98,
+};
+
+const TRANSPORTES = {
+  'Sem transporte': 0,
+  'Motocicleta Norton ($95,00)': 9,
+  'Buick Modelo D-45 ($1.020,00)': 89,
+  'Cadillac Type 55 ($2.240,00)': 98,
+  'Chevrolet Capitol ($695,00)': 49,
+  'Chevrolet, Conversível ($570,00)': 98,
+  'Chrysler Modelo F-58 ($1.045,00)': 89,
+  'Dodge Modelo S/1 ($985,00)': 89,
+  'Duesenberg J ($20.000,00)': 98,
+  'Ford Modelo T ($360,00)': 49,
+  'Ford Modelo A ($450,00)': 49,
+  'Hudson Coach (8 assentos) ($1.450,00)': 89,
+  'Hudson Super Six Series J ($1.750,00)': 89,
+  'Oldsmobile 43-AT ($1.345,00)': 89,
+  'Packard Twin-Six Touring ($2.950,00)': 98,
+  'Pierce-Arrow ($6.000,00)': 98,
+  'Pontiac 6-28 Sedan ($745,00)': 89,
+  'Studebaker Stnd./Dictator ($1.165,00)': 89,
+  'Studebaker Touring (5 assentos) ($995,00)': 89,
+  'Chevrolet, F.B. Coupe (usado) ($300,00)': 89,
+  'Buick 1917 (Usado) ($75,00)': 9,
+  'Chevrolet Camionete ($545,00)': 89,
+  'Caminhão Dodge de 1/2 tonelada ($1.085,00)': 89,
+  'Caminhão Ford Modelo TT ($490,00)': 89,
+};
+
+function obterHospedagens(nivel_credito,callback) {
+
+  if (nivel_credito == 0) {
+    callback(['Sem residência']);
+  } else {
+    let array_hospedagens = Object.keys(HOSPEDAGENS);
+    let hospedagens = [];
+
+    array_hospedagens.forEach((hospedagem, index_hospedagem) => {
+
+      let peso = HOSPEDAGENS[hospedagem];
+      if ( (peso > 0) && (peso < nivel_credito) ) {
+        hospedagens.push(hospedagem);
+      }
+
+      if (index_hospedagem == (array_hospedagens.length - 1)) {
+        let hospedagens_final = [];
+
+        let sorteio_hospedagens = Math.floor(Math.random() * nivel_credito) + ((nivel_credito >= 50) ? 10 : 0);
+        let qtde_hospedagens = 0;
+        if (sorteio_hospedagens > 9) {
+          qtde_hospedagens = 1;
+        }
+
+        if (qtde_hospedagens == 0) {
+          callback(['Sem residência']);
+        } else {
+          let temp_array = [...new Array(qtde_hospedagens).keys()];
+
+          temp_array.forEach((numero, index_temp) => {
+            let index_nova_hospedagem = Math.floor(Math.random() * hospedagens.length);
+            hospedagens_final.push(hospedagens[index_nova_hospedagem]);
+
+            if (index_temp == (temp_array.length - 1)) {
+              if (hospedagens_final.length == 1) {
+                if (hospedagens_final[0] == undefined) {
+                  hospedagens_final = ['Sem residência'];
+                }
+              }
+
+              callback(hospedagens_final);
+            }
+          });
+        }
+      }
+    });
+  }
+}
+
+function obterTransportes(nivel_credito,callback) {
+
+  if (nivel_credito == 0) {
+    callback(['Sem transporte']);
+  } else {
+    let array_transportes = Object.keys(TRANSPORTES);
+    let transportes = [];
+
+    array_transportes.forEach((transporte, index_transporte) => {
+
+      let peso = TRANSPORTES[transporte];
+      if ( (peso > 0) && (peso < nivel_credito) ) {
+        transportes.push(transporte);
+      }
+
+      if (index_transporte == (array_transportes.length - 1)) {
+        let transportes_final = [];
+
+        let sorteio_transportes = Math.floor(Math.random() * nivel_credito) + ((nivel_credito >= 50) ? 10 : 0);
+        let qtde_transportes = 0;
+        if (sorteio_transportes > 19) {
+          qtde_transportes = 1;
+        }
+
+        if (qtde_transportes == 0) {
+          callback(['Sem transporte']);
+        } else {
+          let temp_array = [...new Array(qtde_transportes).keys()];
+
+          temp_array.forEach((numero, index_temp) => {
+            let index_novo_transporte = Math.floor(Math.random() * transportes.length);
+            transportes_final.push(transportes[index_novo_transporte]);
+
+            if (index_temp == (temp_array.length - 1)) {
+              if (transportes_final.length == 1) {
+                if (transportes_final[0] == undefined) {
+                  transportes_final = ['Sem transporte'];
+                }
+              }
+
+              callback(transportes_final);
+            }
+          });
+        }
+      }
+    });
+  }
+}
+
 function definirPadraoDeVida(atributos,pericias,callback) {
   let nivel_credito = pericias['Nível de Crédito']['Regular'];
 
   atributos['Padrão de Vida'] = {};
   atributos['Padrão de Vida']['Nível de Crédito'] = nivel_credito;
 
-  if (nivel_credito == 0) {
-    atributos['Padrão de Vida']['Nível de Gastos'] = '$0,50 (Pobretão)';
-    atributos['Padrão de Vida']['Dinheiro'] = '$0,50';
-    atributos['Padrão de Vida']['Patrimônio'] = 'Nenhum';
-    atributos['Padrão de Vida']['Descrição'] = 'Uma pessoa que sequer pode pagar pelo nível de “pobre” é considerada um pobretão.';
-    atributos['Padrão de Vida']['Acomodações'] = 'Essa pessoa viveria na rua.';
-    atributos['Padrão de Vida']['Viagem'] = 'A pé, pegando carona ou clandestino em um trem ou navio.';
-    atributos['Padrão de Vida']['Hospedagem'] = 'Sem residência';
-    atributos['Padrão de Vida']['Transporte'] = 'Sem transporte';
-  } else if (nivel_credito <= 9) {
-    atributos['Padrão de Vida']['Nível de Gastos'] = '$2 (Pobre)';
-    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 1}`;
-    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 10}`;
-    atributos['Padrão de Vida']['Descrição'] = 'Capaz de pagar por um teto qualquer sobre a cabeça e pelo menos uma parca refeição por dia.';
-    atributos['Padrão de Vida']['Acomodações'] = 'Restrito ao aluguel mais barato ou a um albergue sujo.';
-    atributos['Padrão de Vida']['Viagem'] = 'Transporte público do tipo mais barato. Qualquer veículo possuído será barato e não confiável.';
-    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa ($55,00 aluguel por mês)': 'Flat ($12,50 de aluguel por semana)';
-    atributos['Padrão de Vida']['Hospedagem'] = residencia;
-    atributos['Padrão de Vida']['Transporte'] = 'Sem transporte';
-  } else if (nivel_credito <= 49) {
-    atributos['Padrão de Vida']['Nível de Gastos'] = '$10 (Médio)';
-    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 2}`;
-    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 50}`;
-    atributos['Padrão de Vida']['Descrição'] = 'Um nível razoável de conforto, três refeições por dia e uma diversão ocasional.';
-    atributos['Padrão de Vida']['Acomodações'] = 'Uma casa ou apartamento comum, alugado ou não. Pode ficar em hotéis com preços moderados.';
-    atributos['Padrão de Vida']['Viagem'] = 'Formas padrão de viagem podem ser usadas, mas não de primeira classe. Em tempos modernos, esta pessoa provavelmente possuiria um carro confiável.';
-    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa ($55,00 aluguel por mês)': 'Casa Mediana';
-    atributos['Padrão de Vida']['Hospedagem'] = residencia;
-    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Sem transporte': 'Motocicleta Norton';
-    atributos['Padrão de Vida']['Transporte'] = transporte;
-  } else if (nivel_credito <= 89) {
-    atributos['Padrão de Vida']['Nível de Gastos'] = '$50 (Abastado)';
-    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 5}`;
-    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 500}`;
-    atributos['Padrão de Vida']['Descrição'] = 'Este nível de riqueza oferece luxo e conforto.';
-    atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de tamanho considerável, talvez com alguma ajuda doméstica (mordomo, governanta, faxineiro, jardineiro etc.). Possivelmente uma segunda casa no interior ou em outro país. Hospeda-se em hotéis caros.';
-    atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Esta pessoa poderia ser proprietária de um carro caro ou equivalente.';
-    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa de Campo': 'Casa Grande';
-    atributos['Padrão de Vida']['Hospedagem'] = residencia;
-    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Ford Modelo A': 'Cadillac Type 55';
-    atributos['Padrão de Vida']['Transporte'] = transporte;
-  } else if (nivel_credito <= 98) {
-    atributos['Padrão de Vida']['Nível de Gastos'] = '$250 (Rico)';
-    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 20}`;
-    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 2000}`;
-    atributos['Padrão de Vida']['Descrição'] = 'Este nível de riqueza proporciona grande luxo e conforto. Não há necessidade de se contabilizar gastos com acomodações, comida ou despesas de viagem, desde que os gastos do investigador estejam dentro dos limites de seu padrão de vida. Consulte a Tabela II: Dinheiro e Patrimônio (página 47) caso o investigador deseje fazer compras mais significativas.';
-    atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de luxo ou propriedade com abundante ajuda doméstica (mordomo, serviçais, faxineiro, jardineiro etc.). Outras residências no interior e em outros países. Fica nos melhores hotéis.';
-    atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Em tempos modernos, essa pessoa seria proprietária de vários carros de luxo.';
-    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Mansão': 'Hotel de Luxo';
-    atributos['Padrão de Vida']['Hospedagem'] = residencia;
-    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Oldsmobile 43-AT': 'Chrysler Modelo F-58';
-    atributos['Padrão de Vida']['Transporte'] = transporte;
-  } else if (nivel_credito <= 99) {
-    atributos['Padrão de Vida']['Nível de Gastos'] = '$5000 (Ricaço)';
-    atributos['Padrão de Vida']['Dinheiro'] = '$50.000';
-    atributos['Padrão de Vida']['Patrimônio'] = `$${4 * Math.floor(Math.random() * 4)} milhões`;
-    atributos['Padrão de Vida']['Descrição'] = 'Como o Rico, mas dinheiro realmente não é problema. Os indivíduos desta categoria estão entre os mais ricos do mundo.';
-    atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de luxo ou propriedade com abundante ajuda doméstica (mordomo, serviçais, faxineiro, jardineiro etc.). Outras residências no interior e em outros países. Fica nos melhores hotéis.';
-    atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Em tempos modernos, essa pessoa seria proprietária de vários carros de luxo.';
-    atributos['Padrão de Vida']['Hospedagem'] = 'Mansão';
-    let transporte = (Math.floor(Math.random() * 4) > 1) ? 'Hudson Super Six Series J': 'Duesenberg J';
-    atributos['Padrão de Vida']['Transporte'] = transporte;
-  } else {
-    console.error(`Ocorreu um erro ao assegurar o nome da perícia ${nome_pericia}`);
-    atributos['Padrão de Vida']['Nível de Gastos'] = 'Pobre';
-    atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 1}`;
-    atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 10}`;
-    atributos['Padrão de Vida']['Descrição'] = 'Capaz de pagar por um teto qualquer sobre a cabeça e pelo menos uma parca refeição por dia.';
-    atributos['Padrão de Vida']['Acomodações'] = 'Restrito ao aluguel mais barato ou a um albergue sujo.';
-    atributos['Padrão de Vida']['Viagem'] = 'Transporte público do tipo mais barato. Qualquer veículo possuído será barato e não confiável.';
-    let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa ($55,00 aluguel por mês)': 'Flat ($12,50 de aluguel por semana)';
-    atributos['Padrão de Vida']['Hospedagem'] = residencia;
-    atributos['Padrão de Vida']['Transporte'] = 'Sem transporte';
-  }
+  obterHospedagens(nivel_credito,hospedagens=>{
+    obterTransportes(nivel_credito,transportes=>{
 
-  callback();
+      if (nivel_credito == 0) {
+        atributos['Padrão de Vida']['Nível de Gastos'] = '$0,50 (Pobretão)';
+        atributos['Padrão de Vida']['Dinheiro'] = '$0,50';
+        atributos['Padrão de Vida']['Patrimônio'] = 'Nenhum';
+        atributos['Padrão de Vida']['Descrição'] = 'Uma pessoa que sequer pode pagar pelo nível de “pobre” é considerada um pobretão.';
+        atributos['Padrão de Vida']['Acomodações'] = 'Essa pessoa viveria na rua.';
+        atributos['Padrão de Vida']['Viagem'] = 'A pé, pegando carona ou clandestino em um trem ou navio.';
+        atributos['Padrão de Vida']['Hospedagens'] = hospedagens;
+        atributos['Padrão de Vida']['Transportes'] = transportes;
+      } else if (nivel_credito <= 9) {
+        atributos['Padrão de Vida']['Nível de Gastos'] = '$2 (Pobre)';
+        atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 1}`;
+        atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 10}`;
+        atributos['Padrão de Vida']['Descrição'] = 'Capaz de pagar por um teto qualquer sobre a cabeça e pelo menos uma parca refeição por dia.';
+        atributos['Padrão de Vida']['Acomodações'] = 'Restrito ao aluguel mais barato ou a um albergue sujo.';
+        atributos['Padrão de Vida']['Viagem'] = 'Transporte público do tipo mais barato. Qualquer veículo possuído será barato e não confiável.';
+        atributos['Padrão de Vida']['Hospedagens'] = hospedagens;
+        atributos['Padrão de Vida']['Transportes'] = transportes;
+      } else if (nivel_credito <= 49) {
+        atributos['Padrão de Vida']['Nível de Gastos'] = '$10 (Médio)';
+        atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 2}`;
+        atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 50}`;
+        atributos['Padrão de Vida']['Descrição'] = 'Um nível razoável de conforto, três refeições por dia e uma diversão ocasional.';
+        atributos['Padrão de Vida']['Acomodações'] = 'Uma casa ou apartamento comum, alugado ou não. Pode ficar em hotéis com preços moderados.';
+        atributos['Padrão de Vida']['Viagem'] = 'Formas padrão de viagem podem ser usadas, mas não de primeira classe. Em tempos modernos, esta pessoa provavelmente possuiria um carro confiável.';
+        atributos['Padrão de Vida']['Hospedagens'] = hospedagens;
+        atributos['Padrão de Vida']['Transportes'] = transportes;
+      } else if (nivel_credito <= 89) {
+        atributos['Padrão de Vida']['Nível de Gastos'] = '$50 (Abastado)';
+        atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 5}`;
+        atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 500}`;
+        atributos['Padrão de Vida']['Descrição'] = 'Este nível de riqueza oferece luxo e conforto.';
+        atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de tamanho considerável, talvez com alguma ajuda doméstica (mordomo, governanta, faxineiro, jardineiro etc.). Possivelmente uma segunda casa no interior ou em outro país. Hospeda-se em hotéis caros.';
+        atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Esta pessoa poderia ser proprietária de um carro caro ou equivalente.';
+        atributos['Padrão de Vida']['Hospedagens'] = hospedagens;
+        atributos['Padrão de Vida']['Transportes'] = transportes;
+      } else if (nivel_credito <= 98) {
+        atributos['Padrão de Vida']['Nível de Gastos'] = '$250 (Rico)';
+        atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 20}`;
+        atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 2000}`;
+        atributos['Padrão de Vida']['Descrição'] = 'Este nível de riqueza proporciona grande luxo e conforto. Não há necessidade de se contabilizar gastos com acomodações, comida ou despesas de viagem, desde que os gastos do investigador estejam dentro dos limites de seu padrão de vida. Consulte a Tabela II: Dinheiro e Patrimônio (página 47) caso o investigador deseje fazer compras mais significativas.';
+        atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de luxo ou propriedade com abundante ajuda doméstica (mordomo, serviçais, faxineiro, jardineiro etc.). Outras residências no interior e em outros países. Fica nos melhores hotéis.';
+        atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Em tempos modernos, essa pessoa seria proprietária de vários carros de luxo.';
+        atributos['Padrão de Vida']['Hospedagens'] = hospedagens;
+        atributos['Padrão de Vida']['Transportes'] = transportes;
+      } else if (nivel_credito <= 99) {
+        atributos['Padrão de Vida']['Nível de Gastos'] = '$5000 (Ricaço)';
+        atributos['Padrão de Vida']['Dinheiro'] = '$50.000';
+        atributos['Padrão de Vida']['Patrimônio'] = `$${4 * Math.floor(Math.random() * 4)} milhões`;
+        atributos['Padrão de Vida']['Descrição'] = 'Como o Rico, mas dinheiro realmente não é problema. Os indivíduos desta categoria estão entre os mais ricos do mundo.';
+        atributos['Padrão de Vida']['Acomodações'] = 'Uma residência de luxo ou propriedade com abundante ajuda doméstica (mordomo, serviçais, faxineiro, jardineiro etc.). Outras residências no interior e em outros países. Fica nos melhores hotéis.';
+        atributos['Padrão de Vida']['Viagem'] = 'Primeira classe. Em tempos modernos, essa pessoa seria proprietária de vários carros de luxo.';
+        atributos['Padrão de Vida']['Hospedagens'] = hospedagens;
+        atributos['Padrão de Vida']['Transportes'] = transportes;
+      } else {
+        console.error(`Ocorreu um erro ao assegurar o nome da perícia ${nome_pericia}`);
+        atributos['Padrão de Vida']['Nível de Gastos'] = 'Pobre';
+        atributos['Padrão de Vida']['Dinheiro'] = `$${nivel_credito * 1}`;
+        atributos['Padrão de Vida']['Patrimônio'] = `$${nivel_credito * 10}`;
+        atributos['Padrão de Vida']['Descrição'] = 'Capaz de pagar por um teto qualquer sobre a cabeça e pelo menos uma parca refeição por dia.';
+        atributos['Padrão de Vida']['Acomodações'] = 'Restrito ao aluguel mais barato ou a um albergue sujo.';
+        atributos['Padrão de Vida']['Viagem'] = 'Transporte público do tipo mais barato. Qualquer veículo possuído será barato e não confiável.';
+        let residencia = (Math.floor(Math.random() * 4) > 1) ? 'Casa ($55,00 aluguel por mês)': 'Flat ($12,50 de aluguel por semana)';
+        atributos['Padrão de Vida']['Hospedagens'] = ['Sem residência'];
+        atributos['Padrão de Vida']['Transportes'] = ['Sem transporte'];
+      }
+
+      callback();
+
+    });
+  });
 }
 
 function definirEquipamentos(pericias,ocupacao,callback) {
@@ -3116,8 +3264,34 @@ function preencherTela() {
 
       renderPericiais(personagem,(innerHTML)=>{
         document.getElementById('carregando-pericias').innerHTML = innerHTML;
+
+        document.getElementById('padrao-de-vida-nivel-de-gasto').innerHTML = personagem['Padrão de Vida']['Nível de Gastos'];
+        document.getElementById('padrao-de-vida-dinheiro').innerHTML = personagem['Padrão de Vida']['Dinheiro'];
+        document.getElementById('padrao-de-vida-patrimonio').innerHTML = personagem['Padrão de Vida']['Patrimônio'];
+
+        document.getElementById('padrao-de-vida-hospedagens').innerHTML = personagem['Padrão de Vida']['Hospedagens'].join(", ");
+        document.getElementById('padrao-de-vida-transportes').innerHTML = personagem['Padrão de Vida']['Transportes'].join(", ");
+
         document.getElementById('loading').style.display = 'none';
       });
     });
   });
 }
+
+/*
+"Padrão de Vida": {
+    "Nível de Crédito": 20,
+    "Nível de Gastos": "$10 (Médio)",
+    "Dinheiro": "$40",
+    "Patrimônio": "$1000",
+    "Descrição": "Um nível razoável de conforto, três refeições por dia e uma diversão ocasional.",
+    "Acomodações": "Uma casa ou apartamento comum, alugado ou não. Pode ficar em hotéis com preços moderados.",
+    "Viagem": "Formas padrão de viagem podem ser usadas, mas não de primeira classe. Em tempos modernos, esta pessoa provavelmente possuiria um carro confiável.",
+    "Hospedagens": [
+      "Casas Pré-Fabricadas Pequena ($1.175,00)"
+    ],
+    "Transportes": [
+      "Sem transporte"
+    ]
+  },
+*/
