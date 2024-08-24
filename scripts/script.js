@@ -20,7 +20,7 @@ const PERICIAS = {
   },
 
   'Armas de Fogo': {
-    minimo: 0,
+    minimo: 1,
     incomum: false,
     varias_individual: true,
     varias_unica: false,
@@ -56,7 +56,7 @@ const PERICIAS = {
   },
 
   'Arte e Ofício': {
-    minimo: 0,
+    minimo: 1,
     incomum: false,
     varias_individual: true,
     varias_unica: true,
@@ -85,7 +85,7 @@ const PERICIAS = {
       'Instrumento': 5,
       'Maestro': 5,
       'Desenho Técnico': 5,
-      'Trabalhos de Fazenda': 5,
+      'Fazenda': 5,
     },
     mythos: false,
   },
@@ -100,7 +100,7 @@ const PERICIAS = {
   },
 
   'Ciência': {
-    minimo: 0,
+    minimo: 1,
     incomum: false,
     varias_individual: true,
     varias_unica: true,
@@ -130,7 +130,7 @@ const PERICIAS = {
   },
 
   'Lutar': {
-    minimo: 0,
+    minimo: 1,
     incomum: false,
     varias_individual: true,
     varias_unica: false,
@@ -175,36 +175,36 @@ const PERICIAS = {
   },
 
   'Conhecimento': {
-    minimo: 0,
+    minimo: 1,
     incomum: true,
     moderna: false,
     varias_individual: true,
     varias_unica: true,
     varias: {
-      'Conhecimento sobre Sonhos': 1,
-      'Conhecimento do Necronomicon': 1,
-      'Conhecimento Ufológico': 1,
-      'Conhecimento sobre Vampiros': 1,
-      'Conhecimento sobre Lobisomens': 1,
-      'Conhecimento Yaddithiano': 1,
-      'Conhecimento sobre os Mythos': 1,
-      'Conhecimento sobre Hastur': 1,
-      'Conhecimento sobre Nyarlathotep': 1,
-      'Conhecimento sobre Zhar': 1,
-      'Conhecimento sobre Lloigor': 1,
-      'Conhecimento sobre Cyäegha': 1,
-      'Conhecimento sobre Nyogtha': 1,
-      'Conhecimento sobre Tsathoggua': 1,
-      'Conhecimento sobre Aphoom-Zhah': 1,
-      'Conhecimento sobre Cthugha': 1,
-      'Conhecimento sobre Cthulhu': 1,
-      'Conhecimento sobre Dagon': 1,
-      'Conhecimento sobre Hydra': 1,
-      'Conhecimento sobre Azathoth': 1,
-      'Conhecimento sobre Nyctelios': 1,
-      'Conhecimento sobre Shub-Niggurath': 1,
-      'Conhecimento sobre Yog-Sothoth': 1,
-      'Conhecimento sobre Yidhra': 1,
+      'Sonhos': 1,
+      'Necronomicon': 1,
+      'Ufológico': 1,
+      'Vampiros': 1,
+      'Lobisomens': 1,
+      'Yaddithiano': 1,
+      'Mythos': 1,
+      'Hastur': 1,
+      'Nyarlathotep': 1,
+      'Zhar': 1,
+      'Lloigor': 1,
+      'Cyäegha': 1,
+      'Nyogtha': 1,
+      'Tsathoggua': 1,
+      'Aphoom-Zhah': 1,
+      'Cthugha': 1,
+      'Cthulhu': 1,
+      'Dagon': 1,
+      'Hydra': 1,
+      'Azathoth': 1,
+      'Nyctelios': 1,
+      'Shub-Niggurath': 1,
+      'Yog-Sothoth': 1,
+      'Yidhra': 1,
     },
     mythos: true,
   },
@@ -237,7 +237,7 @@ const PERICIAS = {
   },
 
   'Demolições': {
-    minimo: 0,
+    minimo: 1,
     incomum: true,
     varias_individual: false,
     varias_unica: false,
@@ -300,7 +300,7 @@ const PERICIAS = {
   },
 
   'Esquivar': {
-    minimo: 0,
+    minimo: 1,
     incomum: false,
     varias_individual: false,
     varias_unica: false,
@@ -363,7 +363,7 @@ const PERICIAS = {
   },
 
   'Língua (Nativa)': {
-    minimo: 0,
+    minimo: 1,
     incomum: false,
     varias_individual: false,
     varias_unica: false,
@@ -372,7 +372,7 @@ const PERICIAS = {
   },
 
   'Língua (Outra)': {
-    minimo: 0,
+    minimo: 1,
     incomum: false,
     varias_individual: true,
     varias_unica: true,
@@ -484,7 +484,7 @@ const PERICIAS = {
   },
 
   'Pilotar': {
-    minimo: 0,
+    minimo: 1,
     incomum: true,
     varias_individual: true,
     varias_unica: true,
@@ -572,7 +572,7 @@ const PERICIAS = {
   },
 
   'Sobrevivência': {
-    minimo: 0,
+    minimo: 1,
     incomum: true,
     varias_individual: true,
     varias_unica: true,
@@ -943,7 +943,7 @@ const OCUPACOES = {
   'Fazendeiro': {
     pericias: ['Consertos Mecânicos','Dirigir Automóveis','Mundo Natural','Operar Maquinário Pesado','Rastrear'],
     alternativas: [],
-    especializacoes: { 'Arte e Ofício': 'Trabalhos de Fazenda' },
+    especializacoes: { 'Arte e Ofício': 'Fazenda' },
     interpessoais: 1,
     outras_pericias: 1,
     qtde_outras_especificas: 0,
@@ -1537,13 +1537,13 @@ function segurancaNomePericia(nome_pericia) {
 
       temEspecializacao = true;
       let especializacao = array[1].slice(0, -1);  // COPIAR sem último caracter
+
       return {
         nome_pericia_completo: nome_pericia,
         tem_especializacao: temEspecializacao,
         nome_pericia: array[0],
         nome_especializacao: especializacao,
       };
-
     }
   } else {
     console.error(`Ocorreu um erro ao assegurar o nome da perícia ${nome_pericia}`);
@@ -1594,7 +1594,7 @@ function sortearPericia(atributos,pontos,pericias,lista,lista_seletiva,pode_usar
 
   if (meta_nome_pericia.tem_especializacao) {
 
-    valor = PERICIAS[meta_nome_pericia.nome_pericia][meta_nome_pericia.nome_especializacao];
+    valor = PERICIAS[meta_nome_pericia.nome_pericia].varias[meta_nome_pericia.nome_especializacao];
     nome_pericia_completo = meta_nome_pericia.nome_pericia_completo;
 
   } else {
@@ -2374,7 +2374,9 @@ function dividirAtributo(atributo) {
 
 function dividirPericia(valor) {
   let metade = Math.floor(valor / 2);
+  metade = (metade == 0) ? 1 : metade;
   let quinto = Math.floor(valor / 5);
+  quinto = (quinto == 0) ? 1 : quinto;
   return { 'Regular': valor, 'Difícil': metade, 'Extremo': quinto };
 }
 
@@ -2799,6 +2801,89 @@ function definirPericia(personagem,id,pericia) {
   document.querySelector(`#${id} label.extremo`).innerHTML = personagem['Perícias'][pericia]['Extremo'];
 }
 
+function renderPericia(nome_pericia,pericia,callback) {
+  console.log(pericia);
+  let qtde_espacos = (nome_pericia.match(new RegExp(" ", "g")) || []).length;
+  let class_label = 'uma-palavra';
+  if (qtde_espacos == 2) {
+    class_label = 'duas-palavras';
+  } else if (qtde_espacos > 2) {
+    class_label = 'tres-palavras';
+  }
+
+  let jah_possui_paranteses = false;
+  if ( (nome_pericia == 'Língua (Nativa)') || (nome_pericia == 'Língua (Outra)') ) {
+    jah_possui_paranteses = true;
+  }
+
+  let possui_paranteses = false;
+  let parenteses_abertura = nome_pericia.indexOf("(");
+  if (parenteses_abertura > -1) {
+    possui_paranteses = !jah_possui_paranteses;
+  }
+
+  let partes = nome_pericia.split(' ');
+  let nome_formatado_partes = '';
+  partes.forEach((parte, index_parte) => {
+
+    if ((nome_pericia == 'Armas de Fogo (Submetralhadoras)') && (parte == '(Submetralhadoras)')) {
+      nome_formatado_partes += `<span class="muito-menor">${parte}</span>`;
+    } else {
+      if (parte == '(Lança-Chamas)') {
+        parte = '<br>(Lança-Chamas)';
+      }
+
+      if (parte == 'Maquinário') {
+        nome_formatado_partes += parte;
+      } else {
+        nome_formatado_partes += (parte.length > 9) ? `<span class="menor">${parte}</span>` : parte;
+      }
+    }
+
+    if (index_parte < (partes.length - 1)) {
+      nome_formatado_partes += ' ';
+    }
+
+    if (index_parte == (partes.length - 1)) {
+
+      let text_checkbox = '<input type="checkbox" class="nome">';
+      if ( (nome_pericia == 'Mythos de Cthulhu') || (nome_pericia == 'Nível de Crédito') ) {
+        text_checkbox = '<span class="checkbox">&nbsp;</span>';
+      }
+
+      callback(`
+      <div class="campo">
+        <label class="${class_label}">
+          ${text_checkbox}
+          <span class="nome">${nome_formatado_partes}</span>
+        </label>
+        <div class="valores">
+          <label class="regular">${pericia['Regular']}</label>
+          <label class="dificil">${pericia['Difícil']}</label>
+          <label class="extremo">${pericia['Extremo']}</label>
+        </div>
+      </div>
+      `);
+    }
+  });
+}
+
+function renderPericiais(personagem,callback) {
+  let tags_pericias = '';
+  let array_pericias = Object.keys(personagem['Perícias']);
+
+  array_pericias.forEach((nome_pericia, index_pericia) => {
+    renderPericia(nome_pericia,personagem['Perícias'][nome_pericia],(innerHTML)=>{
+      console.log(innerHTML);
+      tags_pericias = tags_pericias + innerHTML;
+
+      if (index_pericia == (array_pericias.length - 1)) {
+        callback(tags_pericias);
+      }
+    });
+  });
+}
+
 function preencherTela() {
   document.getElementById('loading').style.display = 'block';
   rolarPersonagem(personagem=>{
@@ -2849,8 +2934,11 @@ function preencherTela() {
       document.querySelector(`#atributo-combate-corpo`).innerHTML = personagem['Atributos Secundários']['Corpo'];
 
       definirPericia(personagem,'atributo-secundario-esquivar','Esquivar');
-      
-      document.getElementById('loading').style.display = 'none';
+
+      renderPericiais(personagem,(innerHTML)=>{
+        document.getElementById('carregando-pericias').innerHTML = innerHTML;
+        document.getElementById('loading').style.display = 'none';
+      });
     });
   });
 }
