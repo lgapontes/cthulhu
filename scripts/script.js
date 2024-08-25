@@ -1,5 +1,5 @@
 
-const LOG = false;
+const LOG = true;
 const LOG_TEXTO = false;
 const VERSAO = `0.0.1 ${LOG ? '(debug)' : '(beta)'}`;
 
@@ -2004,6 +2004,8 @@ function ajusteFinalPericiais(pericias_calculadas,callback) {
 
 /* ----------------------------------------------------------- */
 
+const ATAQUE_DESARMADO = { 'Nome': 'Desarmado', 'Dano': '1D3+DX', 'Alcance Base': 'Toque', 'Usos por Rodada': '1', 'Munição na Arma': '', 'Defeito': '' };
+
 const EQUIPAMENTOS = {
   armas_fogo: {
     'Armas de Fogo (Pistolas)': [
@@ -2384,6 +2386,7 @@ function definirPadraoDeVida(atributos,pericias,callback) {
 function definirEquipamentos(pericias,ocupacao,callback) {
   let equipamentos = [];
   let armas = [];
+  armas.push(ATAQUE_DESARMADO);
 
   ocupacao.equipamentos.forEach((tipo_equipamento, index_tipo_equipamento) => {
     let chance = ocupacao.chances_equipamentos[index_tipo_equipamento];
@@ -3203,6 +3206,27 @@ function renderPericiais(personagem,callback) {
       }
     });
   });
+}
+
+function renderArmas() {
+  /*
+  {
+      "Nome": "Desarmado",
+      "Dano": "1D3+DX",
+      "Alcance Base": "Toque",
+      "Usos por Rodada": "1",
+      "Munição na Arma": "",
+      "Defeito": ""
+    },
+    {
+      "Nome": "Bastão de críquete",
+      "Dano": "1D8+DX",
+      "Alcance Base": "Toque",
+      "Usos por Rodada": "1",
+      "Munição na Arma": "",
+      "Defeito": ""
+    }
+  */
 }
 
 function preencherTela() {
