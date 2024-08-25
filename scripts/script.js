@@ -3105,15 +3105,15 @@ document.getElementById('nome_personagem').addEventListener('input',(event)=>{
 });
 
 function definirAtributo(personagem,id,atributo) {
-  document.querySelector(`#${id} label.regular`).innerHTML = personagem['Atributos'][atributo]['Atributo'];
-  document.querySelector(`#${id} label.dificil`).innerHTML = personagem['Atributos'][atributo]['Metade'];
-  document.querySelector(`#${id} label.extremo`).innerHTML = personagem['Atributos'][atributo]['Quinto'];
+  document.querySelector(`#${id} input[type=number].regular`).value = personagem['Atributos'][atributo]['Atributo'];
+  document.querySelector(`#${id} input[type=number].dificil`).value = personagem['Atributos'][atributo]['Metade'];
+  document.querySelector(`#${id} input[type=number].extremo`).value = personagem['Atributos'][atributo]['Quinto'];
 }
 
 function definirPericia(personagem,id,pericia) {
-  document.querySelector(`#${id} label.regular`).innerHTML = personagem['Perícias'][pericia]['Regular'];
-  document.querySelector(`#${id} label.dificil`).innerHTML = personagem['Perícias'][pericia]['Difícil'];
-  document.querySelector(`#${id} label.extremo`).innerHTML = personagem['Perícias'][pericia]['Extremo'];
+  document.querySelector(`#${id} input[type=number].regular`).value = personagem['Perícias'][pericia]['Regular'];
+  document.querySelector(`#${id} input[type=number].dificil`).value = personagem['Perícias'][pericia]['Difícil'];
+  document.querySelector(`#${id} input[type=number].extremo`).value = personagem['Perícias'][pericia]['Extremo'];
 }
 
 function renderPericia(nome_pericia,pericia,callback) {
@@ -3180,9 +3180,9 @@ function renderPericia(nome_pericia,pericia,callback) {
           <span class="nome">${nome_formatado_partes}</span>
         </label>
         <div class="valores">
-          <label class="regular">${pericia['Regular']}</label>
-          <label class="dificil">${pericia['Difícil']}</label>
-          <label class="extremo">${pericia['Extremo']}</label>
+          <input type="number" class="regular" value="${pericia['Regular']}">
+          <input type="number" class="dificil" value="${pericia['Difícil']}">
+          <input type="number" class="extremo" value="${pericia['Extremo']}">
         </div>
       </div>
       `);
@@ -3230,9 +3230,9 @@ function preencherTela() {
         ocupacao = 'Entretenimento';
       }
 
-      document.getElementById('ocupacao').innerHTML = ocupacao;
-      document.getElementById('idade').innerHTML = personagem['Informações']['Idade'];
-      document.getElementById('nascimento').innerHTML = personagem['Informações']['Data de Nascimento'];
+      document.getElementById('ocupacao').value = ocupacao;
+      document.getElementById('idade').value = personagem['Informações']['Idade'];
+      document.getElementById('nascimento').value = personagem['Informações']['Data de Nascimento'];
 
       definirAtributo(personagem,'atributo-forca','FOR (Força)');
       definirAtributo(personagem,'atributo-destreza','DES (Destreza)');
@@ -3242,35 +3242,38 @@ function preencherTela() {
       definirAtributo(personagem,'atributo-poder','POD (Poder)');
       definirAtributo(personagem,'atributo-tamanho','TAM (Tamanho)');
       definirAtributo(personagem,'atributo-educacao','EDU (Educação)');
-      document.querySelector(`#atributo-movimento`).innerHTML = personagem['Atributos Secundários']['Taxa de Movimento (MOV)'];
+      document.querySelector(`#atributo-movimento`).value = personagem['Atributos Secundários']['Taxa de Movimento (MOV)'];
 
-      document.querySelector(`#atributo-pontos-de-vida`).innerHTML = personagem['Atributos Secundários']['Pontos de Vida'];
+      document.querySelector(`#atributo-pontos-de-vida`).value = personagem['Atributos Secundários']['Pontos de Vida'];
+      document.querySelector(`#atributo-pontos-de-vida-atual`).value = personagem['Atributos Secundários']['Pontos de Vida'];
 
-      document.querySelector(`#atributo-sanidade-inicial`).innerHTML = personagem['Atributos Secundários']['SAN (Sanidade)'];
-      document.querySelector(`#atributo-sanidade-maxima`).innerHTML = personagem['Atributos Secundários']['Sanidade Máxima'];
+      document.querySelector(`#atributo-sanidade-inicial`).value = personagem['Atributos Secundários']['SAN (Sanidade)'];
+      document.querySelector(`#atributo-sanidade-maxima`).value = personagem['Atributos Secundários']['Sanidade Máxima'];
+      document.querySelector(`#atributo-sanidade-atual`).value = personagem['Atributos Secundários']['SAN (Sanidade)'];
 
-      document.querySelector(`#atributo-sorte-inicial`).innerHTML = personagem['Atributos Secundários']['Sorte'];
+      document.querySelector(`#atributo-sorte-inicial`).value = personagem['Atributos Secundários']['Sorte'];
+      document.querySelector(`#atributo-sorte-atual`).value = personagem['Atributos Secundários']['Sorte'];
 
-      document.querySelector(`#atributo-magia-maxima`).innerHTML = personagem['Atributos Secundários']['Pontos de Magia'];
+      document.querySelector(`#atributo-magia-maxima`).value = personagem['Atributos Secundários']['Pontos de Magia'];
+      document.querySelector(`#atributo-magia-atual`).value = personagem['Atributos Secundários']['Pontos de Magia'];
 
-      document.querySelector(`#atributo-combate-dano-extra`).innerHTML = personagem['Atributos Secundários']['Dano Extra'];
+      document.querySelector(`#atributo-combate-dano-extra`).value = personagem['Atributos Secundários']['Dano Extra'];
       if (!personagem['Atributos Secundários']['Dano Extra Negativo']) {
         document.querySelector(`#atributo-combate-dano-extra`).style.fontSize = '0.7em';
       }
-
-      document.querySelector(`#atributo-combate-corpo`).innerHTML = personagem['Atributos Secundários']['Corpo'];
+      document.querySelector(`#atributo-combate-corpo`).value = personagem['Atributos Secundários']['Corpo'];
 
       definirPericia(personagem,'atributo-secundario-esquivar','Esquivar');
 
       renderPericiais(personagem,(innerHTML)=>{
         document.getElementById('carregando-pericias').innerHTML = innerHTML;
 
-        document.getElementById('padrao-de-vida-nivel-de-gasto').innerHTML = personagem['Padrão de Vida']['Nível de Gastos'];
-        document.getElementById('padrao-de-vida-dinheiro').innerHTML = personagem['Padrão de Vida']['Dinheiro'];
-        document.getElementById('padrao-de-vida-patrimonio').innerHTML = personagem['Padrão de Vida']['Patrimônio'];
+        document.getElementById('padrao-de-vida-nivel-de-gasto').value = personagem['Padrão de Vida']['Nível de Gastos'];
+        document.getElementById('padrao-de-vida-dinheiro').value = personagem['Padrão de Vida']['Dinheiro'];
+        document.getElementById('padrao-de-vida-patrimonio').value = personagem['Padrão de Vida']['Patrimônio'];
 
-        document.getElementById('padrao-de-vida-hospedagens').innerHTML = personagem['Padrão de Vida']['Hospedagens'].join(", ");
-        document.getElementById('padrao-de-vida-transportes').innerHTML = personagem['Padrão de Vida']['Transportes'].join(", ");
+        document.getElementById('padrao-de-vida-hospedagens').value = personagem['Padrão de Vida']['Hospedagens'].join(", ");
+        document.getElementById('padrao-de-vida-transportes').value = personagem['Padrão de Vida']['Transportes'].join(", ");
 
         document.getElementById('loading').style.display = 'none';
       });

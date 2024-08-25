@@ -174,6 +174,12 @@ div.ficha {
   background-size: 2000px;
 }
 
+input[type=text], input[type=number] {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: .9em;
+  background-color: rgba(255, 255, 255, 0);
+}
+
 div.ficha::after {
   display: block;
   height: 0;
@@ -359,7 +365,7 @@ div.ficha div.informacoes > label.valor {
   height: 29px;
   margin-top: 12px;
   padding-top: 6px;
-  font-style: italic;
+  font-style: normal;
   border: 1px solid #ccc;
   text-indent: 2px;
   overflow: auto;
@@ -374,10 +380,33 @@ div.ficha div.informacoes > input[type=text].valor {
   height: 29px;
   margin-top: 12px;
   padding-top: 6px;
-  font-style: italic;
+  font-style: normal;
+  border: 1px solid #ccc;
+  text-indent: 2px;
+}
+
+div.ficha div.informacoes > input[type=text].valor-center {
+  text-align: center;
+  text-indent: 0;
+}
+
+div.ficha div.informacoes > input[type=number].valor {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2px;
+  text-align: center;
+
+  height: 29px;
+  margin-top: 12px;
+  padding-top: 6px;
+  font-style: normal;
+  border: 1px solid #ccc;
+}
+
+div.ficha div.informacoes > input[type=text].valor-amarelo {
   border: 1px solid #E59700;
   background-color: #FCFAE1;
-  text-indent: 2px;
 }
 
 div.ficha div.informacoes > label.sobrecampo {
@@ -550,6 +579,16 @@ div.ficha div.bloco > div.container > div.horizontal-texto > span.valor {
   font-weight: normal;
 }
 
+div.ficha div.bloco > div.container > div.horizontal-texto > input[type=text].valor {
+  display: block;
+  float: left;
+  font-weight: normal;
+  border: 0;
+  width: 75%;
+  line-height: 16px;
+  background-color: rgba(255, 255, 255, 0);
+}
+
 div.ficha div.bloco > div.container > div.horizontal-texto::after {
   display: block;
   height: 0;
@@ -656,6 +695,32 @@ div.ficha div.bloco > div.container > div.campo > label.valor-movimento {
   text-indent: -2px;
 }
 
+div.ficha div.bloco > div.container > div.campo > input[type=number] {
+  display: block;
+  float: left;
+  width: 32%;
+  height: 40px;
+  font-size: 1em;
+  box-sizing: border-box;
+  padding-top: 2px;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: normal;
+}
+
+div.ficha div.bloco > div.container > div.campo > input[type=number].valor-movimento {
+  width: 48%;
+  margin-left: 2%;
+  line-height: 40px;
+  font-size: 1.2em;
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0;
+  padding-top: -1px;
+  text-indent: -2px;
+}
+
 div.ficha div.bloco > div.container > div.campo > label.secundario {
   width: 54%;
   height: 40px;
@@ -692,7 +757,8 @@ div.ficha div.bloco > div.container > div.campo > label.valor-secundario {
   margin-top: 2px;
 }
 
-div.ficha div.bloco > div.container > div.campo > input[type=number].valor-secundario {
+div.ficha div.bloco > div.container > div.campo > input[type=number].valor-secundario,
+div.ficha div.bloco > div.container > div.campo > input[type=text].valor-secundario {
   display: block;
   float: left;
   height: 40px;
@@ -706,14 +772,18 @@ div.ficha div.bloco > div.container > div.campo > input[type=number].valor-secun
   line-height: 38px;
   font-size: 1.2em;
   text-align: center;
-  border: 1px solid #E59700;
-  background-color: #FCFAE1;
+  border: 1px solid #000;
   border-radius: 10px;
   padding: 0;
   padding-top: -1px;
   text-indent: -2px;
 
   margin-top: 2px;
+}
+
+div.ficha div.bloco > div.container > div.campo > input[type=number].valor-secundario-amarelo {
+  border: 1px solid #E59700;
+  background-color: #FCFAE1;
 }
 
 div.ficha div.bloco > div.container > div.campo > label.horizontal {
@@ -770,6 +840,27 @@ div.ficha div.bloco > div.container > div.campo > label.horizontal > span.valor 
 div.ficha div.bloco > div.container > div.campo > label.horizontal > span.valor-menor {
   padding-top: 2px;
   font-size: .8em;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.horizontal > input[type=text].valor {
+  display: block;
+  float: left;
+  text-align: center;
+
+  width: 100%;
+  line-height: 23px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  font-weight: normal;
+  text-transform: none;
+  background-color: rgba(255, 255, 255, 0);
+
+  font-size: 1em;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.horizontal > input[type=text].valor-menor {
+  font-size: .7em;
 }
 
 div.ficha div.bloco > div.container > div.campo > label.conjunto {
@@ -849,11 +940,29 @@ div.ficha div.bloco > div.container > div.campo > label.conjunto > input[type=nu
   width: 100%;
   padding-bottom: 0px;
   padding-right: 0px;
+  padding-top: 1px;
   margin-left: -1px;
 
+  border: 0;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 0;
+
+  /*
   border: 1px solid #E59700;
   border-bottom-right-radius: 10px;
   background-color: #FCFAE1;
+  */
+}
+
+div.ficha div.bloco > div.container > div.campo > label.conjunto > input[type=number].esquerda {
+  border-bottom-left-radius: 10px;
+  text-indent: 2px;
+}
+
+div.ficha div.bloco > div.container > div.campo > label.conjunto > input[type=number].direita {
+  border-bottom-right-radius: 10px;
+  margin-left: 1px;
+  text-indent: -2px;
 }
 
 div.ficha div.bloco > div.container > div.campo-flags {
@@ -1044,6 +1153,43 @@ div.ficha div.bloco > div.container > div.campo > div.valores::after {
   content: '';
   clear: both;
 }
+
+/* atributos */
+div.ficha div.bloco > div.container > div.campo > div.valores > input[type=number] {
+  display: block;
+  float: left;
+  width: 50%;
+  font-style: normal;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+
+  border-radius: 0px;
+}
+
+div.ficha div.bloco > div.container > div.campo > div.valores > input[type=number].regular {
+  border-right: 1px solid #000;
+  line-height: 40px;
+  text-align: center;
+  font-size: 1.4em;
+}
+
+div.ficha div.bloco > div.container > div.campo > div.valores > input[type=number].dificil {
+  border-bottom: 1px solid #000;
+  line-height: 20px;
+  text-align: center;
+  font-size: .9em;
+  text-indent: -4px;
+
+  border-top-right-radius: 10px;
+}
+
+div.ficha div.bloco > div.container > div.campo > div.valores > input[type=number].extremo {
+  line-height: 19px;
+  text-align: center;
+  font-size: .9em;
+  text-indent: -4px;
+}
+/* atributos */
 
 div.ficha div.bloco > div.container > div.campo > div.valores > label {
   display: block;

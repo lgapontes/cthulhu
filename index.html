@@ -49,28 +49,31 @@
 				<div class="informacoes">
 					<label class="sobrecampo jogador">Jogador</label>
 					<!--<label class="valor" id="jogador"></label>-->
-					<input type="text" class="valor" id="jogador">
+					<input type="text" class="valor valor-amarelo" id="jogador">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo personagem">Personagem</label>
 					<!--<label class="valor" id="personagem"></label>-->
-					<input type="text" class="valor" id="personagem">
+					<input type="text" class="valor valor-amarelo" id="personagem">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo ocupacao">Ocupação</label>
-					<label class="valor" id="ocupacao"></label>
+					<!-- <label class="valor" id="ocupacao"></label> -->
+					<input type="text" class="valor" id="ocupacao">
 				</div>
 
 				<div class="informacoes informacoes-idade">
 					<label class="sobrecampo idade">Idade</label>
-					<label class="valor" id="idade"></label>
+					<!--<label class="valor" id="idade"></label>-->
+					<input type="number" class="valor" id="idade">
 				</div>
 
 				<div class="informacoes informacoes-nascimento">
 					<label class="sobrecampo nascimento">Nascimento</label>
-					<label class="valor" id="nascimento"></label>
+					<!--<label class="valor" id="nascimento"></label>-->
+					<input type="text" class="valor valor-center" id="nascimento">
 				</div>
 			</div>
 
@@ -91,9 +94,14 @@
 								<span class="nome">FOR</span>
 							</label>
 							<div class="valores" id="atributo-forca">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -102,9 +110,14 @@
 								<span class="nome">DES</span>
 							</label>
 							<div class="valores" id="atributo-destreza">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -114,9 +127,14 @@
 								<span class="nome-regra">Ideia</span>
 							</label>
 							<div class="valores" id="atributo-inteligencia">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -125,9 +143,14 @@
 								<span class="nome">CON</span>
 							</label>
 							<div class="valores" id="atributo-constituicao">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -136,9 +159,14 @@
 								<span class="nome">APA</span>
 							</label>
 							<div class="valores" id="atributo-aparencia">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -147,9 +175,14 @@
 								<span class="nome">POD</span>
 							</label>
 							<div class="valores" id="atributo-poder">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -158,9 +191,14 @@
 								<span class="nome">TAM</span>
 							</label>
 							<div class="valores" id="atributo-tamanho">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -170,15 +208,21 @@
 								<span class="nome-regra">Saber</span>
 							</label>
 							<div class="valores" id="atributo-educacao">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
 						<div class="campo">
 							<label class="movimento">Taxa de Movimento</label>
-							<label class="valor-movimento" id="atributo-movimento">0</label>
+							<!--<label class="valor-movimento" id="atributo-movimento">0</label>-->
+							<input type="number" class="valor-movimento" id="atributo-movimento" value="0">
 						</div>
 
 					</div>
@@ -192,13 +236,14 @@
 
 						<div class="campo">
 							<label class="secundario">PV Máx</label>
-							<label class="valor-secundario" id="atributo-pontos-de-vida">0</label>
+							<!--<label class="valor-secundario" id="atributo-pontos-de-vida">0</label>-->
+							<input type="number" class="valor-secundario" id="atributo-pontos-de-vida" value="0">
 						</div>
 
 						<div class="campo">
 							<label class="secundario secundario-color">Atual</label>
-							<input type="number" class="valor-secundario" id="atributo-pontos-de-vida-atual" value="">
 							<!--<label class="valor-secundario" id="atributo-pontos-de-vida-atual"></label>-->
+							<input type="number" class="valor-secundario valor-secundario-amarelo" id="atributo-pontos-de-vida-atual" value="0">
 						</div>
 
 						<div class="campo campo-flags">
@@ -228,18 +273,20 @@
 						<div class="campo">
 							<label class="conjunto">
 								<span class="nome">Inicial</span>
-								<span class="valor" id="atributo-sanidade-inicial">0</span>
+								<!--<span class="valor" id="atributo-sanidade-inicial">0</span>-->
+								<input type="number" class="valor esquerda" id="atributo-sanidade-inicial" value="0">
 							</label>
 							<label class="conjunto">
 								<span class="nome">Máxima</span>
-								<span class="valor" id="atributo-sanidade-maxima">0</span>
+								<!--<span class="valor" id="atributo-sanidade-maxima">0</span>-->
+								<input type="number" class="valor direita" id="atributo-sanidade-maxima" value="0">
 							</label>
 						</div>
 
 						<div class="campo">
 							<label class="secundario secundario-color">Atual</label>
 							<!--<label class="valor-secundario"></label>-->
-							<input type="number" class="valor-secundario" id="atributo-sanidade-atual" value="">
+							<input type="number" class="valor-secundario valor-secundario-amarelo" id="atributo-sanidade-atual" value="">
 						</div>
 
 						<div class="campo campo-flags flags-margin">
@@ -264,12 +311,13 @@
 
 						<div class="campo">
 							<label class="secundario">Inicial</label>
-							<label class="valor-secundario" id="atributo-sorte-inicial">0</label>
+							<!--<label class="valor-secundario" id="atributo-sorte-inicial">0</label>-->
+							<input type="number" class="valor-secundario" id="atributo-sorte-inicial" value="0">
 						</div>
 
 						<div class="campo">
 							<label class="secundario secundario-color">Atual</label>
-							<input type="number" class="valor-secundario" id="atributo-sorte-atual" value="">
+							<input type="number" class="valor-secundario" id="atributo-sorte-atual" value="0">
 						</div>
 
 					</div>
@@ -284,12 +332,13 @@
 						<div class="campo">
 							<label class="conjunto">
 								<span class="nome">Máximo</span>
-								<span class="valor" id="atributo-magia-maxima">0</span>
+								<!--<span class="valor" id="atributo-magia-maxima">0</span>-->
+								<input type="number" class="valor esquerda" id="atributo-magia-maxima" value="0">
 							</label>
 							<label class="conjunto">
 								<span class="nome">Atual</span>
 								<!--<span class="valor"></span>-->
-								<input type="number" class="valor" id="atributo-magia-atual">
+								<input type="number" class="valor direita" id="atributo-magia-atual" value="0">
 							</label>
 						</div>
 
@@ -304,12 +353,14 @@
 
 						<div class="campo campo-menor">
 							<label class="secundario secundario-margin">Dano Extra</label>
-							<label class="valor-secundario" id="atributo-combate-dano-extra">0</label>
+							<!--<label class="valor-secundario" id="atributo-combate-dano-extra">0</label>-->
+							<input type="text" class="valor-secundario" id="atributo-combate-dano-extra" value="0">
 						</div>
 
 						<div class="campo">
 							<label class="secundario">Corpo</label>
-							<label class="valor-secundario" id="atributo-combate-corpo">0</label>
+							<!--<label class="valor-secundario" id="atributo-combate-corpo">0</label>-->
+							<input type="text" class="valor-secundario" id="atributo-combate-corpo" value="0">
 						</div>
 
 						<div class="campo campo-maior">
@@ -317,9 +368,14 @@
 								<span class="nome nome-menor">Esquivar</span>
 							</label>
 							<div class="valores" id="atributo-secundario-esquivar">
+								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
+								-->
+								<input type="number" class="regular" value="0">
+								<input type="number" class="dificil" value="0">
+								<input type="number" class="extremo" value="0">
 							</div>
 						</div>
 
@@ -348,21 +404,24 @@
 						<div class="campo">
 							<label class="horizontal">
 								<span class="nome">Nível de Gastos</span>
-								<span class="valor valor-menor" id="padrao-de-vida-nivel-de-gasto">$0</span>
+								<!--<span class="valor valor-menor" id="padrao-de-vida-nivel-de-gasto">$0</span>-->
+								<input type="text" class="valor valor-menor" id="padrao-de-vida-nivel-de-gasto" value="$0">
 							</label>
 						</div>
 
 						<div class="campo">
 							<label class="horizontal">
 								<span class="nome">Dinheiro</span>
-								<span class="valor" id="padrao-de-vida-dinheiro">$0</span>
+								<!--<span class="valor" id="padrao-de-vida-dinheiro">$0</span>-->
+								<input type="text" class="valor" id="padrao-de-vida-dinheiro" value="$0">
 							</label>
 						</div>
 
 						<div class="campo">
 							<label class="horizontal">
 								<span class="nome">Patrimônio</span>
-								<span class="valor" id="padrao-de-vida-patrimonio">$0</span>
+								<!--<span class="valor" id="padrao-de-vida-patrimonio">$0</span>-->
+								<input type="text" class="valor" id="padrao-de-vida-patrimonio" value="$0">
 							</label>
 						</div>
 
@@ -377,12 +436,14 @@
 
 						<div class="horizontal-texto">
 							<span class="bold">Hospedagens:</span>
-							<span class="valor" id="padrao-de-vida-hospedagens">Sem residência</span>
+							<!--<span class="valor" id="padrao-de-vida-hospedagens">Sem residência</span>-->
+							<input type="text" class="valor" id="padrao-de-vida-hospedagens" value="Sem residência">
 						</div>
 
 						<div class="horizontal-texto">
 							<span class="bold">Transportes:</span>
-							<span class="valor" id="padrao-de-vida-transportes">Sem transporte</span>
+							<!--<span class="valor" id="padrao-de-vida-transportes">Sem transporte</span>-->
+							<input type="text" class="valor" id="padrao-de-vida-transportes" value="Sem transporte">
 						</div>
 
 					</div>
