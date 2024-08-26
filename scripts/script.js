@@ -2019,10 +2019,10 @@ const EQUIPAMENTOS = {
       { 'Nome': 'Revólver .41', 'Dano': '1D10', 'Alcance Base': '15 metros', 'Usos por Rodada': '1 (3)', 'Munição na Arma': '8', 'Defeito': '100' },
     ],
     'Armas de Fogo (Espingardas)': [
-      { 'Nome': 'Espingarda Calibre 20 (2C)', 'Dano': '2D6/1D6/1D3', 'Alcance Base': '10/20/50 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
-      { 'Nome': 'Espingarda Calibre 16 (2C)', 'Dano': '2D6+2/1D6+1/1D4', 'Alcance Base': '10/20/50 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
-      { 'Nome': 'Espingarda Calibre 12 (2C)', 'Dano': '4D6/2D6/1D6', 'Alcance Base': '10/20/50 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
-      { 'Nome': 'Escopeta Calibre 12 (2C serrada)', 'Dano': '4D6/1D6', 'Alcance Base': '5/10 metros', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+      { 'Nome': 'Espingarda Calibre 20 (2C)', 'Dano': '2D6/1D6/1D3', 'Alcance Base': '10/20/50 m', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+      { 'Nome': 'Espingarda Calibre 16 (2C)', 'Dano': '2D6+2/1D6+1/1D4', 'Alcance Base': '10/20/50 m', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+      { 'Nome': 'Espingarda Calibre 12 (2C)', 'Dano': '4D6/2D6/1D6', 'Alcance Base': '10/20/50 m', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
+      { 'Nome': 'Escopeta Calibre 12 (2C serrada)', 'Dano': '4D6/1D6', 'Alcance Base': '5/10 m', 'Usos por Rodada': '1 ou 2', 'Munição na Arma': '2', 'Defeito': '100' },
     ]
   },
   armas_comuns: [
@@ -3208,25 +3208,63 @@ function renderPericiais(personagem,callback) {
   });
 }
 
-function renderArmas() {
-  /*
-  {
-      "Nome": "Desarmado",
-      "Dano": "1D3+DX",
-      "Alcance Base": "Toque",
-      "Usos por Rodada": "1",
-      "Munição na Arma": "",
-      "Defeito": ""
-    },
-    {
-      "Nome": "Bastão de críquete",
-      "Dano": "1D8+DX",
-      "Alcance Base": "Toque",
-      "Usos por Rodada": "1",
-      "Munição na Arma": "",
-      "Defeito": ""
+function renderArmas(armas,callback) {
+  let qtde = 4;
+  let array_qtde = [...new Array(qtde).keys()];
+  let innerHTML = '';
+
+  array_qtde.forEach((tag, index) => {
+
+    let nome = '';
+    let dano = '';
+    let alcance = '';
+    let ataques = '';
+    let municao = '';
+    let defeito = '';
+
+    if (index < armas.length) {
+      nome = armas[index]['Nome'];
+      dano = armas[index]['Dano'];
+      alcance = armas[index]['Alcance Base'];
+      ataques = armas[index]['Usos por Rodada'];
+      municao = armas[index]['Munição na Arma'];
+      defeito = armas[index]['Defeito'];
     }
-  */
+
+    innerHTML += `
+    <div class="arma" id="${nome}">
+      <div class="parte parte-nome">
+        <label class="sobre">Arma</label>
+        <input type="text" class="valor left" meta="Nome" value="${nome}">
+      </div>
+      <div class="parte parte-dano">
+        <label class="sobre">Dano</label>
+        <input type="text" class="valor pequeno" meta="Dano" value="${dano}">
+      </div>
+
+      <div class="parte">
+        <label class="sobre">Alcance</label>
+        <input type="text" class="valor pequeno" meta="Alcance Base" value="${alcance}">
+      </div>
+      <div class="parte">
+        <label class="sobre">Ataques</label>
+        <input type="text" class="valor" meta="Usos por Rodada" value="${ataques}">
+      </div>
+      <div class="parte">
+        <label class="sobre">Munição</label>
+        <input type="text" class="valor" meta="Munição na Arma" value="${municao}">
+      </div>
+      <div class="parte">
+        <label class="sobre">Defeito</label>
+        <input type="text" class="valor" meta="Defeito" value="${defeito}">
+      </div>
+    </div>
+    `;
+
+    if (index == (array_qtde.length - 1)) {
+      callback(innerHTML);
+    }
+  });
 }
 
 function preencherTela() {
@@ -3299,7 +3337,13 @@ function preencherTela() {
         document.getElementById('padrao-de-vida-hospedagens').value = personagem['Padrão de Vida']['Hospedagens'].join(", ");
         document.getElementById('padrao-de-vida-transportes').value = personagem['Padrão de Vida']['Transportes'].join(", ");
 
-        document.getElementById('loading').style.display = 'none';
+        renderArmas(personagem["Armas"],(innerHTML)=>{
+          document.getElementById('carregando-armas').innerHTML = innerHTML;
+
+          document.getElementById('equipamentos_e_pertences').value = personagem['Equipamentos'].join("\r\n");
+
+          document.getElementById('loading').style.display = 'none';
+        });
       });
     });
   });

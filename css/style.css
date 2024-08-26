@@ -174,7 +174,7 @@ div.ficha {
   background-size: 2000px;
 }
 
-input[type=text], input[type=number] {
+input[type=text], input[type=number], textarea {
   font-family: 'Trebuchet MS', sans-serif;
   font-size: .9em;
   background-color: rgba(255, 255, 255, 0);
@@ -562,12 +562,20 @@ div.ficha div.bloco > label.sobrecampo-armas {
   width: 48px;
 }
 
+div.ficha div.bloco > label.sobrecampo-equipamentos {
+  width: 152px;
+}
+
 div.ficha div.bloco > label.atributos-dinheiro-e-recursos {
   width: 120px;
 }
 
 div.ficha div.bloco > label.atributos-patrimonios {
   width: 70px;
+}
+
+div.ficha div.bloco > label.sobrecampo-antecedentes {
+  width: 82px;
 }
 
 div.ficha div.bloco > div.container > div.horizontal-texto {
@@ -1093,6 +1101,107 @@ div.ficha div.bloco100-outros div.bloco > div.container > div.carregando-outros 
   font-weight: bold;
 }
 
+div.ficha div.bloco100-outros div.bloco > div.container > textarea.equipamentos {
+  display: block;
+  width: 98%;
+  margin: 1%;
+  height: 140px;
+  box-sizing: border-box;
+  text-align: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  font-size: .9em;
+  font-style: normal;
+  font-weight: normal;
+
+  resize: none;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma {
+  display: block;
+  float: left;
+  width: 98%;
+  margin: 1%;
+  box-sizing: border-box;
+  padding: 4px 0 0 4px;
+
+  font-size: 1em;
+  font-style: normal;
+  font-weight: normal;
+  background-color: rgba(230,230,230,0.5);
+
+  border: 1px solid #E59700;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte {
+  display: block;
+  float: left;
+  width: 24%;
+  margin: 0;
+  margin-right: 1%;
+  margin-bottom: 1%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte-nome {
+  width: 66%;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte-dano {
+  width: 32%;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte > label.sobre {
+  display: block;
+  float: left;
+
+  box-sizing: border-box;
+  line-height: 14px;
+  font-size: 0.7em;
+  font-weight: bold;
+  background-color: #ccc;
+  border-top-right-radius: 10px;
+  padding: 2px 8px 2px 2px;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte > input[type=text].valor {
+  display: block;
+  float: left;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 0.9em;
+  line-height: 16px;
+  border: 1px solid #ccc;
+  padding: 2px;
+  text-indent: 2px;
+  text-align: center;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte > input[type=text].left {
+  text-align: left;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte > input[type=text].pequeno {
+  font-size: 0.7em;
+}
+
 div.ficha div.bloco100-pericias div.bloco > div.container > div.campo > label.uma-palavra > span.nome {
   margin-top: 13px;
   line-height: 14px;
@@ -1330,5 +1439,14 @@ div.loading {
   div.ficha div.bloco100-pericias div.bloco > div.container > div.campo {
     width: 23%;
     margin: 1%;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > div.arma {
+    width: 48%;
+    margin: 1%;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > textarea.equipamentos {
+    height: 70px;
   }
 }
