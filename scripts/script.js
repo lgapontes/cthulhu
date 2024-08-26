@@ -1,5 +1,5 @@
 
-const LOG = true;
+const LOG = false;
 const LOG_TEXTO = false;
 const VERSAO = `0.0.1 ${LOG ? '(debug)' : '(beta)'}`;
 
@@ -1511,8 +1511,8 @@ function obterPericiaIndividual(atributos,ocupacao,nome_pericia,callback) {
 
 function obterListaPericias(callback) {
   let array_pericias = Object.keys(PERICIAS);
-  let pericias_incomuns = document.getElementById('incomum').checked;
-  let pericias_mythos = document.getElementById('mythos').checked;
+  let pericias_incomuns = document.getElementById('form-incomum').checked;
+  let pericias_mythos = document.getElementById('form-mythos').checked;
   let lista = [];
 
   array_pericias.forEach((nome_pericia, index_pericia) => {
@@ -2953,17 +2953,538 @@ const ANTECEDENTES = {
   ]
 };
 
-function definirAntecedentes(callback) {
+const geradorPessoasProximas = (nome,tipo,callback) => {
+  if (tipo == 'Um colega investigador em seu jogo. Escolha um ou determine aleatoriamente.') {
+    callback(tipo);
+  } else {
+    let proximo = false;
+    let tipos_proximos_masculinos = ['Seu pai, ','Seu avô paterno, ','Seu avô materno, ','Seu irmão, ','Seu filho, '];
+    let tipos_proximos_femininos = ['Sua mãe, ','Sua avó materna, ','Sua avó paterna, ','Sua irmã , ','Sua filha, '];
+    let caso_PNJ = 'Um personagem não-jogador (PNJ) do jogo. Peça ao Guardião para escolher um para você.';
+    let genero = (Math.floor(Math.random() * 10) < 5) ? 'Masculino' : 'Feminino';
+
+    if (tipos_proximos_masculinos.indexOf(tipo) > -1) {
+      genero = 'Masculino';
+      proximo = true;
+    } else if (tipos_proximos_femininos.indexOf(tipo) > -1) {
+      genero = 'Feminino';
+      proximo = true;
+    }
+
+    nameGen(genero,nome_pnj=>{
+      if (tipo == caso_PNJ) {
+        callback(`${nome_pnj}. Um personagem não-jogador (PNJ) que o Guardião escolheu para você.`);
+      } else {
+        if (proximo) {
+          let nome_proximo = nome_pnj.split(' ')[0] + ' ' + nome.split(' ')[1];
+          callback(`${tipo}${nome_proximo}.`);
+        } else {
+          callback(`${tipo}${nome_pnj}.`);
+        }
+      }
+    });
+  }
+}
+
+const GERAR_ANTECEDENTES = {
+  'Descrição Pessoal': {
+    gerar: false,
+    itens: [
+      {
+        '': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      }
+    ],
+  },
+  'Ideologia/Crenças': {
+    gerar: true,
+    itens: [
+      {
+        'Cristianismo: você venera e faz preces para Jesus Cristo, e possui uma Bíblia': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Cristianismo: você venera e faz preces para Deus, e possui uma Bíblia': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Cristianismo: você venera e faz preces para Jesus Cristo, e possui uma Bíblia': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Cristianismo: você venera e faz preces para Deus, e possui uma Bíblia': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Cristianismo: você venera e faz preces para Jesus Cristo, e possui uma Bíblia': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Cristianismo: você venera e faz preces para Deus, e possui uma Bíblia': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Islamismo: você venera e faz preces para Maomé, e possui um Alcorão': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Islamismo: você venera e faz preces para Maomé, e possui um Alcorão': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Islamismo: você venera e faz preces para Maomé, e possui um Alcorão': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Hinduísmo: você venera e pratica os karmas de Brahma': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Hinduísmo: você venera e pratica os karmas de Vishnu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Hinduísmo: você venera e pratica os karmas de Shiva': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Budismo: você venera Siddhartha Gautama (Buda), e segue os ensinamentos do Nobre Caminho Óctuplo': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sikhismo: você venera e faz preces ao Deus único, seguindo os passos dos gurus sikhs': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Judaísmo: você venera e faz preces para Deus, seguindo os ensinamentos da Torá': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Judaísmo: você venera e faz preces para Deus, seguindo os ensinamentos da Torá': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Espiritismo: você busca por sua evolução espiritual': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Xintoísmo: você adora os espíritos kami': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Secularismo: você defende a separação entre a religião e o Estado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Humanismo: você acredita em uma postura de vida democrática e ética que valoriza o ser humano e a condição humana acima de tudo.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Ateísmo: você é ateu e não possui crença em nenhum deus.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você acredita que a ciência tem todas as respostas. Você acredita na evolução darwinista.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que a ciência tem todas as respostas. Você leu obras de ficção científica e acredita que no futuro as pessoas serão congeladas para viver para sempre (criogenia).': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que a ciência tem todas as respostas. Você leu obras de ficção científica e acredita que o futuro está no espaço, a humanidade fará sua exploração espacial um dia.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que a ciência tem todas as respostas. Você leu obras de ficção científica e acredita que existam alienígenas inteligentes nos vigiando.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você acredita no destino, e sabe que o carma e a lei de causa e efeito está sempre em ação.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita no sistema de classes e sabe que uma pessoa não deve se desviar da sua posição na sociedade.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é supersticioso e acredita que há sinais de bom ou mau agouro em toda parte, basta um olhar cuidadoso.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita ser dono de seu destino e que só você é capaz de moldá-lo para o caminho certo.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você pertence a uma sociedade secreta chamada Rosacruz (Rosacrucianismo), construída sobre verdades esotéricas do passado antigo que fornece uma visão da natureza, do universo físico e do domínio espiritual‎.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é um membro da Maçonaria, uma organização fraternal que regulamenta a qualificação da profissão e a sua interação com autoridades e associados. Mulheres não são admitidas.': { restricao_genero: true, genero: 'Masculino', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você pertence ao Instituto das Mulheres e sabe que a força que vocês possuem fará diferença no futuro da humanidade. Homens não são admitidos.': { restricao_genero: true, genero: 'Feminino', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você pertence a uma sociedade secreta chamada Illuminati, cujo objetivo é opor-se à superstição, ao obscurantismo, à influência religiosa sobre a vida pública e aos abusos de poder do estado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você acredita que as drogas são um mal da sociedade que deve ser eliminado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que a violência é um mal da sociedade que deve ser eliminado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que o racismo é um mal da sociedade que deve ser eliminado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que a politicagem é um mal da sociedade que deve ser eliminado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que o Governo é um mal da sociedade que deve ser eliminado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você acredita em astrologia, que há pessoas capazes de ver o futuro através dos astros.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita no espiritualismo, que os espíritos dos mortos existem e podem comunicar com os vivos.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você crê na visão das cartas do Tarô, e sabe seu verdadeiro poder esotérico, como um oráculo que o guia com conhecimento pelo futuro.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você vive e acredita na Política. Como um conservador convicto, é contrário à mudanças de caráter social e político.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você vive e acredita na Política. Como um socialista convicto, sabe que a propriedade social deve ser pública e coletiva.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você vive e acredita na Política. Como um liberal convicto, acredita na ordem constitucional que valorizava liberdades individuais.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita que o Anarquismo é o caminho. Nega a necessidade de gestão coerciva e o poder do estado sobre o homem.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você acredita no Comunismo, sabe que é possível assegurar a igualdade social tornando os meios de produção públicos, entre outras formas mais claras e limpas de justiça ao povo.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você é ganancioso. Sabe que dinheiro é poder, e vai conseguir o tanto quanto puder.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Você é um empreendedor. Sabe que dinheiro é poder, e vai conseguir o tanto quanto puder.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Você é implacável. Sabe que dinheiro é poder, e vai conseguir o tanto quanto puder.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+      },
+      {
+        'Você é militante do feminismo.': { restricao_genero: true, genero: 'Feminino', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é militante dos direitos iguais.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é militante do poder sindical.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é militante das causas sociais.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é ativista do feminismo.': { restricao_genero: true, genero: 'Feminino', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é ativista dos direitos iguais.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é ativista do poder sindical.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você é ativista das causas sociais.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+    ],
+  },
+  'Pessoas Significativas': {
+    gerar: true,
+    itens: [
+      {
+        'Seu pai, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua mãe, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua madrasta, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu padrasto, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Sua avó materna, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua avó paterna, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu avô paterno, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu avô materno, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Seu irmão, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua irmã , ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Seu filho, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua filha, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Seu cônjuge, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua cônjuge, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu noivo, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua noiva, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu amante, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua amante, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu namorado, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua namorada, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Seu professor, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua professora, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Seu colega de classe, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua colega de classe, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu vizinho, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua vizinha, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu amigo imaginário, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua amiga imaginária, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu amigo de infância, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Sua amiga de infância, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      { /// ZZZ genero aqui
+        'Uma estrela de cinema chamado ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma estrela de cinema chamada ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um pessoa da política chamado ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um pessoa da política chamada ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um músico famoso chamado ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma musicista famosa chamada , ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Um colega investigador em seu jogo. Escolha um ou determine aleatoriamente.': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Um personagem não-jogador (PNJ) do jogo. Peça ao Guardião para escolher um para você.': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+    ],
+  },
+  'Por que essa pessoa é importante?': {
+    gerar: true,
+    itens: [
+      {
+        'Essa pessoa lhe ajudou financeiramente.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Essa pessoa lhe protegeu em momentos difíceis.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Essa pessoa lhe ajudou a conseguir seu primeiro emprego.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Essa pessoa lhe dá ajuda psicológica.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Essa pessoa lhe ensinou uma profissão.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Essa pessoa lhe ensinou a ser um indivíduo melhor.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você deseja ser igual a essa pessoa.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você procura estar na presença dessa pessoa.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você deseja fazer essa pessoa feliz.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você roubou dinheiro dessa pessoa e busca por reconciliação.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você informou sobre essa pessoa à polícia e busca por reconciliação.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você se recusou-se a ajudar essa pessoa e busca por reconciliação.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você viveu momentos difíceis com essa pessoa.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Vocês cresceram juntos.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Vocês serviram juntos na guerra.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você quer se provar para essa pessoa, buscando um trabalho melhor.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você quer se provar para essa pessoa, encontrando um bom cônjuge.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você quer se provar para essa pessoa, entrando em uma boa universidade.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você idolatra essa pessoa por sua fama.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você idolatra essa pessoa por sua beleza.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você idolatra essa pessoa por seu trabalho.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você disse algo ruim a essa pessoa e está com um sentimento de arrependimento.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você não ajudou essa pessoa quando teve a chance.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você mentiu para essa pessoa e está com um sentimento de arrependimento.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Você quer provar que é melhor que essa pessoa, pois ele(a) é preguiçoso(a).': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você quer provar que é melhor que essa pessoa, pois ele(a) bebe muito.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você quer provar que é melhor que essa pessoa, pois ele(a) é desamoroso(a).': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Você quer provar que é melhor que essa pessoa, pois ele(a) é ganancioso(a).': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Essa pessoa o traiu e você busca vingança. Ela matou um ente querido.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Essa pessoa o traiu e você busca vingança. Ela roubou de você.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Essa pessoa o traiu e você busca vingança. Ela lhe entregou para a polícia.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Essa pessoa o traiu e você busca vingança. Ela contou um segredo seu para outros.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      }
+    ],
+  },
+  'Locais Importantes': {
+    gerar: true,
+    itens: [
+      {
+        'Escola': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Universidade': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Tutelagem': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Biblioteca Pública': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Cidade onde cresceu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Cidade onde nasceu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Vila onde cresceu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Vila onde nasceu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Onde você conheceu seu primeiro amor, um concerto de música.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Onde você conheceu seu primeiro amor, uma viagem de férias.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Onde você conheceu seu primeiro amor, um abrigo militar.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Onde você conheceu seu primeiro amor, um prédio público.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Biblioteca': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um local de pesca': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma propriedade rual': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Uma montanha': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma capela': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Bar local': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Casa de um parente': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Praça da cidade': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Antiquário da cidade': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Igreja paroquial': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Parque com pedras históricas': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma capela': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um santuário': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'O túmulo de um amigo.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O túmulo de um parente.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O túmulo de seu animal de estimação.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Propriedade rural': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Apartamento alugado': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Orfanato onde você foi criado': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Casa de sua família': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+      },
+      {
+        'O lugar onde você foi mais feliz em sua vida, nas aulas de teatro.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, banco do parque onde você deu seu primeiro beijo.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, sua universidade.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, nas ruelas da cidade.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, na pequena capela da cidade.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, no parte arborizado.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, no escritório onde trabalhou.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, no sofá da sua casa.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'O lugar onde você foi mais feliz em sua vida, na feira da cidade.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'O lugar onde você foi mais feliz em sua vida, na orquestra da cidade.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Seu local de trabalho, no escritório.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, na biblioteca.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, no banco.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, na igreja.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, nas ruas.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, no porto.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, na estação de trem.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, no salão de beleza.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Seu local de trabalho, no antiquário.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$2 (Pobre)','$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+      },
+    ],
+  },
+  'Pertences Queridos': {
+    gerar: true,
+    itens: [
+      {
+        'Terno caro': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Identidade falsa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Soqueira de bronze': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Colar': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Livro': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Óculos': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Chaveiro': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Farda': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Chapéu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Maleta de escritório': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Carro': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: true, padroes_aceitos: ['$10 (Médio)','$50 (Abastado)','$250 (Rico)','$5000 (Ricaço)'] },
+        'Gazuas': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma munição usada': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Navalha de barbeiro': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Linha de costura': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Revista em quadrinhos': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Canivete': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Moeda de sorte': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Cadarços': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Flauta': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Ioiô': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Brinquedo de madeira': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Colar de alguém que partiu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Foto de alguém que partiu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Carta de alguém que partiu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Óculos de alguém que partiu': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Um anel, de uma pessoa muito significativa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um diário, de uma pessoa muito significativa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma foto, de uma pessoa muito significativa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um livro, de uma pessoa muito significativa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma aliança, de uma pessoa muito significativa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Uma carta, de uma pessoa muito significativa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um broche, de uma pessoa muito significativa': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Uma passagem de ônibus': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um bicho de pelúcia': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um disco de música': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um isqueiro': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um selo de carta': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Algo desconhecido que você procurar entender: uma carta escrita em idioma desconhecido.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Algo desconhecido que você procurar entender: um tubo curioso de origem desconhecida.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Algo desconhecido que você procurar entender: uma curiosa bola prateada.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Algo desconhecido que você procurar entender: um bilhete com um endereço que não existe.': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Bastão de críquete': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Bola de beisebol autografada': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Vara de pesca': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Um revólver de serviço (quebrado)': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Seu antigo rifle de caça (quebrado)': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Faca escondida em sua bota': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+      {
+        'Um cão': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+        'Um gato': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      },
+    ],
+  },
+  'Características': {
+    gerar: false,
+    itens: [
+      {
+        '': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      }
+    ],
+  },
+  'Ferimentos & Cicatrizes': {
+    gerar: false,
+    itens: [
+      {
+        '': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      }
+    ],
+  },
+  'Fobias & Manias': {
+    gerar: false,
+    itens: [
+      {
+        '': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      }
+    ],
+  },
+  'Tomos Arcanos, Feitiços & Artefatos': {
+    gerar: false,
+    itens: [
+      {
+        '': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      }
+    ],
+  },
+  'Encontros com Entidades Estranhas': {
+    gerar: false,
+    itens: [
+      {
+        '': { restricao_genero: false, genero: '', possui_gerador: false, gerador: null, restricao_padrao_vida: false, padroes_aceitos: [] },
+      }
+    ],
+  },
+};
+
+function obterAntecedentesValidos(padrao_vida,genero,callback) {
+  let array_fora = Object.keys(GERAR_ANTECEDENTES);
+  let copia_segura = {};
+
+  array_fora.forEach((antecedente, index_fora) => {
+
+    copia_segura[antecedente] = {
+      itens: [],
+    };
+
+    GERAR_ANTECEDENTES[antecedente].itens.forEach((item, index_itens) => {
+      copia_segura[antecedente].itens.push({});
+
+      let array_dentro = Object.keys(item);
+
+      array_dentro.forEach((entry, index_dentro) => {
+
+        if ( (!item[entry].restricao_genero) || ( (item[entry].restricao_genero) && (genero == item[entry].genero) ) ) {
+
+          if ( (!item[entry].restricao_padrao_vida) || ( (item[entry].restricao_padrao_vida) && (item[entry].padroes_aceitos.indexOf(padrao_vida) > -1) ) ) {
+
+            copia_segura[antecedente].itens[index_itens][entry] = {
+              possui_gerador: item[entry].possui_gerador,
+              gerador: item[entry].gerador,
+            };
+
+          }
+
+        }
+
+        if (index_dentro == (array_dentro.length - 1)) {
+          if (index_itens == (GERAR_ANTECEDENTES[antecedente].itens.length - 1)) {
+            if (index_fora == (array_fora.length - 1)) {
+              callback(copia_segura);
+            }
+          }
+        }
+      });
+    });
+  });
+}
+
+function gerarAntecedente(nome,padrao_vida,genero,antecedente,callback) {
+  let gerar_antecedentes = document.getElementById('form-antecedentes').checked;
+  let index_sorteado = Math.floor(Math.random() * ANTECEDENTES[antecedente].length);
+
+  if ( (gerar_antecedentes) && (GERAR_ANTECEDENTES[antecedente].gerar) ) {
+
+    obterAntecedentesValidos(padrao_vida,genero,(copia_segura)=>{
+      let lista_objeto = copia_segura[antecedente].itens[index_sorteado];
+      let lista = Object.keys(lista_objeto);
+      if (lista.length == 0) {
+        callback(ANTECEDENTES[antecedente][index_sorteado]);
+      } else {
+        let item_lista_sorteado = Math.floor(Math.random() * lista.length);
+        if (lista_objeto[lista[item_lista_sorteado]].possui_gerador) {
+          let tipo = lista[item_lista_sorteado];
+          lista_objeto[lista[item_lista_sorteado]].gerador(nome,tipo,gerado=>{
+            callback(gerado);
+          });
+        } else {
+          callback(lista[item_lista_sorteado]);
+        }
+      }
+    });
+
+  } else {
+    callback(ANTECEDENTES[antecedente][index_sorteado]);
+  }
+}
+
+function definirAntecedentes(nome,padrao_vida,genero,callback) {
   let array_antecedentes = Object.keys(ANTECEDENTES);
   let antecedentes = {};
 
   array_antecedentes.forEach((antecedente, index_antecedente) => {
-    let index_sorteado = Math.floor(Math.random() * ANTECEDENTES[antecedente].length);
-    antecedentes[antecedente] = ANTECEDENTES[antecedente][index_sorteado];
 
-    if (index_antecedente == (array_antecedentes.length - 1)) {
-      callback(antecedentes);
-    }
+    gerarAntecedente(nome,padrao_vida,genero,antecedente,(retorno)=>{
+      antecedentes[antecedente] = retorno;
+
+      if (index_antecedente == (array_antecedentes.length - 1)) {
+
+        antecedentes['Ferimentos & Cicatrizes'] = '';
+        antecedentes['Fobias & Manias'] = '';
+        antecedentes['Tomos Arcanos, Feitiços & Artefatos'] = '';
+        antecedentes['Encontros com Entidades Estranhas'] = '';
+
+        let conexoes = ['Ideologia/Crenças','Pessoas Significativas','Locais Importantes','Pertences Queridos'];
+        let index_conexoes = Math.floor(Math.random() * conexoes.length);
+        let conexao_chave = conexoes[index_conexoes];
+
+        callback(antecedentes,conexao_chave);
+      }
+
+    });
   });
 }
 
@@ -3003,6 +3524,8 @@ function definirNomeENascimento(genero,idade,callback) {
 */
 
 function obterImagem(callback) {
+  let genero_sorteado = (Math.floor(Math.random() * 10) < 5) ? 'Masculino' : 'Feminino';
+
   if (OBTER_IMAGEM) {
     try {
       fetch('https://flechamagica.com.br/fotos/api.php', { method: 'GET' })
@@ -3012,14 +3535,14 @@ function obterImagem(callback) {
       })
       .catch((error) => {
         console.error(error);
-        callback('img/default_user.jpg','Masculino');
+        callback('img/default_user.jpg',genero_sorteado);
       });
     } catch (error) {
       console.error(error);
-      callback('img/default_user.jpg','Masculino');
+      callback('img/default_user.jpg',genero_sorteado);
     }
   } else {
-    callback('img/default_user.jpg','Masculino');
+    callback('img/default_user.jpg',genero_sorteado);
   }
 };
 
@@ -3038,11 +3561,12 @@ function rolarPersonagem(callback) {
             ajusteFinalPericiais(pericias_calculadas,(pericias)=>{
               definirPadraoDeVida(atributos,pericias,(nivel_credito)=>{
                 definirEquipamentos(pericias,ocupacao,(equipamentos,armas)=>{
-                  definirAntecedentes(antecedentes=>{
 
-                    obterImagem((url,genero)=>{
+                  obterImagem((url,genero)=>{
 
-                      definirNomeENascimento(genero,atributos['Informações']['Idade'],(nome,data_nascimento)=>{
+                    definirNomeENascimento(genero,atributos['Informações']['Idade'],(nome,data_nascimento)=>{
+
+                      definirAntecedentes(nome,atributos['Padrão de Vida']['Nível de Gastos'],genero,(antecedentes,conexao_chave)=>{
 
                         if ('Mythos de Cthulhu' in pericias) {
                           atributos['Atributos Secundários']['Sanidade Máxima'] = atributos['Atributos Secundários']['Sanidade Máxima'] - pericias['Mythos de Cthulhu']['Regular'];
@@ -3057,6 +3581,7 @@ function rolarPersonagem(callback) {
                         personagem['Equipamentos'] = equipamentos;
                         personagem['Armas'] = armas;
                         personagem['Antecedentes'] = antecedentes;
+                        personagem['Conexão-Chave'] = conexao_chave;
 
                         if (LOG) {
                           console.log('Personagem:');
@@ -3064,11 +3589,13 @@ function rolarPersonagem(callback) {
                         }
 
                         callback(personagem);
+
                       });
 
                     });
 
                   });
+
                 });
               });
             });
@@ -3090,22 +3617,6 @@ function carregarImagem(url,callback) {
   }
   img.src = url;
 }
-
-document.getElementById('nome_jogador').addEventListener('input',(event)=>{
-  /*
-  event.preventDefault();
-  let nome = document.getElementById('nome_jogador').value;
-  document.getElementById('jogador').value = nome;
-  localStorage.setItem('nome_jogador', nome);
-  */
-});
-
-document.getElementById('nome_personagem').addEventListener('input',(event)=>{
-  /*
-  event.preventDefault();
-  document.getElementById('personagem').innerHTML = document.getElementById('nome_personagem').value;
-  */
-});
 
 function definirAtributo(personagem,id,atributo) {
   document.querySelector(`#${id} input[type=number].regular`).value = personagem['Atributos'][atributo]['Atributo'];
@@ -3209,7 +3720,7 @@ function renderPericiais(personagem,callback) {
 }
 
 function renderArmas(armas,callback) {
-  let qtde = 4;
+  let qtde = 6;
   let array_qtde = [...new Array(qtde).keys()];
   let innerHTML = '';
 
@@ -3267,25 +3778,69 @@ function renderArmas(armas,callback) {
   });
 }
 
+function renderAntecedentes(antecedentes,conexao_chave,callback) {
+  let innerHTML = '';
+  let array = Object.keys(antecedentes);
+
+  array.forEach((antecedente, index) => {
+
+    if (antecedente != 'Por que essa pessoa é importante?') {
+      let tag_conexao_chave = '';
+      if (
+        (antecedente == 'Ideologia/Crenças') ||
+        (antecedente == 'Pessoas Significativas') ||
+        (antecedente == 'Locais Importantes') ||
+        (antecedente == 'Pertences Queridos')
+      ) {
+        let checked = '';
+        if (conexao_chave == antecedente) {
+          checked = 'checked="checked"';
+        }
+
+        tag_conexao_chave = `
+        <label class="conexao-chave">
+          <span>Conexão-Chave</span>
+          <input type="checkbox" ${checked}>
+        </label>
+        `;
+      }
+
+      let valor = antecedentes[antecedente];
+      if (antecedente == 'Pessoas Significativas') {
+        // Por que essa pessoa é importante?
+        valor += ' ' + antecedentes[array[index+1]];
+      }
+
+      innerHTML += `
+      <div class="antecedente" id="${antecedente}">
+        <div class="parte">
+          <label class="sobre">${antecedente}</label>
+          ${tag_conexao_chave}
+          <textarea class="valor">${valor}</textarea>
+        </div>
+      </div>
+      `;
+    }
+
+    if (index == (array.length - 1)) {
+      callback(innerHTML);
+    }
+  });
+}
+
 function preencherTela() {
   console.log(VERSAO);
   document.getElementById('loading').style.display = 'block';
 
   if (LOG) {
-    document.getElementById('mythos').checked = true;
+    document.getElementById('form-mythos').checked = true;
   }
 
   rolarPersonagem(personagem=>{
     carregarImagem(personagem['Informações']['Imagem'],()=>{
-      document.getElementById('nome_personagem').value = personagem['Informações']['Nome'];
 
-      let nome = localStorage.getItem('nome_jogador');
-      if (nome === null) {
-        nome = '';
-      }
-      document.getElementById('jogador').value = nome;
-      document.getElementById('nome_jogador').value = nome;
-      document.getElementById('personagem').value = document.getElementById('nome_personagem').value;
+      document.getElementById('jogador').value = '';
+      document.getElementById('personagem').value = personagem['Informações']['Nome'];
 
       let ocupacao = personagem['Informações']['Ocupação'];
       if (ocupacao == 'Profissional de Entretenimento') {
@@ -3340,9 +3895,13 @@ function preencherTela() {
         renderArmas(personagem["Armas"],(innerHTML)=>{
           document.getElementById('carregando-armas').innerHTML = innerHTML;
 
-          document.getElementById('equipamentos_e_pertences').value = personagem['Equipamentos'].join("\r\n");
+          document.getElementById('equipamentos-e-pertences').value = personagem['Equipamentos'].join("\r\n");
 
-          document.getElementById('loading').style.display = 'none';
+          renderAntecedentes(personagem["Antecedentes"],personagem["Conexão-Chave"],(innerHTML)=>{
+            document.getElementById('carregando-antecedentes').innerHTML = innerHTML;
+
+            document.getElementById('loading').style.display = 'none';
+          });
         });
       });
     });

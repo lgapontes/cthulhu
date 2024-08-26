@@ -52,7 +52,6 @@ main > span.text {
   box-sizing: border-box;
 
   width: 100%;
-  margin-bottom: 4px;
   margin-top: 5px;
 }
 
@@ -84,7 +83,6 @@ main > span.text > select {
   width: 70%;
   border: 1px solid #C0C0C0;
   padding: 4px;
-  margin-bottom: 6px;
 }
 
 main > span.checkbox {
@@ -92,9 +90,8 @@ main > span.checkbox {
   float: left;
   box-sizing: border-box;
 
-  width: 50%;
-  margin-bottom: 14px;
-  margin-top: 5px;
+  width: 100%;
+  margin-top: 7px;
 }
 
 span::after {
@@ -109,7 +106,6 @@ main > span.checkbox > input[type=checkbox] {
   float: left;
   margin-top: 2px;
   margin-right: 4px;
-  margin-left: 8px;
 }
 main > span.checkbox > label {
   display: block;
@@ -124,6 +120,7 @@ button.primary {
   background-color: #b71c1c;
   color: #ffffff;
   font-weight: bold;
+  margin-top: 10px;
 }
 button.second {
   padding: 4px 8px;
@@ -1118,6 +1115,120 @@ div.ficha div.bloco100-outros div.bloco > div.container > textarea.equipamentos 
   resize: none;
 }
 
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente {
+  display: block;
+  float: left;
+  width: 98%;
+  margin: 1%;
+  box-sizing: border-box;
+  padding: 4px 0 0 4px;
+
+  font-size: 1em;
+  font-style: normal;
+  font-weight: normal;
+  background-color: rgba(230,230,230,0.5);
+
+  border: 1px solid #E59700;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte {
+  display: block;
+  float: left;
+  width: 99%;
+  margin: 0;
+  margin-right: 1%;
+  margin-bottom: 1%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte > label.sobre {
+  display: block;
+  float: left;
+
+  box-sizing: border-box;
+  line-height: 14px;
+  font-size: 0.7em;
+  font-weight: bold;
+  background-color: #ccc;
+  border-top-right-radius: 10px;
+  padding: 2px 8px 2px 2px;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte > label.conexao-chave {
+  display: block;
+  float: right;
+  width: 50%;
+
+  box-sizing: border-box;
+  line-height: 16px;
+  font-size: 0.7em;
+  font-weight: normal;
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  border-radius: 0;
+  padding-right: 6px;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte > label.conexao-chave > span {
+  display: block;
+  float: right;
+  padding: 0;
+  margin: 0;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte > label.conexao-chave > input[type=checkbox] {
+  display: block;
+  float: right;
+  padding: 0;
+  margin: 1px 2px 0 0;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte > label.conexao-chave::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente > div.parte > textarea.valor {
+  display: block;
+  float: left;
+
+  width: 100%;
+  margin: 0;
+  height: 60px;
+  box-sizing: border-box;
+  font-size: 0.8em;
+  line-height: 16px;
+
+  border: 1px solid #ccc;
+  padding: 2px;
+  text-indent: 0;
+  text-align: left;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-style: normal;
+  font-weight: normal;
+
+  resize: none;
+}
+
 div.ficha div.bloco100-outros div.bloco > div.container > div.arma {
   display: block;
   float: left;
@@ -1386,12 +1497,15 @@ div.loading {
 
 @media (min-width: 850px) {
   main > span.text {
-    width: 50%;
-    padding-left: 10px;
+    width: 100%;
   }
-  main > span.checkbox {
-    width: 25%;
-    padding-top: 6px;
+
+  main > span.text > label {
+    width: 15%;
+  }
+
+  main > span.text > select {
+    width: 85%;
   }
 
   div.ficha {
@@ -1448,5 +1562,10 @@ div.loading {
 
   div.ficha div.bloco100-outros div.bloco > div.container > textarea.equipamentos {
     height: 70px;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente {
+    width: 48%;
+    margin: 1%;
   }
 }
