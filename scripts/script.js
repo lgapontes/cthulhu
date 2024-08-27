@@ -1,6 +1,6 @@
 
 const LOG = false;
-const LOG_PERSONAGEM = true;
+const LOG_PERSONAGEM = false;
 const VERSAO = `1.0.1 ${LOG ? '(debug)' : '(beta)'}`;
 
 function logger(msg) {
@@ -1420,33 +1420,6 @@ if (LOG) {
 function obterOcupacoes() {
   let array_ocupacoes = Object.keys(OCUPACOES);
   return array_ocupacoes;
-}
-
-function createOption(select,value) {
-  let option = document.createElement('option');
-  option.value = value;
-  option.innerHTML = value;
-
-  if ( (LOG) && (value == 'Ocupação de Teste') ) {
-    option.selected = 'selected';
-  }
-
-  select.add(option);
-}
-
-function preencherSelectOcupacoes(callback) {
-  let select = document.getElementById('opcao');
-  select.innerHTML = '';
-  let ocupacoes = obterOcupacoes();
-
-  createOption(select,'Todas as ocupações');
-
-  ocupacoes.forEach((ocupacao, index) => {
-    createOption(select,ocupacao);
-    if (index == (ocupacoes.length - 1)) {
-      callback();
-    }
-  });
 }
 
 function obterPericiaIndividual(atributos,ocupacao,nome_pericia,callback) {
@@ -3572,7 +3545,7 @@ function obterImagem(callback) {
 
 /* ----------------------------------------------------------- */
 
-function rolarPersonagem(callback) {
+function rolarPersonagem(jogador,callback) {
   rolarAtributos((atributos)=>{
     selecionarOcupacao((nome_ocupacao,ocupacao)=>{
       atributos['Informações']['Ocupação'] = nome_ocupacao;
@@ -3596,16 +3569,25 @@ function rolarPersonagem(callback) {
                           atributos['Atributos Secundários']['Sanidade Máxima'] = atributos['Atributos Secundários']['Sanidade Máxima'] - pericias['Mythos de Cthulhu']['Regular'];
                         }
 
+                        let uuid = self.crypto.randomUUID();
+
                         let personagem = atributos;
+                        atributos['Informações']['UUID'] = uuid;
                         atributos['Informações']['Imagem'] = url;
                         atributos['Informações']['Gênero'] = genero;
                         atributos['Informações']['Nome'] = nome;
+                        atributos['Informações']['Jogador'] = jogador;
                         atributos['Informações']['Data de Nascimento'] = data_nascimento;
                         personagem['Perícias'] = pericias;
                         personagem['Equipamentos'] = equipamentos;
                         personagem['Armas'] = armas;
                         personagem['Antecedentes'] = antecedentes;
                         personagem['Conexão-Chave'] = conexao_chave;
+
+                        /* Formatar */
+                        personagem['Padrão de Vida']['Hospedagens'] = personagem['Padrão de Vida']['Hospedagens'].join(", ");
+                        personagem['Padrão de Vida']['Transportes'] = personagem['Padrão de Vida']['Transportes'].join(", ");
+                        personagem['Equipamentos'] = personagem['Equipamentos'].join("\r\n");
 
                         if (LOG_PERSONAGEM) {
                           console.log('Personagem:');

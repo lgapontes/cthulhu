@@ -1,4 +1,31 @@
 
+function createOption(select,value) {
+  let option = document.createElement('option');
+  option.value = value;
+  option.innerHTML = value;
+
+  if ( (LOG) && (value == 'Ocupação de Teste') ) {
+    option.selected = 'selected';
+  }
+
+  select.add(option);
+}
+
+function preencherSelectOcupacoes(callback) {
+  let select = document.getElementById('opcao');
+  select.innerHTML = '';
+  let ocupacoes = obterOcupacoes();
+
+  createOption(select,'Todas as ocupações');
+
+  ocupacoes.forEach((ocupacao, index) => {
+    createOption(select,ocupacao);
+    if (index == (ocupacoes.length - 1)) {
+      callback();
+    }
+  });
+}
+
 function carregarImagem(url,callback) {
   var img = new Image();
   img.onload = function() {
@@ -133,31 +160,31 @@ function renderArmas(armas,callback) {
     }
 
     innerHTML += `
-    <div class="arma" id="${nome}">
+    <div class="arma">
       <div class="parte parte-nome">
         <label class="sobre">Arma</label>
-        <input type="text" class="valor left" meta="Nome" value="${nome}">
+        <input type="text" class="valor left" id="atributo-Armas_${index}_Nome" value="${nome}">
       </div>
       <div class="parte parte-dano">
         <label class="sobre">Dano</label>
-        <input type="text" class="valor pequeno" meta="Dano" value="${dano}">
+        <input type="text" class="valor pequeno" id="atributo-Armas_${index}_Dano" value="${dano}">
       </div>
 
       <div class="parte">
         <label class="sobre">Alcance</label>
-        <input type="text" class="valor pequeno" meta="Alcance Base" value="${alcance}">
+        <input type="text" class="valor pequeno" id="atributo-Armas_${index}_Alcance Base" value="${alcance}">
       </div>
       <div class="parte">
         <label class="sobre">Ataques</label>
-        <input type="text" class="valor" meta="Usos por Rodada" value="${ataques}">
+        <input type="text" class="valor" id="atributo-Armas_${index}_Usos por Rodada" value="${ataques}">
       </div>
       <div class="parte">
         <label class="sobre">Munição</label>
-        <input type="text" class="valor" meta="Munição na Arma" value="${municao}">
+        <input type="text" class="valor" id="atributo-Armas_${index}_Munição na Arma" value="${municao}">
       </div>
       <div class="parte">
         <label class="sobre">Defeito</label>
-        <input type="text" class="valor" meta="Defeito" value="${defeito}">
+        <input type="text" class="valor" id="atributo-Armas_${index}_Defeito" value="${defeito}">
       </div>
     </div>
     `;
@@ -218,6 +245,170 @@ function renderAntecedentes(antecedentes,conexao_chave,callback) {
   });
 }
 
+/*-----------------------------------------------------------------------------------------*/
+
+function definirPropriedadePersonagem(event,personagem,callback) {
+  let tag = event.target;
+  let id = tag.id;
+
+  // text, number, checkbox, textarea
+  let type = tag.type;
+
+  let valor = '';
+
+  if (type == 'checkbox') {
+    valor = tag.checked;
+  } else if (type == 'number') {
+    valor = parseInt(tag.value);
+  } else {
+    valor = tag.value;
+  }
+
+  // atributo-Informações_Nome
+  try {
+    let partes_prefixo = id.split('-');
+    if (partes_prefixo.length == 2) {
+
+      let partes_campos = partes_prefixo[1].split('_');
+      let eh_index = -1;
+      if (partes_campos[0] == 'Armas') {
+        eh_index = 1;
+      }
+
+      let ponteiro = personagem;
+
+      partes_campos.forEach((parte, index_partes) => {
+
+        let parte_ajustada = parte;
+
+        if (eh_index == index_partes) {
+          parte_ajustada = parseInt(parte);
+        }
+
+        if (index_partes < (partes_campos.length - 1)) {
+          ponteiro = ponteiro[parte_ajustada];
+        } else {
+          ponteiro[parte_ajustada] = valor;
+
+          callback();
+        }
+      });
+
+    } else {
+      console.error(`Ocorreu um erro ao definir a propriedade ${id}`);
+      callback();
+    }
+  } catch (error) {
+    console.error(`Ocorreu um erro ao definir a propriedade ${id}`);
+    callback();
+  }
+}
+
+/*-----------------------------------------------------------------------------------------*/
+
+let PERSONAGEM_TRABALHO = {};
+const LOCAL_STORAGE = 'personagens';
+
+function bancoObterPersonagens() {
+  let personagens = {};
+  let dados = localStorage.getItem(LOCAL_STORAGE);
+
+  if (dados === null) {
+    localStorage.setItem(LOCAL_STORAGE,JSON.stringify(personagens));
+  } else {
+    personagens = JSON.parse(dados);
+  }
+
+  return personagens;
+}
+
+function bancoObterPersonagem(id) {
+  let personagens = bancoObterPersonagens();
+
+  if (id in personagens) {
+    return personagens[id];
+  } else {
+    return null;
+  }
+}
+
+function bancoSalvarPersonagem(personagem) {
+  let personagens = bancoObterPersonagens();
+  personagens[personagem['Informações']['UUID']] = personagem;
+  localStorage.setItem(LOCAL_STORAGE,JSON.stringify(personagens));
+}
+
+document.getElementById('salvar').addEventListener('click',event=>{
+  event.preventDefault();
+  bancoSalvarPersonagem(PERSONAGEM_TRABALHO);
+  personagemFoiAlterado(false);
+});
+
+document.getElementById('salvar-fab').addEventListener('click',event=>{
+  event.preventDefault();
+  bancoSalvarPersonagem(PERSONAGEM_TRABALHO);
+  personagemFoiAlterado(false);
+});
+
+/*-----------------------------------------------------------------------------------------*/
+
+let LISTENERS_FICHA = [];
+
+function personagemFoiAlterado(alterado) {
+  if (alterado) {
+    document.getElementById('salvar').style.display = 'block';
+    document.getElementById('salvar-fab').style.display = 'block';
+  } else {
+    document.getElementById('salvar').style.display = 'none';
+    document.getElementById('salvar-fab').style.display = 'none';
+  }
+}
+
+const FUNCAO = (event) => {
+  event.preventDefault();
+  definirPropriedadePersonagem(event,PERSONAGEM_TRABALHO,()=>{
+    personagemFoiAlterado(true);
+  });
+};
+
+function limparListaListeners(callback) {
+  if (LISTENERS_FICHA.length == 0) {
+    callback();
+  } else {
+    LISTENERS_FICHA.forEach((tag, index) => {
+        tag.removeEventListener('input',FUNCAO);
+
+      if (index == (LISTENERS_FICHA.length - 1)) {
+        LISTENERS_FICHA = [];
+        callback();
+      }
+    });
+  }
+}
+
+function definirListeners(personagem,callback) {
+  PERSONAGEM_TRABALHO = personagem;
+
+  limparListaListeners(()=>{
+    let tag_ficha = document.querySelector('div.ficha');
+
+    let tags_input_text = [...tag_ficha.querySelectorAll('input[type=text]')];
+    tags_input_text.forEach((tag_input_text, index_tag_input_text) => {
+
+      if (tag_input_text.id.indexOf('Jogador') > -1) {
+        LISTENERS_FICHA.push(tag_input_text);
+        tag_input_text.addEventListener('input',FUNCAO);
+      }
+
+      if (index_tag_input_text == (tags_input_text.length - 1)) {
+        callback();
+      }
+    });
+  });
+}
+
+/*-----------------------------------------------------------------------------------------*/
+
 function preencherTela() {
   console.log(VERSAO);
   document.getElementById('loading').style.display = 'block';
@@ -226,18 +417,22 @@ function preencherTela() {
     document.getElementById('form-mythos').checked = true;
   }
 
-  rolarPersonagem(personagem=>{
+  let jogador = '';
+
+  rolarPersonagem(jogador,personagem=>{
+
     carregarImagem(personagem['Informações']['Imagem'],()=>{
 
-      document.getElementById('atributo-jogador').value = '';
-      document.getElementById('atributo-personagem').value = personagem['Informações']['Nome'];
+      document.getElementById('atributo-Informações_UUID').value = personagem['Informações']['UUID'];
+      document.getElementById('atributo-Informações_Jogador').value = jogador;
+      document.getElementById('atributo-Informações_Nome').value = personagem['Informações']['Nome'];
 
       let ocupacao = personagem['Informações']['Ocupação'];
       if (ocupacao == 'Profissional de Entretenimento') {
         ocupacao = 'Entretenimento';
       }
 
-      document.getElementById('atributo-ocupacao').value = ocupacao;
+      document.getElementById('atributo-Informações_Ocupação').value = ocupacao;
       document.getElementById('atributo-idade').value = personagem['Informações']['Idade'];
       document.getElementById('atributo-nascimento').value = personagem['Informações']['Data de Nascimento'];
 
@@ -286,18 +481,60 @@ function preencherTela() {
         document.getElementById('padrao-de-vida-dinheiro').value = personagem['Padrão de Vida']['Dinheiro'];
         document.getElementById('padrao-de-vida-patrimonio').value = personagem['Padrão de Vida']['Patrimônio'];
 
-        document.getElementById('padrao-de-vida-hospedagens').value = personagem['Padrão de Vida']['Hospedagens'].join(", ");
-        document.getElementById('padrao-de-vida-transportes').value = personagem['Padrão de Vida']['Transportes'].join(", ");
+        document.getElementById('padrao-de-vida-hospedagens').value = personagem['Padrão de Vida']['Hospedagens'];
+        document.getElementById('padrao-de-vida-transportes').value = personagem['Padrão de Vida']['Transportes'];
 
         renderArmas(personagem["Armas"],(innerHTML)=>{
           document.getElementById('carregando-armas').innerHTML = innerHTML;
 
-          document.getElementById('equipamentos-e-pertences').value = personagem['Equipamentos'].join("\r\n");
+          document.getElementById('equipamentos-e-pertences').value = personagem['Equipamentos'];
 
           renderAntecedentes(personagem["Antecedentes"],personagem["Conexão-Chave"],(innerHTML)=>{
             document.getElementById('carregando-antecedentes').innerHTML = innerHTML;
 
-            document.getElementById('loading').style.display = 'none';
+            definirListeners(personagem,()=>{
+                console.log(LISTENERS_FICHA);
+
+                document.getElementById('loading').style.display = 'none';
+            });
+
+
+
+            /* Testando */
+            /*
+            let tag = document.getElementById('atributo-Armas_0_Nome');
+
+            let funcao = (event) => {
+              event.preventDefault();
+              definirPropriedadePersonagem(event,personagem,()=>{
+                console.log(personagem['Armas'][0]);
+              });
+            };
+            console.log(tag.hasAttribute('input'));
+            //tag.addEventListener('input',funcao);
+            console.log(tag.hasAttribute('input'));
+            tag.removeEventListener('input',funcao);
+            console.log(tag.hasAttribute('input'));
+            */
+
+            /*
+            let a = document.createElement('a');
+            a.innerHTML = 'teste';
+            a.id = 'teste-link';
+            a.style.backgroundColor = 'red';
+
+            let funcao = (event) => {
+              event.preventDefault();
+              console.log('teste');
+
+              document.querySelector('div.ficha #teste-link').removeEventListener('click',funcao);
+            };
+            a.addEventListener('click',funcao);
+            //a.removeEventListener('click',funcao);
+
+            document.querySelector('div.ficha').appendChild(a);
+            */
+
           });
         });
       });

@@ -34,29 +34,30 @@
 
       <div class="botoes">
         <button class="primary" type="button" id="rolar">Rolar</button>
-        <button class="primary" type="button" id="salvar">Salvar</button>
+        <button class="primary esconder" type="button" id="salvar">Salvar Personagem</button>
       </div>
     </main>
 
 		<div class="ficha">
+			<input type="hidden" id="atributo-Informações_UUID" value="">
 
 			<div class="bloco50">
 				<div class="informacoes">
 					<label class="sobrecampo jogador">Jogador</label>
 					<!--<label class="valor" id="jogador"></label>-->
-					<input type="text" class="valor valor-amarelo" id="atributo-jogador">
+					<input type="text" class="valor valor-amarelo" id="atributo-Informações_Jogador">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo personagem">Personagem</label>
 					<!--<label class="valor" id="personagem"></label>-->
-					<input type="text" class="valor valor-amarelo" id="atributo-personagem">
+					<input type="text" class="valor valor-amarelo" id="atributo-Informações_Nome">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo ocupacao">Ocupação</label>
 					<!-- <label class="valor" id="ocupacao"></label> -->
-					<input type="text" class="valor" id="atributo-ocupacao">
+					<input type="text" class="valor" id="atributo-Informações_Ocupação">
 				</div>
 
 				<div class="informacoes informacoes-idade">
@@ -490,6 +491,8 @@
 			</div>
 
 		</div>
+
+		<button class="floating-action-button" id="salvar-fab"></button>
 
 		<script type="text/javascript" src="scripts/nomes.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
