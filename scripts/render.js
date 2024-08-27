@@ -433,8 +433,8 @@ function preencherTela() {
       }
 
       document.getElementById('atributo-Informações_Ocupação').value = ocupacao;
-      document.getElementById('atributo-idade').value = personagem['Informações']['Idade'];
-      document.getElementById('atributo-nascimento').value = personagem['Informações']['Data de Nascimento'];
+      document.getElementById('atributo-Informações_Idade').value = personagem['Informações']['Idade'];
+      document.getElementById('atributo-Informações_Data de Nascimento').value = personagem['Informações']['Data de Nascimento'];
 
       definirAtributo(personagem,'atributo-forca','FOR (Força)');
       definirAtributo(personagem,'atributo-destreza','DES (Destreza)');
@@ -444,33 +444,33 @@ function preencherTela() {
       definirAtributo(personagem,'atributo-poder','POD (Poder)');
       definirAtributo(personagem,'atributo-tamanho','TAM (Tamanho)');
       definirAtributo(personagem,'atributo-educacao','EDU (Educação)');
-      document.querySelector(`#atributo-movimento`).value = personagem['Atributos Secundários']['Taxa de Movimento (MOV)'];
+      document.getElementById('atributo-Atributos Secundários_Taxa de Movimento (MOV)').value = personagem['Atributos Secundários']['Taxa de Movimento (MOV)'];
 
-      document.querySelector(`#atributo-pontos-de-vida`).value = personagem['Atributos Secundários']['Pontos de Vida'];
-      document.querySelector(`#atributo-pontos-de-vida-atual`).value = personagem['Atributos Secundários']['Pontos de Vida'];
+      document.getElementById('atributo-Atributos Secundários_Pontos de Vida').value = personagem['Atributos Secundários']['Pontos de Vida'];
+      document.getElementById('atributo-Atributos Secundários_Pontos de Vida Atuais').value = personagem['Atributos Secundários']['Pontos de Vida Atuais'];
 
-      document.getElementById("atributo-lesao-grave").checked = personagem['Atributos Secundários']['Lesão Grave'];
-      document.getElementById("atributo-morrendo").checked = personagem['Atributos Secundários']['Morrendo'];
-      document.getElementById("atributo-inconsciente").checked = personagem['Atributos Secundários']['Inconsciente'];
+      document.getElementById('atributo-Atributos Secundários_Lesão Grave').checked = personagem['Atributos Secundários']['Lesão Grave'];
+      document.getElementById('atributo-Atributos Secundários_Morrendo').checked = personagem['Atributos Secundários']['Morrendo'];
+      document.getElementById('atributo-Atributos Secundários_Inconsciente').checked = personagem['Atributos Secundários']['Inconsciente'];
 
-      document.querySelector(`#atributo-sanidade-inicial`).value = personagem['Atributos Secundários']['SAN (Sanidade)'];
-      document.querySelector(`#atributo-sanidade-maxima`).value = personagem['Atributos Secundários']['Sanidade Máxima'];
-      document.querySelector(`#atributo-sanidade-atual`).value = personagem['Atributos Secundários']['SAN (Sanidade)'];
+      document.getElementById('atributo-Atributos Secundários_SAN (Sanidade)').value = personagem['Atributos Secundários']['SAN (Sanidade)'];
+      document.getElementById('atributo-Atributos Secundários_Sanidade Máxima').value = personagem['Atributos Secundários']['Sanidade Máxima'];
+      document.getElementById('atributo-Atributos Secundários_Sanidade Atual').value = personagem['Atributos Secundários']['Sanidade Atual'];
 
-      document.getElementById("atributo-insanidade-temporaria").checked = personagem['Atributos Secundários']['Insanidade Temporária'];
-      document.getElementById("atributo-insanidade-indefinida").checked = personagem['Atributos Secundários']['Insanidade Indefinida'];
+      document.getElementById('atributo-Atributos Secundários_Insanidade Temporária').checked = personagem['Atributos Secundários']['Insanidade Temporária'];
+      document.getElementById('atributo-Atributos Secundários_Insanidade Indefinida').checked = personagem['Atributos Secundários']['Insanidade Indefinida'];
 
-      document.querySelector(`#atributo-sorte-inicial`).value = personagem['Atributos Secundários']['Sorte'];
-      document.querySelector(`#atributo-sorte-atual`).value = personagem['Atributos Secundários']['Sorte'];
+      document.getElementById('atributo-Atributos Secundários_Sorte').value = personagem['Atributos Secundários']['Sorte'];
+      document.getElementById('atributo-Atributos Secundários_Sorte Atual').value = personagem['Atributos Secundários']['Sorte'];
 
-      document.querySelector(`#atributo-magia-maxima`).value = personagem['Atributos Secundários']['Pontos de Magia'];
-      document.querySelector(`#atributo-magia-atual`).value = personagem['Atributos Secundários']['Pontos de Magia'];
+      document.getElementById('atributo-Atributos Secundários_Pontos de Magia Máximo').value = personagem['Atributos Secundários']['Pontos de Magia Máximo'];
+      document.getElementById('atributo-Atributos Secundários_Pontos de Magia').value = personagem['Atributos Secundários']['Pontos de Magia'];
 
-      document.querySelector(`#atributo-combate-dano-extra`).value = personagem['Atributos Secundários']['Dano Extra'];
+      document.getElementById('atributo-combate-dano-extra').value = personagem['Atributos Secundários']['Dano Extra'];
       if (!personagem['Atributos Secundários']['Dano Extra Negativo']) {
-        document.querySelector(`#atributo-combate-dano-extra`).style.fontSize = '0.7em';
+        document.getElementById('atributo-combate-dano-extra').style.fontSize = '0.7em';
       }
-      document.querySelector(`#atributo-combate-corpo`).value = personagem['Atributos Secundários']['Corpo'];
+      document.getElementById('atributo-combate-corpo').value = personagem['Atributos Secundários']['Corpo'];
 
       definirPericia(personagem,'atributo-secundario-esquivar','Esquivar');
 

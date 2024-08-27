@@ -2692,8 +2692,10 @@ function rolarAtributosComIdade(callback) {
         'Atributos': {},
         'Atributos Secundários': {
           'SAN (Sanidade)': atributosComIdade['POD (Poder)'],
+          'Sanidade Atual': atributosComIdade['POD (Poder)'],
           'Sanidade Máxima': 99,
           'Sorte': atributosComIdade['Sorte'],
+          'Sorte Atual': atributosComIdade['Sorte'],
           'Lesão Grave': false,
           'Morrendo': false,
           'Inconsciente': false,
@@ -2715,6 +2717,7 @@ function rolarAtributosComIdade(callback) {
       atributosCalculados['Atributos']['EDU (Educação)'] = dividirAtributo(atributosComIdade['EDU (Educação)']);
 
       atributosCalculados['Atributos Secundários']['Pontos de Magia'] = atributosCalculados['Atributos']['POD (Poder)']['Quinto'];
+      atributosCalculados['Atributos Secundários']['Pontos de Magia Máximo'] = atributosCalculados['Atributos Secundários']['Pontos de Magia'];
 
       callback(atributosCalculados);
     });
@@ -2784,6 +2787,7 @@ function rolarAtributos(callback) {
 
       let CON_mais_TAM = atributosCalculados['Atributos']['CON (Constituição)']['Atributo'] + atributosCalculados['Atributos']['TAM (Tamanho)']['Atributo'];
       atributosCalculados['Atributos Secundários']['Pontos de Vida'] = Math.floor(CON_mais_TAM / 10);
+      atributosCalculados['Atributos Secundários']['Pontos de Vida Atuais'] = atributosCalculados['Atributos Secundários']['Pontos de Vida'];
 
       let FOR = atributosCalculados['Atributos']['FOR (Força)']['Atributo'];
       let DES = atributosCalculados['Atributos']['DES (Destreza)']['Atributo'];
