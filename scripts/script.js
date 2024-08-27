@@ -2957,11 +2957,28 @@ const geradorPessoasProximas = (nome,tipo,callback) => {
   if (tipo == 'Um colega investigador em seu jogo. Escolha um ou determine aleatoriamente.') {
     callback(tipo);
   } else {
+
+    let genero = (Math.floor(Math.random() * 10) < 5) ? 'Masculino' : 'Feminino';
+    let tipos_generos_masculinos = [
+      'Seu pai, ','Seu padrasto, ','Seu avô paterno, ','Seu avô materno, ','Seu irmão, ','Seu filho, ','Seu cônjuge, ','Seu noivo, ',
+      'Seu amante, ','Seu namorado, ','Seu professor, ','Seu colega de classe, ','Seu vizinho, ','Seu amigo imaginário, ','Seu amigo de infância, ',
+      'Uma estrela de cinema chamado ','Um pessoa da política chamado ','Um músico famoso chamado ',
+    ];
+    let tipos_generos_femininos = [
+      'Sua mãe, ','Sua madrasta, ','Sua avó materna, ','Sua avó paterna, ','Sua irmã, ','Sua filha, ','Sua cônjuge, ','Sua noiva, ','Sua amante, ',
+      'Sua namorada, ','Sua professora, ','Sua colega de classe, ','Sua vizinha, ','Sua amiga imaginária, ','Sua amiga de infância, ','Uma estrela de cinema chamada ',
+      'Um pessoa da política chamada ','Uma musicista famosa chamada ',
+    ];
+
+    if (tipos_generos_masculinos.indexOf(tipo) > -1) {
+      genero = 'Masculino';
+    } else if (tipos_generos_femininos.indexOf(tipo) > -1) {
+      genero = 'Feminino';
+    }
+
     let proximo = false;
     let tipos_proximos_masculinos = ['Seu pai, ','Seu avô paterno, ','Seu avô materno, ','Seu irmão, ','Seu filho, '];
     let tipos_proximos_femininos = ['Sua mãe, ','Sua avó materna, ','Sua avó paterna, ','Sua irmã , ','Sua filha, '];
-    let caso_PNJ = 'Um personagem não-jogador (PNJ) do jogo. Peça ao Guardião para escolher um para você.';
-    let genero = (Math.floor(Math.random() * 10) < 5) ? 'Masculino' : 'Feminino';
 
     if (tipos_proximos_masculinos.indexOf(tipo) > -1) {
       genero = 'Masculino';
@@ -2970,6 +2987,8 @@ const geradorPessoasProximas = (nome,tipo,callback) => {
       genero = 'Feminino';
       proximo = true;
     }
+
+    let caso_PNJ = 'Um personagem não-jogador (PNJ) do jogo. Peça ao Guardião para escolher um para você.';
 
     nameGen(genero,nome_pnj=>{
       if (tipo == caso_PNJ) {
