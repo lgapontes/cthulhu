@@ -575,6 +575,10 @@ div.ficha div.bloco > label.sobrecampo-antecedentes {
   width: 82px;
 }
 
+div.ficha div.bloco > label.sobrecampo-anotacoes {
+  width: 148px;
+}
+
 div.ficha div.bloco > div.container > div.horizontal-texto {
   display: block;
   float: left;
@@ -1115,6 +1119,23 @@ div.ficha div.bloco100-outros div.bloco > div.container > textarea.equipamentos 
   resize: none;
 }
 
+div.ficha div.bloco100-outros div.bloco > div.container > textarea.anotacoes {
+  display: block;
+  width: 98%;
+  margin: 1%;
+  height: 140px;
+  box-sizing: border-box;
+  text-align: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  font-size: .9em;
+  font-style: normal;
+  font-weight: normal;
+
+  resize: none;
+}
+
 div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente {
   display: block;
   float: left;
@@ -1567,5 +1588,9 @@ div.loading {
   div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente {
     width: 48%;
     margin: 1%;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > textarea.anotacoes {
+    height: 70px;
   }
 }
