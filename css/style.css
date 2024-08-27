@@ -1031,6 +1031,14 @@ div.ficha div.bloco > div.container > div.campo > div.flags > span.flag {
   color: #726E54;
 }
 
+div.ficha div.bloco > div.container > div.campo > div.flags > label.flag {
+  display: block;
+  float: left;
+  margin-left: 4px;
+  padding-top: 2px;
+  color: #726E54;
+}
+
 div.ficha div.bloco > div.container > div.campo > div.flags > input[type=checkbox] {
   display: block;
   float: left;

@@ -44,38 +44,38 @@
 				<div class="informacoes">
 					<label class="sobrecampo jogador">Jogador</label>
 					<!--<label class="valor" id="jogador"></label>-->
-					<input type="text" class="valor valor-amarelo" id="jogador">
+					<input type="text" class="valor valor-amarelo" id="atributo-jogador">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo personagem">Personagem</label>
 					<!--<label class="valor" id="personagem"></label>-->
-					<input type="text" class="valor valor-amarelo" id="personagem">
+					<input type="text" class="valor valor-amarelo" id="atributo-personagem">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo ocupacao">Ocupação</label>
 					<!-- <label class="valor" id="ocupacao"></label> -->
-					<input type="text" class="valor" id="ocupacao">
+					<input type="text" class="valor" id="atributo-ocupacao">
 				</div>
 
 				<div class="informacoes informacoes-idade">
 					<label class="sobrecampo idade">Idade</label>
 					<!--<label class="valor" id="idade"></label>-->
-					<input type="number" class="valor" id="idade">
+					<input type="number" class="valor" id="atributo-idade">
 				</div>
 
 				<div class="informacoes informacoes-nascimento">
 					<label class="sobrecampo nascimento">Nascimento</label>
 					<!--<label class="valor" id="nascimento"></label>-->
-					<input type="text" class="valor valor-center" id="nascimento">
+					<input type="text" class="valor valor-center" id="atributo-nascimento">
 				</div>
 			</div>
 
 			<div class="bloco50">
 				<div class="fotografia">
 				  <div class="fotografia-interna moldura"></div>
-				  <div id="fotografia" class="fotografia-interna foto"></div>
+				  <div id="atributo-fotografia" class="fotografia-interna foto"></div>
 				</div>
 			</div>
 
@@ -243,16 +243,16 @@
 
 						<div class="campo campo-flags">
 							<div class="flags">
-								<input type="checkbox">
-								<span class="flag">Lesão Grave</span>
+								<input type="checkbox" id="atributo-lesao-grave" name="atributo-lesao-grave">
+								<label class="flag" for="atributo-lesao-grave">Lesão Grave</label>
 							</div>
 							<div class="flags">
-								<input type="checkbox">
-								<span class="flag">Morrendo</span>
+								<input type="checkbox" id="atributo-morrendo" name="atributo-morrendo">
+								<label class="flag" for="atributo-morrendo">Morrendo</label>
 							</div>
 							<div class="flags">
-								<input type="checkbox">
-								<span class="flag">Inconsciente</span>
+								<input type="checkbox" id="atributo-inconsciente" name="atributo-inconsciente">
+								<label class="flag" for="atributo-inconsciente">Inconsciente</label>
 							</div>
 						</div>
 
@@ -286,12 +286,12 @@
 
 						<div class="campo campo-flags flags-margin">
 							<div class="flags">
-								<input type="checkbox">
-								<span class="flag">Ins. Temporária</span>
+								<input type="checkbox" id="atributo-insanidade-temporaria" name="atributo-insanidade-temporaria">
+								<label class="flag" for="atributo-insanidade-temporaria">Ins. Temporária</label>
 							</div>
 							<div class="flags">
-								<input type="checkbox">
-								<span class="flag">Ins. Indefinida</span>
+								<input type="checkbox" id="atributo-insanidade-indefinida" name="atributo-insanidade-indefinida">
+								<label class="flag" for="atributo-insanidade-indefinida">Ins. Indefinida</label>
 							</div>
 						</div>
 
@@ -491,8 +491,9 @@
 
 		</div>
 
-		<script type="text/javascript" src="scripts/fantasyname.js"></script>
+		<script type="text/javascript" src="scripts/nomes.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
+		<script type="text/javascript" src="scripts/render.js"></script>
     <script type="text/javascript">
       let buttonRolar = document.getElementById('rolar');
       let buttonSalvar = document.getElementById('salvar');
