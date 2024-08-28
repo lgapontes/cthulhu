@@ -34,7 +34,8 @@ main {
   font-size: 1em;
   font-weight: bold;
 
-  background-image: url(../img/background3.jpg);
+  /* background-image: url(../img/background3.jpg); */
+  background-color: #fff3e0;
   background-repeat: repeat;
   background-size: 600px;
 }
@@ -113,25 +114,61 @@ main > span.checkbox > label {
   padding: 0;
 }
 
-button.primary {
+main button {
+  display: block;
   padding: 4px 8px;
   float: right;
   margin-left: 5px;
-  background-color: #b71c1c;
+  background-color: #000;
   color: #ffffff;
   font-weight: bold;
   margin-top: 10px;
-}
-button.second {
-  padding: 4px 8px;
-  float: right;
-  margin-left: 3px;
-  margin-top: 5px;
-  font-weight: bold;
-  background-color: #cccccc;
+  border-radius: 2px;
 }
 
-button.esconder {
+main button::after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+
+main button > span {
+  display: block;
+  float: left;
+}
+
+main button > img {
+  display: block;
+  float: left;
+  width: 20px;
+  margin-right: 6px;
+}
+
+main button > img.floppy {
+  margin-top: 1px;
+  width: 14px;
+}
+
+main button > img.lista {
+  margin-top: 1px;
+  width: 17px;
+}
+
+main button.vermelho {
+  background-color: #b71c1c;
+}
+main button.marrom {
+  float: left;
+  background-color: #6d4c41;
+  margin-left: 0;
+  margin-right: 5px;
+}
+main button.verde {
+  background-color: #00897b;
+}
+
+main button.esconder {
   display: none;
 }
 
@@ -146,7 +183,7 @@ button.floating-action-button {
   height: 75px;
   border-radius: 50%;
 
-  background-color: #b71c1c;
+  background-color: #00897b;
   background-image: url(../img/floppy-disk-solid.svg);
   background-position: center;
   background-repeat: no-repeat;
@@ -163,11 +200,19 @@ button.floating-action-button {
 br {
   clear: both;
 }
+
 div.botoes {
   display: block;
-  margin-top: 5px;
-  clear: both;
 }
+
+div.botoes-baixo {
+  margin-top: 5px;
+}
+
+div.botoes-cima {
+  margin-bottom: 5px;
+}
+
 div.botoes::after {
   display: block;
   height: 0;
@@ -529,6 +574,14 @@ div.ficha div.bloco > div.container {
   overflow: hidden;
 }
 
+div.ficha div.bloco > div.container-dicas {
+  font-size: 0.9em;
+  padding: 10px 4px 6px 4px;
+  font-style: normal;
+  text-indent: 0;
+  overflow: hidden;
+}
+
 div.ficha div.bloco100-fluido div.bloco > div.container,
 div.ficha div.bloco33 div.bloco > div.container,
 div.ficha div.bloco66 div.bloco > div.container {
@@ -607,6 +660,10 @@ div.ficha div.bloco > label.sobrecampo-antecedentes {
 
 div.ficha div.bloco > label.sobrecampo-anotacoes {
   width: 148px;
+}
+
+div.ficha div.bloco > label.sobrecampo-dicas {
+  width: 40px;
 }
 
 div.ficha div.bloco > div.container > div.horizontal-texto {

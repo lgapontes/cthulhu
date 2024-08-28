@@ -3567,6 +3567,38 @@ function obterImagem(callback) {
 
 /* ----------------------------------------------------------- */
 
+function hashCode(_string,callback) {
+  var hash = 0,
+    i, chr;
+  if (_string.length === 0) callback('' + hash);
+  for (i = 0; i < _string.length; i++) {
+    chr = _string.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+
+    if (i == (_string.length - 1)) {
+      callback('' + hash);
+    }
+  }
+}
+
+function criarUUIDSeguro(callback) {
+  try {
+    let uuid = self.crypto.randomUUID();
+    callback(uuid);
+  } catch (error) {
+    console.error(`Ocorreu um erro ao gerar o ID: ${error}`);
+    let data = new Date();
+    let parte1 = data.toString() + '';
+    hashCode(parte1,(uuid1)=>{
+      let parte2 = Math.floor(Math.random() * 999999)  + '';
+      hashCode(parte2,(uuid2)=>{
+        callback(Math.abs(uuid1) + '-' + Math.abs(uuid2));
+      });
+    });
+  }
+}
+
 function rolarPersonagem(jogador,callback) {
   rolarAtributos((atributos)=>{
     selecionarOcupacao((nome_ocupacao,ocupacao)=>{
@@ -3591,34 +3623,41 @@ function rolarPersonagem(jogador,callback) {
                           atributos['Atributos Secundários']['Sanidade Máxima'] = atributos['Atributos Secundários']['Sanidade Máxima'] - pericias['Mythos de Cthulhu']['Regular'];
                         }
 
-                        let uuid = self.crypto.randomUUID();
-
                         let personagem = atributos;
-                        atributos['Informações']['UUID'] = uuid;
-                        atributos['Informações']['Imagem'] = url;
-                        atributos['Informações']['Gênero'] = genero;
-                        atributos['Informações']['Nome'] = nome;
-                        atributos['Informações']['Jogador'] = jogador;
-                        atributos['Informações']['Data de Nascimento'] = data_nascimento;
-                        personagem['Perícias'] = pericias;
-                        personagem['Equipamentos'] = equipamentos;
-                        personagem['Armas'] = armas;
-                        personagem['Antecedentes'] = antecedentes;
-                        personagem['Conexões-Chave'] = conexoes_chave;
-                        personagem['Anotações'] = '';
-                        personagem['Mostrar Dicas'] = document.getElementById('form-dicas').checked;
 
-                        /* Formatar */
-                        personagem['Padrão de Vida']['Hospedagens'] = personagem['Padrão de Vida']['Hospedagens'].join(", ");
-                        personagem['Padrão de Vida']['Transportes'] = personagem['Padrão de Vida']['Transportes'].join(", ");
-                        personagem['Equipamentos'] = personagem['Equipamentos'].join("\r\n");
+                        criarUUIDSeguro((uuid)=>{
 
-                        if (LOG_PERSONAGEM) {
-                          console.log('Personagem:');
-                          console.log(JSON.stringify(personagem, null, 2));
-                        }
+                          personagem['Metadados'] = {};
+                          personagem['Metadados']['UUID'] = uuid;
+                          personagem['Metadados']['Mostrar Dicas'] = document.getElementById('form-dicas').checked;
+                          personagem['Metadados']['Versão'] = VERSAO;
 
-                        callback(personagem);
+                          personagem['Informações']['Imagem'] = url;
+                          personagem['Informações']['Gênero'] = genero;
+                          personagem['Informações']['Nome'] = nome;
+                          personagem['Informações']['Jogador'] = jogador;
+                          personagem['Informações']['Data de Nascimento'] = data_nascimento;
+
+                          personagem['Perícias'] = pericias;
+                          personagem['Equipamentos'] = equipamentos;
+                          personagem['Armas'] = armas;
+                          personagem['Antecedentes'] = antecedentes;
+                          personagem['Conexões-Chave'] = conexoes_chave;
+                          personagem['Anotações'] = '';
+
+                          /* Formatar */
+                          personagem['Padrão de Vida']['Hospedagens'] = personagem['Padrão de Vida']['Hospedagens'].join(", ");
+                          personagem['Padrão de Vida']['Transportes'] = personagem['Padrão de Vida']['Transportes'].join(", ");
+                          personagem['Equipamentos'] = personagem['Equipamentos'].join("\r\n");
+
+                          if (LOG_PERSONAGEM) {
+                            console.log('Personagem:');
+                            console.log(JSON.stringify(personagem, null, 2));
+                          }
+
+                          callback(personagem);
+
+                        });
 
                       });
 

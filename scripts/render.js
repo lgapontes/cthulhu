@@ -427,7 +427,7 @@ function preencherTela() {
 
     carregarImagem(personagem['Informações']['Imagem'],()=>{
 
-      document.getElementById('atributo|Informações_UUID').value = personagem['Informações']['UUID'];
+      document.getElementById('atributo|Informações_UUID').value = personagem['Metadados']['UUID'];
       document.getElementById('atributo|Informações_Jogador').value = jogador;
       document.getElementById('atributo|Informações_Nome').value = personagem['Informações']['Nome'];
 
@@ -499,6 +499,11 @@ function preencherTela() {
             document.getElementById('atributo|Anotações').value = personagem['Anotações'];
 
             // personagem['Mostrar Dicas']
+            /*
+            atributos['Metadados']['UUID'] = uuid;
+            atributos['Metadados']['Mostrar Dicas'] = document.getElementById('form-dicas').checked;
+            atributos['Metadados']['Versão'] = VERSAO;
+            */
 
             definirListeners(personagem,()=>{
                 document.getElementById('loading').style.display = 'none';
