@@ -338,16 +338,25 @@ function bancoSalvarPersonagem(personagem) {
   localStorage.setItem(LOCAL_STORAGE,JSON.stringify(personagens));
 }
 
-document.getElementById('salvar').addEventListener('click',event=>{
+document.getElementById('rolar').addEventListener('click',event=>{
   event.preventDefault();
+  let personagem_salvo = null;
+  preencherTela(personagem_salvo);
+});
+
+function salvarPersonagem() {
   bancoSalvarPersonagem(PERSONAGEM_TRABALHO);
   personagemFoiAlterado(false);
+}
+
+document.getElementById('salvar').addEventListener('click',event=>{
+  event.preventDefault();
+  salvarPersonagem();
 });
 
 document.getElementById('salvar-fab').addEventListener('click',event=>{
   event.preventDefault();
-  bancoSalvarPersonagem(PERSONAGEM_TRABALHO);
-  personagemFoiAlterado(false);
+  salvarPersonagem();
 });
 
 /*-----------------------------------------------------------------------------------------*/
@@ -413,7 +422,7 @@ function definirListeners(personagem,callback) {
 
 /*-----------------------------------------------------------------------------------------*/
 
-function preencherTela() {
+function preencherTela(personagem_salvo) {
   console.log(VERSAO);
   document.getElementById('loading').style.display = 'block';
 
@@ -423,7 +432,11 @@ function preencherTela() {
 
   let jogador = '';
 
-  rolarPersonagem(jogador,personagem=>{
+  rolarPersonagem(personagem_salvo,jogador,personagem=>{
+
+    if (!personagem['Metadados']['Salvo']) {
+      document.getElementById('salvar').style.display = 'block';
+    }
 
     carregarImagem(personagem['Informações']['Imagem'],()=>{
 
@@ -498,53 +511,13 @@ function preencherTela() {
 
             document.getElementById('atributo|Anotações').value = personagem['Anotações'];
 
-            // personagem['Mostrar Dicas']
-            /*
-            atributos['Metadados']['UUID'] = uuid;
-            atributos['Metadados']['Mostrar Dicas'] = document.getElementById('form-dicas').checked;
-            atributos['Metadados']['Versão'] = VERSAO;
-            */
+            if (personagem['Metadados']['Mostrar Dicas']) {
+              document.getElementById('atributo_dicas').style.display = 'block';
+            }
 
             definirListeners(personagem,()=>{
                 document.getElementById('loading').style.display = 'none';
             });
-
-
-
-            /* Testando */
-            /*
-            let tag = document.getElementById('atributo|Armas_0_Nome');
-
-            let funcao = (event) => {
-              event.preventDefault();
-              definirPropriedadePersonagem(event,personagem,()=>{
-                console.log(personagem['Armas'][0]);
-              });
-            };
-            console.log(tag.hasAttribute('input'));
-            //tag.addEventListener('input',funcao);
-            console.log(tag.hasAttribute('input'));
-            tag.removeEventListener('input',funcao);
-            console.log(tag.hasAttribute('input'));
-            */
-
-            /*
-            let a = document.createElement('a');
-            a.innerHTML = 'teste';
-            a.id = 'teste-link';
-            a.style.backgroundColor = 'red';
-
-            let funcao = (event) => {
-              event.preventDefault();
-              console.log('teste');
-
-              document.querySelector('div.ficha #teste-link').removeEventListener('click',funcao);
-            };
-            a.addEventListener('click',funcao);
-            //a.removeEventListener('click',funcao);
-
-            document.querySelector('div.ficha').appendChild(a);
-            */
 
           });
         });
@@ -554,3 +527,8 @@ function preencherTela() {
 }
 
 /* ----------------------------------------------------------- */
+
+preencherSelectOcupacoes(()=>{
+  let personagem_salvo = null;
+  preencherTela(personagem_salvo);
+});

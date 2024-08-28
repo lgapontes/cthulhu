@@ -337,6 +337,10 @@ div.bloco100-outros {
   border: 0;
 }
 
+div.bloco100-outros-esconder {
+  display: none;
+}
+
 div.bloco100-outros::after {
   display: block;
   height: 0;
@@ -580,6 +584,11 @@ div.ficha div.bloco > div.container-dicas {
   font-style: normal;
   text-indent: 0;
   overflow: hidden;
+}
+
+div.ficha div.bloco > div.container-dicas > bold {
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 div.ficha div.bloco100-fluido div.bloco > div.container,

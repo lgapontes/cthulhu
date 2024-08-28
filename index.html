@@ -42,7 +42,7 @@
 					<img src="img\dice-solid.svg">
 					<span>Gerar</span>
 				</button>
-        <button class="primary verde" type="button" id="salvar">
+        <button class="primary verde esconder" type="button" id="salvar">
 					<img class="floppy" src="img\floppy-disk-solid.svg">
 					<span>Salvar</span>
 				</button>
@@ -495,11 +495,11 @@
 				</div>
 			</div>
 
-			<div class="bloco100-outros">
+			<div class="bloco100-outros bloco100-outros-esconder" id="atributo_dicas">
 				<div class="bloco">
 					<label class="sobrecampo sobrecampo-dicas">Dicas</label>
 					<div class="container container-dicas">
-						teste
+						<bold>teste:</bold> teste teste
 					</div>
 				</div>
 			</div>
@@ -510,23 +510,6 @@
 
 		<script type="text/javascript" src="scripts/nomes.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
-		<script type="text/javascript" src="scripts/render.js"></script>
-    <script type="text/javascript">
-      let buttonRolar = document.getElementById('rolar');
-      let buttonSalvar = document.getElementById('salvar');
-      let selectOpcao = document.getElementById('opcao');
-
-      buttonRolar.addEventListener('click',event=>{
-        event.preventDefault();
-        preencherTela();
-      });
-      buttonSalvar.addEventListener('click',event=>{
-        event.preventDefault();
-      });
-
-			preencherSelectOcupacoes(()=>{
-				preencherTela();
-			});
-    </script>
+		<script type="text/javascript" src="scripts/render.js"></script>    
 
 </body></html>

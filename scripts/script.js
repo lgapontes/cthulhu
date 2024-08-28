@@ -3599,63 +3599,71 @@ function criarUUIDSeguro(callback) {
   }
 }
 
-function rolarPersonagem(jogador,callback) {
-  rolarAtributos((atributos)=>{
-    selecionarOcupacao((nome_ocupacao,ocupacao)=>{
-      atributos['Informações']['Ocupação'] = nome_ocupacao;
-      atributos['Pontos de Perícia']['Perícias Ocupacionais'] = ocupacao.pontos_pericias_ocupacionais(atributos);
-      logger(`Ocupação: ${atributos['Informações']['Ocupação']}`);
+function rolarPersonagem(personagem_salvo,jogador,callback) {
 
-      obterPericiasIniciais(atributos,ocupacao,(pericias_iniciais)=>{
-        pontuarInteressesPessoais(atributos,pericias_iniciais,(pericias_pessoais)=>{
-          pontuarPericiasOcupacionais(ocupacao,atributos,pericias_pessoais,(pericias_calculadas)=>{
-            ajusteFinalPericiais(pericias_calculadas,(pericias)=>{
-              definirPadraoDeVida(atributos,pericias,(nivel_credito)=>{
-                definirEquipamentos(pericias,ocupacao,(equipamentos,armas)=>{
+  if (personagem_salvo != null) {
+    callback(personagem_salvo);
+  } else { // ROLAR
 
-                  obterImagem((url,genero)=>{
+    rolarAtributos((atributos)=>{
+      selecionarOcupacao((nome_ocupacao,ocupacao)=>{
+        atributos['Informações']['Ocupação'] = nome_ocupacao;
+        atributos['Pontos de Perícia']['Perícias Ocupacionais'] = ocupacao.pontos_pericias_ocupacionais(atributos);
+        logger(`Ocupação: ${atributos['Informações']['Ocupação']}`);
 
-                    definirNomeENascimento(genero,atributos['Informações']['Idade'],(nome,data_nascimento)=>{
+        obterPericiasIniciais(atributos,ocupacao,(pericias_iniciais)=>{
+          pontuarInteressesPessoais(atributos,pericias_iniciais,(pericias_pessoais)=>{
+            pontuarPericiasOcupacionais(ocupacao,atributos,pericias_pessoais,(pericias_calculadas)=>{
+              ajusteFinalPericiais(pericias_calculadas,(pericias)=>{
+                definirPadraoDeVida(atributos,pericias,(nivel_credito)=>{
+                  definirEquipamentos(pericias,ocupacao,(equipamentos,armas)=>{
 
-                      definirAntecedentes(nome,atributos['Padrão de Vida']['Nível de Gastos'],genero,(antecedentes,conexoes_chave)=>{
+                    obterImagem((url,genero)=>{
 
-                        if ('Mythos de Cthulhu' in pericias) {
-                          atributos['Atributos Secundários']['Sanidade Máxima'] = atributos['Atributos Secundários']['Sanidade Máxima'] - pericias['Mythos de Cthulhu']['Regular'];
-                        }
+                      definirNomeENascimento(genero,atributos['Informações']['Idade'],(nome,data_nascimento)=>{
 
-                        let personagem = atributos;
+                        definirAntecedentes(nome,atributos['Padrão de Vida']['Nível de Gastos'],genero,(antecedentes,conexoes_chave)=>{
 
-                        criarUUIDSeguro((uuid)=>{
-
-                          personagem['Metadados'] = {};
-                          personagem['Metadados']['UUID'] = uuid;
-                          personagem['Metadados']['Mostrar Dicas'] = document.getElementById('form-dicas').checked;
-                          personagem['Metadados']['Versão'] = VERSAO;
-
-                          personagem['Informações']['Imagem'] = url;
-                          personagem['Informações']['Gênero'] = genero;
-                          personagem['Informações']['Nome'] = nome;
-                          personagem['Informações']['Jogador'] = jogador;
-                          personagem['Informações']['Data de Nascimento'] = data_nascimento;
-
-                          personagem['Perícias'] = pericias;
-                          personagem['Equipamentos'] = equipamentos;
-                          personagem['Armas'] = armas;
-                          personagem['Antecedentes'] = antecedentes;
-                          personagem['Conexões-Chave'] = conexoes_chave;
-                          personagem['Anotações'] = '';
-
-                          /* Formatar */
-                          personagem['Padrão de Vida']['Hospedagens'] = personagem['Padrão de Vida']['Hospedagens'].join(", ");
-                          personagem['Padrão de Vida']['Transportes'] = personagem['Padrão de Vida']['Transportes'].join(", ");
-                          personagem['Equipamentos'] = personagem['Equipamentos'].join("\r\n");
-
-                          if (LOG_PERSONAGEM) {
-                            console.log('Personagem:');
-                            console.log(JSON.stringify(personagem, null, 2));
+                          if ('Mythos de Cthulhu' in pericias) {
+                            atributos['Atributos Secundários']['Sanidade Máxima'] = atributos['Atributos Secundários']['Sanidade Máxima'] - pericias['Mythos de Cthulhu']['Regular'];
                           }
 
-                          callback(personagem);
+                          let personagem = atributos;
+
+                          criarUUIDSeguro((uuid)=>{
+
+                            personagem['Metadados'] = {};
+                            personagem['Metadados']['UUID'] = uuid;
+                            personagem['Metadados']['Mostrar Dicas'] = document.getElementById('form-dicas').checked;
+                            personagem['Metadados']['Versão'] = VERSAO;
+                            personagem['Metadados']['Salvo'] = false;
+
+                            personagem['Informações']['Imagem'] = url;
+                            personagem['Informações']['Gênero'] = genero;
+                            personagem['Informações']['Nome'] = nome;
+                            personagem['Informações']['Jogador'] = jogador;
+                            personagem['Informações']['Data de Nascimento'] = data_nascimento;
+
+                            personagem['Perícias'] = pericias;
+                            personagem['Equipamentos'] = equipamentos;
+                            personagem['Armas'] = armas;
+                            personagem['Antecedentes'] = antecedentes;
+                            personagem['Conexões-Chave'] = conexoes_chave;
+                            personagem['Anotações'] = '';
+
+                            /* Formatar */
+                            personagem['Padrão de Vida']['Hospedagens'] = personagem['Padrão de Vida']['Hospedagens'].join(", ");
+                            personagem['Padrão de Vida']['Transportes'] = personagem['Padrão de Vida']['Transportes'].join(", ");
+                            personagem['Equipamentos'] = personagem['Equipamentos'].join("\r\n");
+
+                            if (LOG_PERSONAGEM) {
+                              console.log('Personagem:');
+                              console.log(JSON.stringify(personagem, null, 2));
+                            }
+
+                            callback(personagem);
+
+                          });
 
                         });
 
@@ -3664,16 +3672,16 @@ function rolarPersonagem(jogador,callback) {
                     });
 
                   });
-
                 });
               });
             });
           });
         });
-      });
 
+      });
     });
-  });
+
+  } // ROLAR
 }
 
 /* ----------------------------------------------------------- */
