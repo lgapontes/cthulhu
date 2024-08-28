@@ -32,6 +32,11 @@
 				<label for="form-antecedentes">Gerar Antecedentes do Investigador</label>
 			</span>
 
+			<span class="checkbox">
+				<input type="checkbox" checked id="form-dicas" name="form-dicas">
+				<label for="form-dicas">Exibir dicas no final da ficha</label>
+			</span>
+
       <div class="botoes">
         <button class="primary" type="button" id="rolar">Rolar</button>
         <button class="primary esconder" type="button" id="salvar">Salvar Personagem</button>
@@ -39,44 +44,44 @@
     </main>
 
 		<div class="ficha">
-			<input type="hidden" id="atributo-Informações_UUID" value="">
+			<input type="hidden" id="atributo|Informações_UUID" value="">
 
 			<div class="bloco50">
 				<div class="informacoes">
 					<label class="sobrecampo jogador">Jogador</label>
 					<!--<label class="valor" id="jogador"></label>-->
-					<input type="text" class="valor valor-amarelo" id="atributo-Informações_Jogador">
+					<input type="text" class="valor valor-amarelo" id="atributo|Informações_Jogador">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo personagem">Personagem</label>
 					<!--<label class="valor" id="personagem"></label>-->
-					<input type="text" class="valor valor-amarelo" id="atributo-Informações_Nome">
+					<input type="text" class="valor valor-amarelo" id="atributo|Informações_Nome">
 				</div>
 
 				<div class="informacoes">
 					<label class="sobrecampo ocupacao">Ocupação</label>
 					<!-- <label class="valor" id="ocupacao"></label> -->
-					<input type="text" class="valor" id="atributo-Informações_Ocupação">
+					<input type="text" class="valor" id="atributo|Informações_Ocupação">
 				</div>
 
 				<div class="informacoes informacoes-idade">
 					<label class="sobrecampo idade">Idade</label>
 					<!--<label class="valor" id="idade"></label>-->
-					<input type="number" class="valor" id="atributo-Informações_Idade">
+					<input type="number" class="valor" id="atributo|Informações_Idade">
 				</div>
 
 				<div class="informacoes informacoes-nascimento">
 					<label class="sobrecampo nascimento">Nascimento</label>
 					<!--<label class="valor" id="nascimento"></label>-->
-					<input type="text" class="valor valor-center" id="atributo-Informações_Data de Nascimento">
+					<input type="text" class="valor valor-center" id="atributo|Informações_Data de Nascimento">
 				</div>
 			</div>
 
 			<div class="bloco50">
 				<div class="fotografia">
 				  <div class="fotografia-interna moldura"></div>
-				  <div id="atributo-fotografia" class="fotografia-interna foto"></div>
+				  <div id="atributo|fotografia" class="fotografia-interna foto"></div>
 				</div>
 			</div>
 
@@ -89,15 +94,15 @@
 							<label>
 								<span class="nome">FOR</span>
 							</label>
-							<div class="valores" id="atributo-forca">
+							<div class="valores" id="atributo_forca">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_FOR (Força)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_FOR (Força)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_FOR (Força)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_FOR (Força)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_FOR (Força)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_FOR (Força)_Quinto" value="0">
 							</div>
 						</div>
 
@@ -105,15 +110,15 @@
 							<label>
 								<span class="nome">DES</span>
 							</label>
-							<div class="valores" id="atributo-destreza">
+							<div class="valores" id="atributo_destreza">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_CON (Constituição)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_CON (Constituição)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_CON (Constituição)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_CON (Constituição)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_CON (Constituição)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_CON (Constituição)_Quinto" value="0">
 							</div>
 						</div>
 
@@ -122,15 +127,15 @@
 								<span class="nome-parcial">INT</span>
 								<span class="nome-regra">Ideia</span>
 							</label>
-							<div class="valores" id="atributo-inteligencia">
+							<div class="valores" id="atributo_inteligencia">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_TAM (Tamanho)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_TAM (Tamanho)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_TAM (Tamanho)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_TAM (Tamanho)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_TAM (Tamanho)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_TAM (Tamanho)_Quinto" value="0">
 							</div>
 						</div>
 
@@ -138,15 +143,15 @@
 							<label>
 								<span class="nome">CON</span>
 							</label>
-							<div class="valores" id="atributo-constituicao">
+							<div class="valores" id="atributo_constituicao">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_DES (Destreza)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_DES (Destreza)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_DES (Destreza)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_DES (Destreza)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_DES (Destreza)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_DES (Destreza)_Quinto" value="0">
 							</div>
 						</div>
 
@@ -154,15 +159,15 @@
 							<label>
 								<span class="nome">APA</span>
 							</label>
-							<div class="valores" id="atributo-aparencia">
+							<div class="valores" id="atributo_aparencia">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_APA (Aparência)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_APA (Aparência)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_APA (Aparência)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_APA (Aparência)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_APA (Aparência)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_APA (Aparência)_Quinto" value="0">
 							</div>
 						</div>
 
@@ -170,15 +175,15 @@
 							<label>
 								<span class="nome">POD</span>
 							</label>
-							<div class="valores" id="atributo-poder">
+							<div class="valores" id="atributo_poder">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_INT (Inteligência)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_INT (Inteligência)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_INT (Inteligência)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_INT (Inteligência)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_INT (Inteligência)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_INT (Inteligência)_Quinto" value="0">
 							</div>
 						</div>
 
@@ -186,15 +191,15 @@
 							<label>
 								<span class="nome">TAM</span>
 							</label>
-							<div class="valores" id="atributo-tamanho">
+							<div class="valores" id="atributo_tamanho">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_POD (Poder)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_POD (Poder)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_POD (Poder)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_POD (Poder)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_POD (Poder)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_POD (Poder)_Quinto" value="0">
 							</div>
 						</div>
 
@@ -203,22 +208,21 @@
 								<span class="nome-parcial">EDU</span>
 								<span class="nome-regra">Saber</span>
 							</label>
-							<div class="valores" id="atributo-educacao">
+							<div class="valores" id="atributo_educacao">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo-Atributos_EDU (Educação)_Atributo" value="0">
-								<input type="number" class="dificil" id="atributo-Atributos_EDU (Educação)_Metade" value="0">
-								<input type="number" class="extremo" id="atributo-Atributos_EDU (Educação)_Quinto" value="0">
+								<input type="number" class="regular" id="atributo|Atributos_EDU (Educação)_Atributo" value="0">
+								<input type="number" class="dificil" id="atributo|Atributos_EDU (Educação)_Metade" value="0">
+								<input type="number" class="extremo" id="atributo|Atributos_EDU (Educação)_Quinto" value="0">
 							</div>
 						</div>
 
 						<div class="campo">
 							<label class="movimento">Taxa de Movimento</label>
-							<!--<label class="valor-movimento" id="atributo-movimento">0</label>-->
-							<input type="number" class="valor-movimento" id="atributo-Atributos Secundários_Taxa de Movimento (MOV)" value="0">
+							<input type="number" class="valor-movimento" id="atributo|Atributos Secundários_Taxa de Movimento (MOV)" value="0">
 						</div>
 
 					</div>
@@ -232,28 +236,26 @@
 
 						<div class="campo">
 							<label class="secundario">PV Máx</label>
-							<!--<label class="valor-secundario" id="atributo-pontos-de-vida">0</label>-->
-							<input type="number" class="valor-secundario" id="atributo-Atributos Secundários_Pontos de Vida" value="0">
+							<input type="number" class="valor-secundario" id="atributo|Atributos Secundários_Pontos de Vida" value="0">
 						</div>
 
 						<div class="campo">
 							<label class="secundario secundario-color">Atual</label>
-							<!--<label class="valor-secundario" id="atributo-pontos-de-vida-atual"></label>-->
-							<input type="number" class="valor-secundario valor-secundario-amarelo" id="atributo-Atributos Secundários_Pontos de Vida Atuais" value="0">
+							<input type="number" class="valor-secundario valor-secundario-amarelo" id="atributo|Atributos Secundários_Pontos de Vida Atuais" value="0">
 						</div>
 
 						<div class="campo campo-flags">
 							<div class="flags">
-								<input type="checkbox" id="atributo-Atributos Secundários_Lesão Grave" name="atributo-Atributos Secundários_Lesão Grave">
-								<label class="flag" for="atributo-Atributos Secundários_Lesão Grave">Lesão Grave</label>
+								<input type="checkbox" id="atributo|Atributos Secundários_Lesão Grave" name="atributo|Atributos Secundários_Lesão Grave">
+								<label class="flag" for="atributo|Atributos Secundários_Lesão Grave">Lesão Grave</label>
 							</div>
 							<div class="flags">
-								<input type="checkbox" id="atributo-Atributos Secundários_Morrendo" name="atributo-Atributos Secundários_Morrendo">
-								<label class="flag" for="atributo-Atributos Secundários_Morrendo">Morrendo</label>
+								<input type="checkbox" id="atributo|Atributos Secundários_Morrendo" name="atributo|Atributos Secundários_Morrendo">
+								<label class="flag" for="atributo|Atributos Secundários_Morrendo">Morrendo</label>
 							</div>
 							<div class="flags">
-								<input type="checkbox" id="atributo-Atributos Secundários_Inconsciente" name="atributo-Atributos Secundários_Inconsciente">
-								<label class="flag" for="atributo-Atributos Secundários_Inconsciente">Inconsciente</label>
+								<input type="checkbox" id="atributo|Atributos Secundários_Inconsciente" name="atributo|Atributos Secundários_Inconsciente">
+								<label class="flag" for="atributo|Atributos Secundários_Inconsciente">Inconsciente</label>
 							</div>
 						</div>
 
@@ -269,30 +271,27 @@
 						<div class="campo">
 							<label class="conjunto">
 								<span class="nome">Inicial</span>
-								<!--<span class="valor" id="atributo-sanidade-inicial">0</span>-->
-								<input type="number" class="valor esquerda" id="atributo-Atributos Secundários_SAN (Sanidade)" value="0">
+								<input type="number" class="valor esquerda" id="atributo|Atributos Secundários_SAN (Sanidade)" value="0">
 							</label>
 							<label class="conjunto">
 								<span class="nome">Máxima</span>
-								<!--<span class="valor" id="atributo-sanidade-maxima">0</span>-->
-								<input type="number" class="valor direita" id="atributo-Atributos Secundários_Sanidade Máxima" value="0">
+								<input type="number" class="valor direita" id="atributo|Atributos Secundários_Sanidade Máxima" value="0">
 							</label>
 						</div>
 
 						<div class="campo">
 							<label class="secundario secundario-color">Atual</label>
-							<!--<label class="valor-secundario"></label>-->
-							<input type="number" class="valor-secundario valor-secundario-amarelo" id="atributo-Atributos Secundários_Sanidade Atual" value="">
+							<input type="number" class="valor-secundario valor-secundario-amarelo" id="atributo|Atributos Secundários_Sanidade Atual" value="">
 						</div>
 
 						<div class="campo campo-flags flags-margin">
 							<div class="flags">
-								<input type="checkbox" id="atributo-Atributos Secundários_Insanidade Temporária" name="atributo-Atributos Secundários_Insanidade Temporária">
-								<label class="flag" for="atributo-Atributos Secundários_Insanidade Temporária">Ins. Temporária</label>
+								<input type="checkbox" id="atributo|Atributos Secundários_Insanidade Temporária" name="atributo|Atributos Secundários_Insanidade Temporária">
+								<label class="flag" for="atributo|Atributos Secundários_Insanidade Temporária">Ins. Temporária</label>
 							</div>
 							<div class="flags">
-								<input type="checkbox" id="atributo-Atributos Secundários_Insanidade Indefinida" name="atributo-Atributos Secundários_Insanidade Indefinida">
-								<label class="flag" for="atributo-Atributos Secundários_Insanidade Indefinida">Ins. Indefinida</label>
+								<input type="checkbox" id="atributo|Atributos Secundários_Insanidade Indefinida" name="atributo|Atributos Secundários_Insanidade Indefinida">
+								<label class="flag" for="atributo|Atributos Secundários_Insanidade Indefinida">Ins. Indefinida</label>
 							</div>
 						</div>
 
@@ -307,13 +306,12 @@
 
 						<div class="campo">
 							<label class="secundario">Inicial</label>
-							<!--<label class="valor-secundario" id="atributo-sorte-inicial">0</label>-->
-							<input type="number" class="valor-secundario" id="atributo-Atributos Secundários_Sorte" value="0">
+							<input type="number" class="valor-secundario" id="atributo|Atributos Secundários_Sorte" value="0">
 						</div>
 
 						<div class="campo">
 							<label class="secundario secundario-color">Atual</label>
-							<input type="number" class="valor-secundario" id="atributo-Atributos Secundários_Sorte Atual" value="0">
+							<input type="number" class="valor-secundario" id="atributo|Atributos Secundários_Sorte Atual" value="0">
 						</div>
 
 					</div>
@@ -328,13 +326,12 @@
 						<div class="campo">
 							<label class="conjunto">
 								<span class="nome">Máximo</span>
-								<!--<span class="valor" id="atributo-magia-maxima">0</span>-->
-								<input type="number" class="valor esquerda" id="atributo-Atributos Secundários_Pontos de Magia Máximo" value="0">
+								<input type="number" class="valor esquerda" id="atributo|Atributos Secundários_Pontos de Magia Máximo" value="0">
 							</label>
 							<label class="conjunto">
 								<span class="nome">Atual</span>
 								<!--<span class="valor"></span>-->
-								<input type="number" class="valor direita" id="atributo-Atributos Secundários_Pontos de Magia" value="0">
+								<input type="number" class="valor direita" id="atributo|Atributos Secundários_Pontos de Magia" value="0">
 							</label>
 						</div>
 
@@ -349,29 +346,27 @@
 
 						<div class="campo campo-menor">
 							<label class="secundario secundario-margin">Dano Extra</label>
-							<!--<label class="valor-secundario" id="atributo-combate-dano-extra">0</label>-->
-							<input type="text" class="valor-secundario" id="atributo-combate-dano-extra" value="0">
+							<input type="text" class="valor-secundario" id="atributo|Atributos Secundários_Dano Extra" value="0">
 						</div>
 
 						<div class="campo">
 							<label class="secundario">Corpo</label>
-							<!--<label class="valor-secundario" id="atributo-combate-corpo">0</label>-->
-							<input type="text" class="valor-secundario" id="atributo-combate-corpo" value="0">
+							<input type="text" class="valor-secundario" id="atributo|Atributos Secundários_Corpo" value="0">
 						</div>
 
 						<div class="campo campo-maior">
 							<label>
 								<span class="nome nome-menor">Esquivar</span>
 							</label>
-							<div class="valores" id="atributo-secundario-esquivar">
+							<div class="valores" id="atributo_secundario-esquivar">
 								<!--
 								<label class="regular">0</label>
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" value="0">
-								<input type="number" class="dificil" value="0">
-								<input type="number" class="extremo" value="0">
+								<input type="number" class="regular" id="atributo|Perícias_Esquivar_Regular" value="0">
+								<input type="number" class="dificil" id="atributo|Perícias_Esquivar_Difícil" value="0">
+								<input type="number" class="extremo" id="atributo|Perícias_Esquivar_Extremo" value="0">
 							</div>
 						</div>
 
@@ -409,7 +404,7 @@
 				<div class="bloco">
 					<label class="sobrecampo sobrecampo-equipamentos">Equipamentos & Pertences</label>
 					<div class="container">
-						<textarea class="equipamentos" id="equipamentos-e-pertences"></textarea>
+						<textarea class="equipamentos" id="atributo|Equipamentos"></textarea>
 					</div>
 				</div>
 			</div>
@@ -423,7 +418,7 @@
 							<label class="horizontal">
 								<span class="nome">Nível de Gastos</span>
 								<!--<span class="valor valor-menor" id="padrao-de-vida-nivel-de-gasto">$0</span>-->
-								<input type="text" class="valor valor-menor" id="padrao-de-vida-nivel-de-gasto" value="$0">
+								<input type="text" class="valor valor-menor" id="atributo|Padrão de Vida_Nível de Gastos" value="$0">
 							</label>
 						</div>
 
@@ -431,7 +426,7 @@
 							<label class="horizontal">
 								<span class="nome">Dinheiro</span>
 								<!--<span class="valor" id="padrao-de-vida-dinheiro">$0</span>-->
-								<input type="text" class="valor" id="padrao-de-vida-dinheiro" value="$0">
+								<input type="text" class="valor" id="atributo|Padrão de Vida_Dinheiro" value="$0">
 							</label>
 						</div>
 
@@ -439,7 +434,7 @@
 							<label class="horizontal">
 								<span class="nome">Patrimônio</span>
 								<!--<span class="valor" id="padrao-de-vida-patrimonio">$0</span>-->
-								<input type="text" class="valor" id="padrao-de-vida-patrimonio" value="$0">
+								<input type="text" class="valor" id="atributo|Padrão de Vida_Patrimônio" value="$0">
 							</label>
 						</div>
 
@@ -455,13 +450,13 @@
 						<div class="horizontal-texto">
 							<span class="bold">Hospedagens:</span>
 							<!--<span class="valor" id="padrao-de-vida-hospedagens">Sem residência</span>-->
-							<input type="text" class="valor" id="padrao-de-vida-hospedagens" value="Sem residência">
+							<input type="text" class="valor" id="atributo|Padrão de Vida_Hospedagens" value="Sem residência">
 						</div>
 
 						<div class="horizontal-texto">
 							<span class="bold">Transportes:</span>
 							<!--<span class="valor" id="padrao-de-vida-transportes">Sem transporte</span>-->
-							<input type="text" class="valor" id="padrao-de-vida-transportes" value="Sem transporte">
+							<input type="text" class="valor" id="atributo|Padrão de Vida_Transportes" value="Sem transporte">
 						</div>
 
 					</div>
@@ -485,7 +480,7 @@
 				<div class="bloco">
 					<label class="sobrecampo sobrecampo-anotacoes">Anotações do Investigador</label>
 					<div class="container">
-						<textarea class="anotacoes" id="anotacoes"></textarea>
+						<textarea class="anotacoes" id="atributo|Anotações"></textarea>
 					</div>
 				</div>
 			</div>

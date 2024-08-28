@@ -29,7 +29,7 @@ function preencherSelectOcupacoes(callback) {
 function carregarImagem(url,callback) {
   var img = new Image();
   img.onload = function() {
-    document.getElementById('atributo-fotografia').style.backgroundImage = `url(${img.src})`;
+    document.getElementById('atributo|fotografia').style.backgroundImage = `url(${img.src})`;
     callback();
   }
   img.src = url;
@@ -99,7 +99,7 @@ function renderPericia(nome_pericia,pericia,callback) {
 
     if (index_parte == (partes.length - 1)) {
 
-      let text_checkbox = '<input type="checkbox" class="nome">';
+      let text_checkbox = `<input type="checkbox" class="nome" id="atributo|Perícias_${nome_pericia}_Usada com Sucesso">`;
       if ( (nome_pericia == 'Mythos de Cthulhu') || (nome_pericia == 'Nível de Crédito') ) {
         text_checkbox = '<span class="checkbox">&nbsp;</span>';
       }
@@ -111,9 +111,9 @@ function renderPericia(nome_pericia,pericia,callback) {
           <span class="nome">${nome_formatado_partes}</span>
         </label>
         <div class="valores">
-          <input type="number" class="regular" value="${pericia['Regular']}">
-          <input type="number" class="dificil" value="${pericia['Difícil']}">
-          <input type="number" class="extremo" value="${pericia['Extremo']}">
+          <input type="number" class="regular" id="atributo|Perícias_${nome_pericia}_Regular" value="${pericia['Regular']}">
+          <input type="number" class="dificil" id="atributo|Perícias_${nome_pericia}_Difícil" value="${pericia['Difícil']}">
+          <input type="number" class="extremo" id="atributo|Perícias_${nome_pericia}_Extremo" value="${pericia['Extremo']}">
         </div>
       </div>
       `);
@@ -163,28 +163,28 @@ function renderArmas(armas,callback) {
     <div class="arma">
       <div class="parte parte-nome">
         <label class="sobre">Arma</label>
-        <input type="text" class="valor left" id="atributo-Armas_${index}_Nome" value="${nome}">
+        <input type="text" class="valor left" id="atributo|Armas_${index}_Nome" value="${nome}">
       </div>
       <div class="parte parte-dano">
         <label class="sobre">Dano</label>
-        <input type="text" class="valor pequeno" id="atributo-Armas_${index}_Dano" value="${dano}">
+        <input type="text" class="valor pequeno" id="atributo|Armas_${index}_Dano" value="${dano}">
       </div>
 
       <div class="parte">
         <label class="sobre">Alcance</label>
-        <input type="text" class="valor pequeno" id="atributo-Armas_${index}_Alcance Base" value="${alcance}">
+        <input type="text" class="valor pequeno" id="atributo|Armas_${index}_Alcance Base" value="${alcance}">
       </div>
       <div class="parte">
         <label class="sobre">Ataques</label>
-        <input type="text" class="valor" id="atributo-Armas_${index}_Usos por Rodada" value="${ataques}">
+        <input type="text" class="valor" id="atributo|Armas_${index}_Usos por Rodada" value="${ataques}">
       </div>
       <div class="parte">
         <label class="sobre">Munição</label>
-        <input type="text" class="valor" id="atributo-Armas_${index}_Munição na Arma" value="${municao}">
+        <input type="text" class="valor" id="atributo|Armas_${index}_Munição na Arma" value="${municao}">
       </div>
       <div class="parte">
         <label class="sobre">Defeito</label>
-        <input type="text" class="valor" id="atributo-Armas_${index}_Defeito" value="${defeito}">
+        <input type="text" class="valor" id="atributo|Armas_${index}_Defeito" value="${defeito}">
       </div>
     </div>
     `;
@@ -195,7 +195,7 @@ function renderArmas(armas,callback) {
   });
 }
 
-function renderAntecedentes(antecedentes,conexao_chave,callback) {
+function renderAntecedentes(antecedentes,conexoes_chave,callback) {
   let innerHTML = '';
   let array = Object.keys(antecedentes);
 
@@ -210,14 +210,14 @@ function renderAntecedentes(antecedentes,conexao_chave,callback) {
         (antecedente == 'Pertences Queridos')
       ) {
         let checked = '';
-        if (conexao_chave == antecedente) {
+        if (conexoes_chave[antecedente]) {
           checked = 'checked="checked"';
         }
 
         tag_conexao_chave = `
         <label class="conexao-chave">
           <span>Conexão-Chave</span>
-          <input type="checkbox" ${checked}>
+          <input type="checkbox" ${checked} id="atributo|Conexões-Chave_${antecedente}">
         </label>
         `;
       }
@@ -233,7 +233,7 @@ function renderAntecedentes(antecedentes,conexao_chave,callback) {
         <div class="parte">
           <label class="sobre">${antecedente}</label>
           ${tag_conexao_chave}
-          <textarea class="valor">${valor}</textarea>
+          <textarea class="valor" id="atributo|Antecedentes_${antecedente}">${valor}</textarea>
         </div>
       </div>
       `;
@@ -264,9 +264,9 @@ function definirPropriedadePersonagem(event,personagem,callback) {
     valor = tag.value;
   }
 
-  // atributo-Informações_Nome
+  // atributo|Informações_Nome
   try {
-    let partes_prefixo = id.split('-');
+    let partes_prefixo = id.split('|');
     if (partes_prefixo.length == 2) {
 
       let partes_campos = partes_prefixo[1].split('_');
@@ -368,6 +368,7 @@ const FUNCAO = (event) => {
   event.preventDefault();
   definirPropriedadePersonagem(event,PERSONAGEM_TRABALHO,()=>{
     personagemFoiAlterado(true);
+    console.log(PERSONAGEM_TRABALHO);
   });
 };
 
@@ -392,15 +393,18 @@ function definirListeners(personagem,callback) {
   limparListaListeners(()=>{
     let tag_ficha = document.querySelector('div.ficha');
 
-    let tags_input_text = [...tag_ficha.querySelectorAll('input[type=text]')];
-    tags_input_text.forEach((tag_input_text, index_tag_input_text) => {
+    // text, number, checkbox, textarea
+    let tags_input = [...tag_ficha.querySelectorAll('input[type=text]')];
+    tags_input.push(...[...tag_ficha.querySelectorAll('input[type=number]')]);
+    tags_input.push(...[...tag_ficha.querySelectorAll('input[type=checkbox]')]);
+    tags_input.push(...[...tag_ficha.querySelectorAll('textarea')]);
 
-      if (tag_input_text.id.indexOf('Jogador') > -1) {
-        LISTENERS_FICHA.push(tag_input_text);
-        tag_input_text.addEventListener('input',FUNCAO);
-      }
+    tags_input.forEach((tag_input, index_tag_input) => {
 
-      if (index_tag_input_text == (tags_input_text.length - 1)) {
+      LISTENERS_FICHA.push(tag_input);
+      tag_input.addEventListener('input',FUNCAO);
+
+      if (index_tag_input == (tags_input.length - 1)) {
         callback();
       }
     });
@@ -423,78 +427,80 @@ function preencherTela() {
 
     carregarImagem(personagem['Informações']['Imagem'],()=>{
 
-      document.getElementById('atributo-Informações_UUID').value = personagem['Informações']['UUID'];
-      document.getElementById('atributo-Informações_Jogador').value = jogador;
-      document.getElementById('atributo-Informações_Nome').value = personagem['Informações']['Nome'];
+      document.getElementById('atributo|Informações_UUID').value = personagem['Informações']['UUID'];
+      document.getElementById('atributo|Informações_Jogador').value = jogador;
+      document.getElementById('atributo|Informações_Nome').value = personagem['Informações']['Nome'];
 
       let ocupacao = personagem['Informações']['Ocupação'];
       if (ocupacao == 'Profissional de Entretenimento') {
         ocupacao = 'Entretenimento';
       }
 
-      document.getElementById('atributo-Informações_Ocupação').value = ocupacao;
-      document.getElementById('atributo-Informações_Idade').value = personagem['Informações']['Idade'];
-      document.getElementById('atributo-Informações_Data de Nascimento').value = personagem['Informações']['Data de Nascimento'];
+      document.getElementById('atributo|Informações_Ocupação').value = ocupacao;
+      document.getElementById('atributo|Informações_Idade').value = personagem['Informações']['Idade'];
+      document.getElementById('atributo|Informações_Data de Nascimento').value = personagem['Informações']['Data de Nascimento'];
 
-      definirAtributo(personagem,'atributo-forca','FOR (Força)');
-      definirAtributo(personagem,'atributo-destreza','DES (Destreza)');
-      definirAtributo(personagem,'atributo-inteligencia','INT (Inteligência)');
-      definirAtributo(personagem,'atributo-constituicao','CON (Constituição)');
-      definirAtributo(personagem,'atributo-aparencia','APA (Aparência)');
-      definirAtributo(personagem,'atributo-poder','POD (Poder)');
-      definirAtributo(personagem,'atributo-tamanho','TAM (Tamanho)');
-      definirAtributo(personagem,'atributo-educacao','EDU (Educação)');
-      document.getElementById('atributo-Atributos Secundários_Taxa de Movimento (MOV)').value = personagem['Atributos Secundários']['Taxa de Movimento (MOV)'];
+      definirAtributo(personagem,'atributo_forca','FOR (Força)');
+      definirAtributo(personagem,'atributo_destreza','DES (Destreza)');
+      definirAtributo(personagem,'atributo_inteligencia','INT (Inteligência)');
+      definirAtributo(personagem,'atributo_constituicao','CON (Constituição)');
+      definirAtributo(personagem,'atributo_aparencia','APA (Aparência)');
+      definirAtributo(personagem,'atributo_poder','POD (Poder)');
+      definirAtributo(personagem,'atributo_tamanho','TAM (Tamanho)');
+      definirAtributo(personagem,'atributo_educacao','EDU (Educação)');
+      document.getElementById('atributo|Atributos Secundários_Taxa de Movimento (MOV)').value = personagem['Atributos Secundários']['Taxa de Movimento (MOV)'];
 
-      document.getElementById('atributo-Atributos Secundários_Pontos de Vida').value = personagem['Atributos Secundários']['Pontos de Vida'];
-      document.getElementById('atributo-Atributos Secundários_Pontos de Vida Atuais').value = personagem['Atributos Secundários']['Pontos de Vida Atuais'];
+      document.getElementById('atributo|Atributos Secundários_Pontos de Vida').value = personagem['Atributos Secundários']['Pontos de Vida'];
+      document.getElementById('atributo|Atributos Secundários_Pontos de Vida Atuais').value = personagem['Atributos Secundários']['Pontos de Vida Atuais'];
 
-      document.getElementById('atributo-Atributos Secundários_Lesão Grave').checked = personagem['Atributos Secundários']['Lesão Grave'];
-      document.getElementById('atributo-Atributos Secundários_Morrendo').checked = personagem['Atributos Secundários']['Morrendo'];
-      document.getElementById('atributo-Atributos Secundários_Inconsciente').checked = personagem['Atributos Secundários']['Inconsciente'];
+      document.getElementById('atributo|Atributos Secundários_Lesão Grave').checked = personagem['Atributos Secundários']['Lesão Grave'];
+      document.getElementById('atributo|Atributos Secundários_Morrendo').checked = personagem['Atributos Secundários']['Morrendo'];
+      document.getElementById('atributo|Atributos Secundários_Inconsciente').checked = personagem['Atributos Secundários']['Inconsciente'];
 
-      document.getElementById('atributo-Atributos Secundários_SAN (Sanidade)').value = personagem['Atributos Secundários']['SAN (Sanidade)'];
-      document.getElementById('atributo-Atributos Secundários_Sanidade Máxima').value = personagem['Atributos Secundários']['Sanidade Máxima'];
-      document.getElementById('atributo-Atributos Secundários_Sanidade Atual').value = personagem['Atributos Secundários']['Sanidade Atual'];
+      document.getElementById('atributo|Atributos Secundários_SAN (Sanidade)').value = personagem['Atributos Secundários']['SAN (Sanidade)'];
+      document.getElementById('atributo|Atributos Secundários_Sanidade Máxima').value = personagem['Atributos Secundários']['Sanidade Máxima'];
+      document.getElementById('atributo|Atributos Secundários_Sanidade Atual').value = personagem['Atributos Secundários']['Sanidade Atual'];
 
-      document.getElementById('atributo-Atributos Secundários_Insanidade Temporária').checked = personagem['Atributos Secundários']['Insanidade Temporária'];
-      document.getElementById('atributo-Atributos Secundários_Insanidade Indefinida').checked = personagem['Atributos Secundários']['Insanidade Indefinida'];
+      document.getElementById('atributo|Atributos Secundários_Insanidade Temporária').checked = personagem['Atributos Secundários']['Insanidade Temporária'];
+      document.getElementById('atributo|Atributos Secundários_Insanidade Indefinida').checked = personagem['Atributos Secundários']['Insanidade Indefinida'];
 
-      document.getElementById('atributo-Atributos Secundários_Sorte').value = personagem['Atributos Secundários']['Sorte'];
-      document.getElementById('atributo-Atributos Secundários_Sorte Atual').value = personagem['Atributos Secundários']['Sorte'];
+      document.getElementById('atributo|Atributos Secundários_Sorte').value = personagem['Atributos Secundários']['Sorte'];
+      document.getElementById('atributo|Atributos Secundários_Sorte Atual').value = personagem['Atributos Secundários']['Sorte'];
 
-      document.getElementById('atributo-Atributos Secundários_Pontos de Magia Máximo').value = personagem['Atributos Secundários']['Pontos de Magia Máximo'];
-      document.getElementById('atributo-Atributos Secundários_Pontos de Magia').value = personagem['Atributos Secundários']['Pontos de Magia'];
+      document.getElementById('atributo|Atributos Secundários_Pontos de Magia Máximo').value = personagem['Atributos Secundários']['Pontos de Magia Máximo'];
+      document.getElementById('atributo|Atributos Secundários_Pontos de Magia').value = personagem['Atributos Secundários']['Pontos de Magia'];
 
-      document.getElementById('atributo-combate-dano-extra').value = personagem['Atributos Secundários']['Dano Extra'];
+      document.getElementById('atributo|Atributos Secundários_Dano Extra').value = personagem['Atributos Secundários']['Dano Extra'];
       if (!personagem['Atributos Secundários']['Dano Extra Negativo']) {
-        document.getElementById('atributo-combate-dano-extra').style.fontSize = '0.7em';
+        document.getElementById('atributo|Atributos Secundários_Dano Extra').style.fontSize = '0.7em';
       }
-      document.getElementById('atributo-combate-corpo').value = personagem['Atributos Secundários']['Corpo'];
+      document.getElementById('atributo|Atributos Secundários_Corpo').value = personagem['Atributos Secundários']['Corpo'];
 
-      definirPericia(personagem,'atributo-secundario-esquivar','Esquivar');
+      definirPericia(personagem,'atributo_secundario-esquivar','Esquivar');
 
       renderPericiais(personagem,(innerHTML)=>{
         document.getElementById('carregando-pericias').innerHTML = innerHTML;
 
-        document.getElementById('padrao-de-vida-nivel-de-gasto').value = personagem['Padrão de Vida']['Nível de Gastos'];
-        document.getElementById('padrao-de-vida-dinheiro').value = personagem['Padrão de Vida']['Dinheiro'];
-        document.getElementById('padrao-de-vida-patrimonio').value = personagem['Padrão de Vida']['Patrimônio'];
+        document.getElementById('atributo|Padrão de Vida_Nível de Gastos').value = personagem['Padrão de Vida']['Nível de Gastos'];
+        document.getElementById('atributo|Padrão de Vida_Dinheiro').value = personagem['Padrão de Vida']['Dinheiro'];
+        document.getElementById('atributo|Padrão de Vida_Patrimônio').value = personagem['Padrão de Vida']['Patrimônio'];
 
-        document.getElementById('padrao-de-vida-hospedagens').value = personagem['Padrão de Vida']['Hospedagens'];
-        document.getElementById('padrao-de-vida-transportes').value = personagem['Padrão de Vida']['Transportes'];
+        document.getElementById('atributo|Padrão de Vida_Hospedagens').value = personagem['Padrão de Vida']['Hospedagens'];
+        document.getElementById('atributo|Padrão de Vida_Transportes').value = personagem['Padrão de Vida']['Transportes'];
 
         renderArmas(personagem["Armas"],(innerHTML)=>{
           document.getElementById('carregando-armas').innerHTML = innerHTML;
 
-          document.getElementById('equipamentos-e-pertences').value = personagem['Equipamentos'];
+          document.getElementById('atributo|Equipamentos').value = personagem['Equipamentos'];
 
-          renderAntecedentes(personagem["Antecedentes"],personagem["Conexão-Chave"],(innerHTML)=>{
+          renderAntecedentes(personagem["Antecedentes"],personagem["Conexões-Chave"],(innerHTML)=>{
             document.getElementById('carregando-antecedentes').innerHTML = innerHTML;
 
-            definirListeners(personagem,()=>{
-                console.log(LISTENERS_FICHA);
+            document.getElementById('atributo|Anotações').value = personagem['Anotações'];
 
+            // personagem['Mostrar Dicas']
+
+            definirListeners(personagem,()=>{
                 document.getElementById('loading').style.display = 'none';
             });
 
@@ -502,7 +508,7 @@ function preencherTela() {
 
             /* Testando */
             /*
-            let tag = document.getElementById('atributo-Armas_0_Nome');
+            let tag = document.getElementById('atributo|Armas_0_Nome');
 
             let funcao = (event) => {
               event.preventDefault();
@@ -543,78 +549,3 @@ function preencherTela() {
 }
 
 /* ----------------------------------------------------------- */
-
-/* Eventos */
-
-/*
-
-#atributo-jogador
-#atributo-personagem
-#atributo-ocupacao
-#atributo-idade
-#atributo-nascimento
-
-#atributo-fotografia
-
-#atributo-forca > input[type=number].regular
-#atributo-forca > input[type=number].dificil
-#atributo-forca > input[type=number].extremo
-
-#atributo-destreza > input[type=number].regular
-#atributo-destreza > input[type=number].dificil
-#atributo-destreza > input[type=number].extremo
-
-#atributo-inteligencia > input[type=number].regular
-#atributo-inteligencia > input[type=number].dificil
-#atributo-inteligencia > input[type=number].extremo
-
-#atributo-constituicao > input[type=number].regular
-#atributo-constituicao > input[type=number].dificil
-#atributo-constituicao > input[type=number].extremo
-
-#atributo-aparencia > input[type=number].regular
-#atributo-aparencia > input[type=number].dificil
-#atributo-aparencia > input[type=number].extremo
-
-#atributo-poder > input[type=number].regular
-#atributo-poder > input[type=number].dificil
-#atributo-poder > input[type=number].extremo
-
-#atributo-tamanho > input[type=number].regular
-#atributo-tamanho > input[type=number].dificil
-#atributo-tamanho > input[type=number].extremo
-
-#atributo-educacao > input[type=number].regular
-#atributo-educacao > input[type=number].dificil
-#atributo-educacao > input[type=number].extremo
-
-#atributo-movimento
-
-#atributo-pontos-de-vida
-#atributo-pontos-de-vida-atual
-
-#atributo-lesao-grave
-#atributo-morrendo
-#atributo-inconsciente
-
-#atributo-sanidade-inicial
-#atributo-sanidade-maxima
-#atributo-sanidade-atual
-
-#atributo-insanidade-temporaria
-#atributo-insanidade-indefinida
-
-#atributo-sorte-inicial
-#atributo-sorte-atual
-
-#atributo-magia-maxima
-#atributo-magia-atual
-
-#atributo-combate-dano-extra
-#atributo-combate-corpo
-
-#atributo-secundario-esquivar > input[type=number].regular
-#atributo-secundario-esquivar > input[type=number].dificil
-#atributo-secundario-esquivar > input[type=number].extremo
-
-*/

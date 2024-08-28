@@ -2409,7 +2409,18 @@ function definirEquipamentos(pericias,ocupacao,callback) {
     }
 
     if (index_tipo_equipamento == (ocupacao.equipamentos.length - 1)) {
-      callback(equipamentos,armas);
+
+      /* Completar armas */
+      let quantas_faltam = 6 - armas.length;
+      let faltam_array = [...new Array(quantas_faltam).keys()];
+
+      faltam_array.forEach((faltam, index_faltam) => {
+        armas.push({ 'Nome': '', 'Dano': '', 'Alcance Base': '', 'Usos por Rodada': '', 'Munição na Arma': '', 'Defeito': '' });
+
+        if (index_faltam == (faltam_array.length - 1)) {
+          callback(equipamentos,armas);
+        }
+      });
     }
   });
 }
@@ -2666,7 +2677,7 @@ function dividirPericia(valor) {
   metade = (metade == 0) ? 1 : metade;
   let quinto = Math.floor(valor / 5);
   quinto = (quinto == 0) ? 1 : quinto;
-  return { 'Regular': valor, 'Difícil': metade, 'Extremo': quinto };
+  return { 'Regular': valor, 'Difícil': metade, 'Extremo': quinto, 'Usada com Sucesso': false };
 }
 
 function rolarAtributosComIdade(callback) {
@@ -3125,7 +3136,7 @@ const GERAR_ANTECEDENTES = {
         'Seu amigo de infância, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
         'Sua amiga de infância, ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
       },
-      { /// ZZZ genero aqui
+      {
         'Uma estrela de cinema chamado ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
         'Uma estrela de cinema chamada ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
         'Um pessoa da política chamado ': { restricao_genero: false, genero: '', possui_gerador: true, gerador: geradorPessoasProximas, restricao_padrao_vida: false, padroes_aceitos: [] },
@@ -3478,11 +3489,18 @@ function definirAntecedentes(nome,padrao_vida,genero,callback) {
         antecedentes['Tomos Arcanos, Feitiços & Artefatos'] = '';
         antecedentes['Encontros com Entidades Estranhas'] = '';
 
-        let conexoes = ['Ideologia/Crenças','Pessoas Significativas','Locais Importantes','Pertences Queridos'];
-        let index_conexoes = Math.floor(Math.random() * conexoes.length);
-        let conexao_chave = conexoes[index_conexoes];
+        let conexoes_chave = {
+          'Ideologia/Crenças': false,
+          'Pessoas Significativas': false,
+          'Locais Importantes': false,
+          'Pertences Queridos': false
+        };
 
-        callback(antecedentes,conexao_chave);
+        let array_conexoes = Object.keys(conexoes_chave);
+        let index_conexoes = Math.floor(Math.random() * array_conexoes.length);
+        conexoes_chave[array_conexoes[index_conexoes]] = true;
+
+        callback(antecedentes,conexoes_chave);
       }
 
     });
@@ -3567,7 +3585,7 @@ function rolarPersonagem(jogador,callback) {
 
                     definirNomeENascimento(genero,atributos['Informações']['Idade'],(nome,data_nascimento)=>{
 
-                      definirAntecedentes(nome,atributos['Padrão de Vida']['Nível de Gastos'],genero,(antecedentes,conexao_chave)=>{
+                      definirAntecedentes(nome,atributos['Padrão de Vida']['Nível de Gastos'],genero,(antecedentes,conexoes_chave)=>{
 
                         if ('Mythos de Cthulhu' in pericias) {
                           atributos['Atributos Secundários']['Sanidade Máxima'] = atributos['Atributos Secundários']['Sanidade Máxima'] - pericias['Mythos de Cthulhu']['Regular'];
@@ -3586,7 +3604,9 @@ function rolarPersonagem(jogador,callback) {
                         personagem['Equipamentos'] = equipamentos;
                         personagem['Armas'] = armas;
                         personagem['Antecedentes'] = antecedentes;
-                        personagem['Conexão-Chave'] = conexao_chave;
+                        personagem['Conexões-Chave'] = conexoes_chave;
+                        personagem['Anotações'] = '';
+                        personagem['Mostrar Dicas'] = document.getElementById('form-dicas').checked;
 
                         /* Formatar */
                         personagem['Padrão de Vida']['Hospedagens'] = personagem['Padrão de Vida']['Hospedagens'].join(", ");
