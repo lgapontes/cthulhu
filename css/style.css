@@ -166,14 +166,28 @@ main button > img.importar {
 main button.vermelho {
   background-color: #b71c1c;
 }
+main button.vermelho:hover {
+  background-color: #d73c3c;
+  box-shadow: 0 0 10px #777;
+}
+
 main button.marrom {
   float: left;
   background-color: #6d4c41;
   margin-left: 0;
   margin-right: 5px;
 }
+main button.marrom:hover {
+  background-color: #8d6c61;
+  box-shadow: 0 0 10px #777;
+}
+
 main button.verde {
   background-color: #00897b;
+}
+main button.verde:hover {
+  background-color: #20A99b;
+  box-shadow: 0 0 10px #777;
 }
 
 main button.esconder {
@@ -203,6 +217,9 @@ button.floating-action-button {
   padding: 0;
   margin: 0;
   z-index: 2;
+}
+button.floating-action-button:hover {
+  background-color: #20A99b;
 }
 
 br {
@@ -292,6 +309,78 @@ div.lista-investigadores > div.investigador {
   border: 2px solid #E59700;
 }
 
+div.lista-investigadores > div.investigador:hover {
+  background-color: #F5E7C0;
+}
+
+div.lista-investigadores > div.investigador button {
+  display: block;
+  padding: 4px 8px;
+  float: right;
+  margin-left: 5px;
+  background-color: #000;
+  color: #ffffff;
+  font-weight: bold;
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+div.lista-investigadores > div.investigador button::after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+
+div.lista-investigadores > div.investigador button > span {
+  display: block;
+  float: left;
+}
+
+div.lista-investigadores > div.investigador button > img {
+  display: block;
+  float: left;
+  width: 20px;
+  margin-right: 6px;
+}
+
+div.lista-investigadores > div.investigador button > img.exportar {
+  margin-top: 1px;
+}
+
+div.lista-investigadores > div.investigador button > img.excluir {
+  width: 15px;
+  margin-right: 1px;
+}
+
+div.lista-investigadores > div.investigador button.vermelho {
+  float: left;
+  margin-left: 0;
+  margin-right: 5px;
+  background-color: #b71c1c;
+}
+div.lista-investigadores > div.investigador button.marrom {
+  background-color: #6d4c41;
+}
+div.lista-investigadores > div.investigador button.verde {
+  background-color: #00897b;
+}
+
+div.lista-investigadores > div.investigador button.vermelho:hover {
+  background-color: #d73c3c;
+  box-shadow: 0 0 10px #777;
+}
+
+div.lista-investigadores > div.investigador button.marrom:hover {
+  background-color: #8d6c61;
+  box-shadow: 0 0 10px #777;
+}
+
+div.lista-investigadores > div.investigador button.verde:hover {
+  background-color: #20A99b;
+  box-shadow: 0 0 10px #777;
+}
+
 div.lista-investigadores > div.investigador::after {
   content: '';
   display: block;
@@ -325,10 +414,6 @@ div.lista-investigadores > div.investigador > div.container > div.informacoes {
   float: left;
   width: 100%;
   margin-top: 4px;
-}
-
-div.lista-investigadores > div.investigador > div.container > div.informacoes:first-child {
-  margin-top: 1px;
 }
 
 div.lista-investigadores > div.investigador > div.container > div.informacoes::after {
@@ -777,7 +862,7 @@ div.ficha div.bloco > div.container {
 }
 
 div.ficha div.bloco > div.container-dicas {
-  font-size: 0.9em;
+  font-size: 0.8em;
   padding: 10px 4px 6px 4px;
   font-style: normal;
   text-indent: 0;
@@ -787,6 +872,7 @@ div.ficha div.bloco > div.container-dicas {
 div.ficha div.bloco > div.container-dicas > bold {
   text-transform: uppercase;
   font-weight: bold;
+  color: #726E54;
 }
 
 div.ficha div.bloco100-fluido div.bloco > div.container,

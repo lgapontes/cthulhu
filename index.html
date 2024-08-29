@@ -559,7 +559,124 @@
 				<div class="bloco">
 					<label class="sobrecampo sobrecampo-dicas">Dicas</label>
 					<div class="container container-dicas">
-						<bold>teste:</bold> teste teste
+						<bold>TESTES:</bold><br>
+						- Desastre: resultado 100 (se a perícia >= 50) ou resultado 96+ (se a perícias < 50)<br>
+						- Fracasso: resultado > perícia<br>
+						- Sucesso Regular: resultado <= perícia<br>
+						- Sucesso Sólido: resultado <= perícia/2<br>
+						- Sucesso Extremo: resultado <= perícia/5<br>
+						- Sucesso Crítico: resultado = 01<br>
+						<br>
+						<bold>FORÇAR:</bold> o jogador pode rolar de novo, mas se falhar as consequências são piores.<br>
+						<br>
+						<bold>TESTES CONTRA PNJ:</bold><br>
+						- Perícia do PNJ < 50: Sucesso com Regular<br>
+						- Perícia do PNJ >= 50: Sucesso com Sólido<br>
+						- Pericia do PNJ >= 90: Sucesso com Extremo<br>
+						<br>
+						<bold>LIMITE FÍSICO HUMANO:</bold> se a perícia do PNJ for maior que 100 + a perícia do investigador, não é possível fazer o teste (não passa nem com extremo ou crítico).<br>
+						<br>
+						<bold>TESTES RESISTIDOS:</bold> ambos personagens jogam, com os resultados comparados ao valor do atributo. Obtém-se os níveis de sucesso acima, do pior para o melhor. Se houver empate fora de combate, perícias maiores ganham. Empate em combate é explicado adiante.<br>
+						Exemplos:<br>
+						- Psicologia versus Periciais Sociais (Intimidação, Lábia, Persuasão e Charme).<br>
+						- Combate: Lutar (Briga) versus Lutar (Briga)<br>
+						- Faz um teste resistido. Empate: atacante ganha causando dano e o alvo, que tentava contra-atacar, não causa dano. Se ambos falharem ninguém causa dano.<br>
+						- Combate: Esquivar (Briga) versus Lutar (Briga). Faz um teste resistido. Empate: defensor ganha e não causa nem recebe dano. Se ambos falharem ninguém causa dano.<br>
+						<br>
+						<bold>INICIATIVA:</bold> maior destreza. Para armas de fogo preparadas use DES +50.<br>
+						<br>
+						<bold>SURPRESA (Atacando Primeiro):</bold> o ataque ocorre antes da iniciativa. Se houver necessidade, um teste de Furtividade do atacante versus Escutar,  Encontrar ou Psicologia do alvo pode determinante se houve ou não a surpresa. Se houver surpresa, para ataques corpo-a-corpo pode ser sucesso automático ou um aplicar um dado de bônus. Ataques à distância sempre precisam do teste de ataque. O alvo não pode se defender em ambos os casos.<br>
+						<br>
+						<bold>ARMAS DE FOGO:</bold> não são testes resistidos. A dificuldade é definido pela distância e outros elementos. A cada duplicação do alcance base da arma o nível de dificuldade sobe um (regular = alcance base, difícil = 2x base, extremo = 4x base, acima disso utiliza dados de penalidade). Falha não causa dano.<br>
+						<br>
+						<bold>Modificadores para dados bônus ou de penalidade para armas de fogo:</bold><br>
+						- Buscar Cobertura (Dado de Penalidade): teste de Esquivar do alvo. Ele perde seu próximo ataque. Se já tiver atacado nessa rodada, perde o da próxima. A única coisa que ele pode fazer é tentar Esquivar de novos ataques.<br>
+						- Queima-Roupa (Dado de Bônus): em distância em metros igual à DES do atirador dividida por 15 o atacante ganha um dado de bônus.<br>
+						- Mirando (Dado de Bônus): passa a rodada mirando.<br>
+						- Alvos Movendo-se Rapidamente (Dado de Penalidade): alvo movendo com MOV 8 ou mais.<br>
+						- Tamanho do Alvo (Dado de Bônus ou Penalidade): alvos menores (Corpo -2 ou menos), dado de penalidade. Alvos maiores (Corpo 4 ou mais), aplique um dado de bônus.<br>
+						- Recarregando Armas de Fogo (Possível Dado de Penalidade): em uma rodada, é possível colocar um cartucho no tambor e disparar com um dado de penalidade.<br>
+						- Pistolas, Múltiplos Tiros (Dado de Penalidade): quando disparar dois ou três tiros em uma rodada, teste cada tiro individualmente; todos os tiros recebem um dado de penalidade. Veja a seguir.<br>
+						- Disparando Contra um Combate Corpo a corpo: um dado de penalidade em alvo em combate corpo a corpo. Desastre indica que um aliado foi atingido. Se múltiplos aliados estiverem na linha de fogo, aquele com a Sorte mais baixa é atingido.<br>
+						<br>
+						<bold>RECARREGAR:</bold> uma rodada para carregar duas balas ou cartuchos de qualquer tipo de revólver, rifle ou Espingarda. Uma rodada para trocar um pente. Duas para trocar uma correia de munição de uma metralhadora.<br>
+						<br>
+						<bold>FOGO AUTOMÁTICO:</bold>
+						- Para modo automático: jogador escolhe quantas munições, sendo agrupadas em rajadas (mínimo de 3 balas e máximo até Submetralhadoras ou Metralhadoras dividido por 10 e arredondado para baixo), limite de quantidade das munições da arma. Fazer um ataque por rajada. Chance de acertar reduz após primeira rajada. Alvos devem estar em um mesmo arco de 60 graus. Perde-se munições (1 bala por metro) entre um alvo e outro. Um sucesso na jogada de ataque provoca dano igual a metade (arredondado para baixo, mínimo 1) das balas disparadas (armadura conta por bala). Sucesso extremo acerta todos os tiros, e metade causa empalamento.<br>
+						- Para modo rajada: aperta uma vez o gatilho e dispara 2 ou 3 munições.<br>
+						- Ao disparar em modo semiautomático (ou seja, vários tiros individuais): aplique um dado de penalidade para cada tiro, fazendo um teste para cada disparo, como se estivesse dando múltiplos tiros com uma.<br>
+						<br>
+						<bold>DEFEITOS</bold> valor igual ou maior ao defeito da arma emperrar (arma de alavanca) ou falha a arma (não dispara apenas). Consertar um emperramento leva 1D6 rodadas de combate, além de precisar de um teste bem-sucedido de Consertos Mecânicos ou Armas de Fogo.<br>
+						<br>
+						<bold>TIPOS DE DANO:</bold> dano normal e lesões graves. Se o dano de um único ataque for:<br>
+						- Dano Normal: menor do que metade dos pontos de vida do personagem, trata-se de um dano normal. Se chegar a zero, fica inconsistente, mas o personagem não morre.<br>
+						- Lesão grave: igual ou maior do que a metade do máximo de pontos de vida do personagem, é uma lesão grave. Se os pontos de vida chegar a zero o personagem pode morrer. Marque a caixa Lesão Grave. Faça um teste de CON, um sucesso evita que o personagem fique inconsistente.<br>
+						- Morte: Maior do que máximo de pontos de vida do personagem, o resultado é a morte inevitável.<br>
+						- Inconsciente: zerar pontos de vida sem a caixa lesão grave estar marcada. Vai se recuperar com o tempo.<br>
+						<br>
+						<bold>PRIMEIROS SOCORROS:</bold> pode ser realizado em até 1 hora após estar morrendo. Recupera 1 ponto de vida. Só pode ser tentada uma vez, podendo uma segunda se forçar. Duas pessoas podem se ajudar, bastando um sucesso.<br>
+						<br>
+						<bold>MEDICINA:</bold> demora 1 hora. Pode ser realizado a qualquer momento pós dano, mas se passar um dia precisa de um sucesso sólido. Sucesso recupera 1D3 (exceto em Morrendo).<br>
+						<br>
+						<bold>MORRENDO:</bold> zerar pontos de vida com a caixa lesão grave marcada. Pode morrer em breve exceto se receber Primeiros Socorros. Faz teste de CON no final da próxima rodada e todas rodadas subsequentes. Se falhar o personagem morre. Se receber sucesso de Primeiros Socorros, estabiliza o personagem e recupera 1 ponto de vida temporário. Deve fazer teste de CON a cada hora, se falhar piorou, perde o ponto de vida e fica Morrendo novamente. Depois de estabilizado, deve receber Medicina. Se obtiver sucesso não está mais morrendo e recupera 1d3 pontos de vida. O personagem deve repousar uma semana para fazer teste de recuperar da lesão grave.<br>
+						<br>
+						<bold>RECUPERAÇÃO DE DANO NORMAL:</bold> recupera 1 ponto de vida por dia.<br>
+						<br>
+						<bold>RECUPERAÇÃO DE LESÃO GRAVE:</bold> teste de CON a cada semana. Sucesso recupera 1d3. Sucesso extremo recupera 2d3. Dados de bônus se tiver repouso completo em lugar adequado. Dados de bônus se sucesso de Medicina realizada por cuidador. Dado de penalidade se o personagem não descansar ou se a Medicina resultar em desastre. A lesão é curada (desmarque a caixa) se obtiver sucesso extremo em CON ou se recuperar pelo menos metade dos pontos de vida. Se o teste de CON for desastre, algo permanente acontece, registre em Ferimentos e Cicatrizes (ex, cego de um olho, perde um dedo, manco, etc).<br>
+						<br>
+						<bold>DANO (Corpo-a-corpo):</bold> danos com a perícia Lutar são o valor de dano da arma (ou 1d3 para desarmado) + o valor de Dano Extra (ou menos, se for redutor). Danos com a perícia Arremessar são o dano da arma mais METADE do Dano Extra (não se aplica a bestas).<br>
+						<br>
+						<bold>DANO EXTREMO:</bold> jogada de ataque com armas NÃO perfurantes ou cortantes com Sucesso Extremo causa valor máximo do dado de dano e máximo do Dano Extra, se houver.<br>
+						Exemplo: Dano 1d4 + DX1d4 = 8<br>
+						<br>
+						<bold>EMPALAMENTOS:</bold> jogada de ataque com armas perfurantes ou cortantes com Sucesso Extremo causa valor máximo do dado de dano, valor máximo do Dano Extra, se houver, e acrescenta mais uma jogada de dano da arma.<br>
+						Exemplo: Dano 1d4 + DX1d4 = 8 + 1d4<br>
+						<br>
+						<bold>MANOBRAS DE LUTA:</bold> atacante recebe 1 dado de Penalidade para cada ponto de Corpo menor que o do oponente (máximo 2). Se exceder por 3 ou mais não há como realizar a manobra. Uma manobra é tratada da mesma maneira que um ataque normal, geralmente com Lutar (Briga).<br>
+						<br>
+						<bold>NOCAUTE:</bold> trate como uma manobra de luta. Se acertar, o alvo fica inconsistente e perde 1 ponto de vida.<br>
+						<br>
+						<bold>DESVANTAGEM NUMÉRICA:</bold> ataques corpo-a-corpo subsequentes ao primeiro atacante que pertence a um grupo maior ganham um dado de bônus. Ataques à distância não possuem esse benefício.<br>
+						<br>
+						<bold>Ataque à distância pode ser contra-atacado?</bold> Sim, desde que o alvo esteja a uma distância em metros igual a um quinto da DES, dividido por 3.<br>
+						<br>
+						<bold>ARMADURAS:</bold> reduz valor do dano.<br>
+						<br>
+						<bold>TESTE DE SABER:</bold> teste de EDU para descobrir coisas do jogo, como por exemplo tentar ler um idioma desconhecido.<br>
+						<br>
+						<bold>TESTE DE IDEIA:</bold> teste de INT para dar dica quando a investigação está travada no jogo.<br>
+						<br>
+						<bold>TESTES DE SANIDADE:</bold> teste SAN, um sucesso (menor ou igual) pode perder poucos pontos, enquanto uma falha perde mais pontos. As perdas são exibidas como 1/1d4, por exemplo, sendo o número antes da barra o valor de perda em caso de sucesso, enquanto o depois da barra a perda da falha.<br>
+						<br>
+						<bold>FALHAR EM SANIDADE:</bold> sempre perde o autocontrole, causando situações como gritos, pular de susto (deixa cair algo), movimento involuntário, congelar, etc. Um desastre perde a quantidade máxima de sanidade. Perder uma grande quantidade de sanidade de uma vez pode fazer o personagem ficar insano.<br>
+						<br>
+						<bold>ESTADOS DE INSANIDADE:</bold> temporário, indefinido e permanente.
+						<br>
+						<bold>INSANIDADE TEMPORÁRIA:</bold> se perder 5 ou mais pontos de uma vez. Faz um teste de INT, se FALHAR, ele reprime a memória e NÃO fica insano. Se ele passar, reconhece o que viu, ficando temporariamente insano por 1d10 horas.<br>
+						<br>
+						<bold>INSANIDADE INDEFINIDA:</bold> se perder um quinto ou mais de SAN de uma única vez em uma dia de jogo o personagem fica indefinidamente insano. A insanidade indefinida dura até que o personagem seja curado ou até o final do arco, campanha ou evolução dos personagens.<br>
+						<br>
+						<bold>INSANIDADE PERMANENTE:</bold> quando a insanidade chega a zero não há como se recuperar (jogador perde o personagem).<br>
+						<br>
+						<bold>EFEITOS DA INSANIDADE:</bold> tanto para temporada quanto indefinida, passa por duas fases: acesso de loura (fase 1) e insanidade latente (fase 2).<br>
+						<br>
+						<bold>ACESSO DE LOUCURA (fase 1):</bold> a fase 1 dura 10 rodadas e o Guardião pode alterar dados dos antecedentes do investigador (acrescentar Fobias & Manias por exemplo). Se o investigador estiver acompanhando de outros PJs, o acesso de loucura deve ser rolado na tabela Tempo Real da página 157. Se ele estiver sozinho, o Guardião pode fazer um resumo rolando na tabela Resumo da página 159. Enquanto estiver com acesso de loucura o personagem pode adquirir Fobias e Manias, respetivamente rolando nas tabelas 160 e 161.<br>
+						<br>
+						<bold>INSANIDADE LATENTE (fase 2):</bold> neste período qualquer perda de sanidade provoca outro acesso de loucura. Ele permanece neste estado por 1d10 horas no caso de insanidade temporária, ou provável que durante toda a campanha ou arco no caso de insanidade indefinida.<br>
+						<br>
+						<bold>EFEITOS COLATERAIS:</bold> enquanto estiver insano, presenciar algo que seja sua Fobia ou Mania causa pânico e reação obsessiva, respectivamente. Em ambos casos aplica-se um dado de penalidade. Usar Psicanálise sobre tal investigador mantém ele sobre controle temporariamente.<br>
+						<br>
+						<bold>EXAMES DA REALIDADE:</bold> enquanto estiver na insanidade latente o personagem pode sofrer efeitos de delírios descritos pelo Guardião. Para tentar perceber as coisas como realmente são ele pode testar Sanidade: falha causa acesso de loucura e perde 1 ponto de sanidade. Sucesso: o personagem enxerga o que de fato está acontecendo na cena. Usar Psicanálise sobre tal investigador faz com que ele não veja os delírios.<br>
+						<br>
+						<bold>MYTHOS DE CTHULHU:</bold> a primeira ocorrência de insanidade a partir de Mythos adiciona 5 pontos à perícia Mythos. As próximas acrescentam 1 ponto. Em ambos os casos deve reduzir sua sanidade máxima (99 - Mythos de Cthulhu).<br>
+						<br>
+						<bold>RECUPERAR DE INSANIDADE INDEFINIDA:</bold> a cada mês de tratamento faz um teste de Sanidade, se passar o personagem está curado. Leia sobre os tipos de tratamento na página 164.<br>
+						<br>
+						<bold>AUMENTANDO SANIDADE (há quatro formas além de tratamento):</bold><br>
+						- Recompensa do Guardião ao final de arco ou campanha.<br>
+						- Aumentar uma perícia para 90%.<br>
+						- Teste de um Psicanálise: pode ser realizado uma vez por mês. Sucesso adiciona 1d3, desastre perca 1d6.<br>
+						- Autoajuda: interagir com algo do antecedente durante período de inatividade. Ao final faz uma teste de Sanidade, sucesso ganha 1d6, falha perde 1 e deve revisar o antecedente. Se o antecedente for uma “conexão-chave” ele ganha um dado de bônus no teste. Se passar recupera 1d6 e sai da insanidade indefinida. Se falhar perde a conexão-chave.<br>
 					</div>
 				</div>
 			</div>

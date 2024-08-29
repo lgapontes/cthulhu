@@ -417,10 +417,6 @@ function listarInvestigadores() {
       </div>
       <div class="container">
         <div class="informacoes">
-          <label class="sobrecampo jogador">Jogador</label>
-          <label class="valor">${personagem['Informações']['Jogador']}</label>
-        </div>
-        <div class="informacoes">
           <label class="sobrecampo personagem">Personagem</label>
           <label class="valor">${personagem['Informações']['Nome']}</label>
         </div>
@@ -428,6 +424,18 @@ function listarInvestigadores() {
           <label class="sobrecampo ocupacao">Ocupação</label>
           <label class="valor">${personagem['Informações']['Ocupação']}</label>
         </div>
+
+        <button class="vermelho" type="button">
+					<img class="excluir" src="img/trash-solid.svg">					
+				</button>
+        <button class="verde" type="button">
+					<img class="exportar" src="img/person-circle-check-solid.svg">
+					<span>Editar</span>
+				</button>
+        <button class="marrom" type="button">
+					<img class="exportar" src="img/person-arrow-down-to-line-solid.svg">
+					<span>Exportar</span>
+				</button>
       </div>
     </div>
     `;

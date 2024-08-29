@@ -7,7 +7,7 @@ function logger(msg) {
   if ( LOG ) console.log(msg);
 }
 
-const OBTER_IMAGEM = true;
+const OBTER_IMAGEM = false;
 const MAXIMO_INTERACOES = 1000;
 
 /* ----------------------------------------------------------- */
