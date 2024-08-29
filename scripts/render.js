@@ -1,4 +1,8 @@
 
+function renderInfoToast(msg) {
+  vanillaToast.default(msg,{ duration:3000 });
+}
+
 function createOption(select,value) {
   let option = document.createElement('option');
   option.value = value;
@@ -307,14 +311,43 @@ function definirPropriedadePersonagem(event,personagem,callback) {
 /*-----------------------------------------------------------------------------------------*/
 
 let PERSONAGEM_TRABALHO = {};
-const LOCAL_STORAGE = 'personagens';
+const LOCAL_STORAGE_PERSONAGENS = 'personagens';
+const LOCAL_STORAGE_METADATA = 'metadata';
+
+function bancoObterMetadata() {
+  let metadata = {
+    mensagemExibida: false,
+    jogador: ''
+  };
+  let dados = localStorage.getItem(LOCAL_STORAGE_METADATA);
+
+  if (dados === null) {
+    localStorage.setItem(LOCAL_STORAGE_METADATA,JSON.stringify(metadata));
+  } else {
+    metadata = JSON.parse(dados);
+  }
+
+  return metadata;
+}
+
+function bancoMarcarMensagemExibida() {
+  let metadata = bancoObterMetadata();
+  metadata.mensagemExibida = true;
+  localStorage.setItem(LOCAL_STORAGE_METADATA,JSON.stringify(metadata));
+}
+
+function bancoSalvarJogador(jogador) {
+  let metadata = bancoObterMetadata();
+  metadata.jogador = jogador;
+  localStorage.setItem(LOCAL_STORAGE_METADATA,JSON.stringify(metadata));
+}
 
 function bancoObterPersonagens() {
   let personagens = {};
-  let dados = localStorage.getItem(LOCAL_STORAGE);
+  let dados = localStorage.getItem(LOCAL_STORAGE_PERSONAGENS);
 
   if (dados === null) {
-    localStorage.setItem(LOCAL_STORAGE,JSON.stringify(personagens));
+    localStorage.setItem(LOCAL_STORAGE_PERSONAGENS,JSON.stringify(personagens));
   } else {
     personagens = JSON.parse(dados);
   }
@@ -335,10 +368,10 @@ function bancoObterPersonagem(id) {
 function bancoSalvarPersonagem(personagem) {
   let personagens = bancoObterPersonagens();
   personagens[personagem['Informações']['UUID']] = personagem;
-  localStorage.setItem(LOCAL_STORAGE,JSON.stringify(personagens));
+  localStorage.setItem(LOCAL_STORAGE_PERSONAGENS,JSON.stringify(personagens));
 }
 
-document.getElementById('rolar').addEventListener('click',event=>{
+document.getElementById('form-rolar').addEventListener('click',event=>{
   event.preventDefault();
   let personagem_salvo = null;
   preencherTela(personagem_salvo);
@@ -347,14 +380,15 @@ document.getElementById('rolar').addEventListener('click',event=>{
 function salvarPersonagem() {
   bancoSalvarPersonagem(PERSONAGEM_TRABALHO);
   personagemFoiAlterado(false);
+  renderInfoToast('Personagem salvo com sucesso!');
 }
 
-document.getElementById('salvar').addEventListener('click',event=>{
+document.getElementById('form-salvar').addEventListener('click',event=>{
   event.preventDefault();
   salvarPersonagem();
 });
 
-document.getElementById('salvar-fab').addEventListener('click',event=>{
+document.getElementById('form-salvar-fab').addEventListener('click',event=>{
   event.preventDefault();
   salvarPersonagem();
 });
@@ -365,11 +399,11 @@ let LISTENERS_FICHA = [];
 
 function personagemFoiAlterado(alterado) {
   if (alterado) {
-    document.getElementById('salvar').style.display = 'block';
-    document.getElementById('salvar-fab').style.display = 'block';
+    document.getElementById('form-salvar').style.display = 'block';
+    document.getElementById('form-salvar-fab').style.display = 'block';
   } else {
-    document.getElementById('salvar').style.display = 'none';
-    document.getElementById('salvar-fab').style.display = 'none';
+    document.getElementById('form-salvar').style.display = 'none';
+    document.getElementById('form-salvar-fab').style.display = 'none';
   }
 }
 
@@ -377,7 +411,10 @@ const FUNCAO = (event) => {
   event.preventDefault();
   definirPropriedadePersonagem(event,PERSONAGEM_TRABALHO,()=>{
     personagemFoiAlterado(true);
-    console.log(PERSONAGEM_TRABALHO);
+    if (!bancoObterMetadata().mensagemExibida) {
+      renderInfoToast('Clique em SALVAR para salvar este personagem!');
+      bancoMarcarMensagemExibida();
+    }
   });
 };
 
@@ -435,7 +472,7 @@ function preencherTela(personagem_salvo) {
   rolarPersonagem(personagem_salvo,jogador,personagem=>{
 
     if (!personagem['Metadados']['Salvo']) {
-      document.getElementById('salvar').style.display = 'block';
+      personagemFoiAlterado(true);
     }
 
     carregarImagem(personagem['Informações']['Imagem'],()=>{

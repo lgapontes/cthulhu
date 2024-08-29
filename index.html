@@ -1,16 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="pt-BR">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Call of Cthulhu</title>
 		<link rel="icon" href="img/favicon.png">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/vanilla-toast.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body>
 		<div class="loading" id="loading"></div>
 
     <header></header>
-    <main>
+
+		<main id="form-consultar">
+			<div class="botoes botoes-cima">
+        <h4>Rolador de Personagens</h4>
+      </div>
+
+			<span class="text">
+				<label>Jogador</label>
+				<input type="text" value="" id="form-jogador">
+			</span>
+
+      <div class="botoes botoes-baixo">
+        <button class="primary verde" type="button" id="form-criar">
+					<img src="img/person-circle-plus-solid.svg">
+					<span>Criar Personagem</span>
+				</button>
+				<button class="marrom" type="button" id="form-importar">
+					<img class="importar" src="img/person-arrow-up-from-line-solid.svg">
+					<span>Importar Personagem</span>
+				</button>
+      </div>
+    </main>
+
+		<main id="form-gerar">
 			<span class="text">
 				<label>Ocupação</label>
 				<select id="opcao">
@@ -38,16 +63,16 @@
 			</span>
 
       <div class="botoes botoes-baixo">
-        <button class="vermelho" type="button" id="rolar">
-					<img src="img\dice-solid.svg">
+        <button class="vermelho" type="button" id="form-rolar">
+					<img src="img/dice-solid.svg">
 					<span>Gerar</span>
 				</button>
-        <button class="primary verde esconder" type="button" id="salvar">
-					<img class="floppy" src="img\floppy-disk-solid.svg">
+        <button class="primary verde esconder" type="button" id="form-salvar">
+					<img src="img/person-circle-check-solid.svg">
 					<span>Salvar</span>
 				</button>
-				<button class="marrom" type="button" id="voltar">
-					<img class="lista" src="img\table-list-solid.svg">
+				<button class="marrom" type="button" id="form-voltar">
+					<img class="lista" src="img/table-list-solid.svg">
 					<span>Meus Personagens</span>
 				</button>
       </div>
@@ -374,9 +399,9 @@
 								<label class="dificil">0</label>
 								<label class="extremo">0</label>
 								-->
-								<input type="number" class="regular" id="atributo|Perícias_Esquivar_Regular" value="0">
-								<input type="number" class="dificil" id="atributo|Perícias_Esquivar_Difícil" value="0">
-								<input type="number" class="extremo" id="atributo|Perícias_Esquivar_Extremo" value="0">
+								<input type="number" class="regular" id="atributo2|Perícias_Esquivar_Regular" value="0">
+								<input type="number" class="dificil" id="atributo2|Perícias_Esquivar_Difícil" value="0">
+								<input type="number" class="extremo" id="atributo2|Perícias_Esquivar_Extremo" value="0">
 							</div>
 						</div>
 
@@ -506,10 +531,11 @@
 
 		</div>
 
-		<button class="floating-action-button" id="salvar-fab"></button>
+		<button class="floating-action-button" id="form-salvar-fab"></button>
 
+		<script type="text/javascript" src="scripts/vanilla-toast.js"></script>
 		<script type="text/javascript" src="scripts/nomes.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
-		<script type="text/javascript" src="scripts/render.js"></script>    
+		<script type="text/javascript" src="scripts/render.js"></script>
 
 </body></html>
