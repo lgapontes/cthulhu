@@ -46,6 +46,10 @@ main::after {
   clear: both;
 }
 
+main h4 {
+  font-size: 1.2em;
+}
+
 main > span.text {
   display: block;
   float: left;
@@ -223,6 +227,197 @@ div.botoes::after {
   content: '';
   clear: both;
 }
+
+/* ------------------------------------------------ */
+
+div.lista-investigadores {
+  display: block;
+  width: 900px;
+  min-width: 420px;
+  max-width: 95%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0 auto;
+  margin-bottom: 60px;
+  position: relative;
+
+  border-radius: 0;
+  box-shadow:
+	  inset #3A3D3E 0 0 0 2px,
+    inset #5A5D3E 0 0 0 4px,
+    inset #7A7D3E 0 0 0 6px;
+
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 1em;
+
+  background-image: url(../img/background4.jpg);
+  background-repeat: repeat;
+  background-size: 2000px;
+}
+
+div.lista-investigadores::after {
+  display: block;
+  height: 0;
+  content: '';
+  clear: both;
+}
+
+div.lista-investigadores > div.carregando-lista {
+  display: block;
+  width: 100%;
+  height: 121px;
+  box-sizing: border-box;
+  text-align: center;
+  padding-top: 46px;
+
+  color: #E59700;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: bold;
+}
+
+div.lista-investigadores > div.investigador {
+  display: block;
+  float: left;
+  width: 98%;
+  margin: 1%;
+  box-sizing: border-box;
+  padding: 4px 0 0 4px;
+
+  font-size: 1em;
+  font-style: normal;
+  font-weight: normal;
+  background-color: rgba(230,230,230,0.7);
+
+  border: 2px solid #E59700;
+}
+
+div.lista-investigadores > div.investigador::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+div.lista-investigadores > div.investigador > div {
+  display: block;
+  box-sizing: border-box;
+  position: relative;
+  margin-bottom: 5px;
+  height: 121px;
+}
+
+div.lista-investigadores > div.investigador > div.container {
+  width: 64%;
+  margin-right: 2%;
+  float: right;
+}
+
+div.lista-investigadores > div.investigador > div.container::after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes {
+  display: block;
+  float: left;
+  width: 100%;
+  margin-top: 4px;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes:first-child {
+  margin-top: 1px;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes::after {
+  display: block;
+  height: 0;
+  content: '';
+  clear: both;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes > label {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes > label.valor {
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin-top: 17px;
+  padding-top: 2px;
+  font-style: normal;
+  border: 1px solid #E59700;
+  background-color: #FCFAE1;
+
+  text-indent: 2px;
+  overflow: hidden;
+  font-size: 0.9em;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes > label.sobrecampo {
+  display: block;
+  position: absolute;
+  line-height: 13px;
+  text-align: center;
+
+  font-size: 0.65em;
+  font-weight: bold;
+  background-color: #CCCAB1;
+  color: #726E54;
+
+  z-index: 0;
+  border-top-right-radius: 10px;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes > label.personagem {
+  width: 74px;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes > label.ocupacao {
+  width: 60px;
+}
+
+div.lista-investigadores > div.investigador > div.container > div.informacoes > label.jogador {
+  width: 52px;
+}
+
+div.lista-investigadores > div.investigador > div.fotografia {
+  float: left;
+  width: 120px;
+}
+
+div.lista-investigadores > div.investigador > div.fotografia > div.fotografia-interna {
+  display: block;
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+div.lista-investigadores > div.investigador > div.fotografia > div.moldura {
+  background-image: url(../img/moldura.png);
+  background-size: 100%;
+  z-index: 1;
+}
+
+div.lista-investigadores > div.investigador > div.fotografia > div.foto {
+  background-image: url(../img/default_user.jpg);
+  background-size: 95%;
+  z-index: 0;
+
+  -webkit-filter: sepia(100%); /* Safari 6.0 - 9.0 */
+  filter: sepia(100%);
+}
+
+/* ------------------------------------------------ */
 
 div.ficha {
   display: block;
@@ -1638,6 +1833,11 @@ div.loading {
 
   main > span.text > select {
     width: 85%;
+  }
+
+  div.lista-investigadores > div.investigador {
+    width: 48%;
+    margin: 1%;
   }
 
   div.ficha {

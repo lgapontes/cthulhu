@@ -30,10 +30,10 @@ function preencherSelectOcupacoes(callback) {
   });
 }
 
-function carregarImagem(url,callback) {
+function carregarImagem(id,url,callback) {
   var img = new Image();
   img.onload = function() {
-    document.getElementById('atributo|fotografia').style.backgroundImage = `url(${img.src})`;
+    document.getElementById(id).style.backgroundImage = `url(${img.src})`;
     callback();
   }
   img.src = url;
@@ -367,7 +367,7 @@ function bancoObterPersonagem(id) {
 
 function bancoSalvarPersonagem(personagem) {
   let personagens = bancoObterPersonagens();
-  personagens[personagem['Informações']['UUID']] = personagem;
+  personagens[personagem['Metadados']['UUID']] = personagem;
   localStorage.setItem(LOCAL_STORAGE_PERSONAGENS,JSON.stringify(personagens));
 }
 
@@ -392,6 +392,63 @@ document.getElementById('form-salvar-fab').addEventListener('click',event=>{
   event.preventDefault();
   salvarPersonagem();
 });
+
+/*-----------------------------------------------------------------------------------------*/
+
+function listarInvestigadores() {
+  document.getElementById('loading').style.display = 'block';
+  let personagens = bancoObterPersonagens();
+  let array_personagens = Object.keys(personagens);
+  let innerHTML = '';
+  let selectors_imagens = [];
+
+  array_personagens.forEach((id, index) => {
+    let personagem = personagens[id];
+    selectors_imagens.push({
+      url: personagem['Informações']['Imagem'],
+      selector: `foto-${personagem['Metadados']['UUID']}`,
+    });
+
+    innerHTML += `
+    <div class="investigador" id="${personagem['Metadados']['UUID']}">
+      <div class="fotografia">
+        <div class="fotografia-interna moldura"></div>
+        <div id="foto-${personagem['Metadados']['UUID']}" class="fotografia-interna foto"></div>
+      </div>
+      <div class="container">
+        <div class="informacoes">
+          <label class="sobrecampo jogador">Jogador</label>
+          <label class="valor">${personagem['Informações']['Jogador']}</label>
+        </div>
+        <div class="informacoes">
+          <label class="sobrecampo personagem">Personagem</label>
+          <label class="valor">${personagem['Informações']['Nome']}</label>
+        </div>
+        <div class="informacoes">
+          <label class="sobrecampo ocupacao">Ocupação</label>
+          <label class="valor">${personagem['Informações']['Ocupação']}</label>
+        </div>
+      </div>
+    </div>
+    `;
+
+    if (index == (array_personagens.length - 1)) {
+      document.getElementById('lista-investigadores').innerHTML = innerHTML;
+
+      selectors_imagens.forEach((entry, index_imagem) => {
+
+        carregarImagem(entry.selector,entry.url,()=>{
+
+          if (index_imagem == (selectors_imagens.length - 1)) {
+            document.getElementById('loading').style.display = 'none';
+          }
+
+        });
+      });
+
+    }
+  });
+}
 
 /*-----------------------------------------------------------------------------------------*/
 
@@ -475,7 +532,7 @@ function preencherTela(personagem_salvo) {
       personagemFoiAlterado(true);
     }
 
-    carregarImagem(personagem['Informações']['Imagem'],()=>{
+    carregarImagem('atributo|fotografia',personagem['Informações']['Imagem'],()=>{
 
       document.getElementById('atributo|Informações_UUID').value = personagem['Metadados']['UUID'];
       document.getElementById('atributo|Informações_Jogador').value = jogador;
@@ -569,3 +626,5 @@ preencherSelectOcupacoes(()=>{
   let personagem_salvo = null;
   preencherTela(personagem_salvo);
 });
+
+listarInvestigadores();
