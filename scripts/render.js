@@ -366,37 +366,166 @@ function bancoObterPersonagem(id) {
 }
 
 function bancoSalvarPersonagem(personagem) {
+  personagem['Metadados']['Salvo'] = true;
+
   let personagens = bancoObterPersonagens();
   personagens[personagem['Metadados']['UUID']] = personagem;
   localStorage.setItem(LOCAL_STORAGE_PERSONAGENS,JSON.stringify(personagens));
+
+  PERSONAGEM_TRABALHO = personagem;
 }
 
-document.getElementById('form-rolar').addEventListener('click',event=>{
-  event.preventDefault();
-  let personagem_salvo = null;
-  preencherTela(personagem_salvo);
-});
+function bancoExcluirPersonagem(id) {
+  let personagens = bancoObterPersonagens();
+  if (id in personagens) {
+    delete personagens[id];
+    localStorage.setItem(LOCAL_STORAGE_PERSONAGENS,JSON.stringify(personagens));
+    PERSONAGEM_TRABALHO = null;
+  }
+}
 
 function salvarPersonagem() {
   bancoSalvarPersonagem(PERSONAGEM_TRABALHO);
-  personagemFoiAlterado(false);
+  personagemPrecisaAlterar(false);
+  gerarOuAlterarPersonagem(PERSONAGEM_TRABALHO['Metadados']['Salvo']);
   renderInfoToast('Personagem salvo com sucesso!');
 }
 
-document.getElementById('form-salvar').addEventListener('click',event=>{
-  event.preventDefault();
-  salvarPersonagem();
-});
+function exportarPersonagem(id) {
+    let contentType = 'application/json';
+    let personagem = bancoObterPersonagem(id);
+    let fileName = `${bancoObterMetadata().jogador} - ${personagem['Informações']['Nome']} - ${personagem['Informações']['Ocupação']}.ficha`;
+    let content = JSON.stringify(personagem, null, "\t");
 
-document.getElementById('form-salvar-fab').addEventListener('click',event=>{
-  event.preventDefault();
-  salvarPersonagem();
-});
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
 
 /*-----------------------------------------------------------------------------------------*/
 
+/* Dropzone */
+Dropzone.options.uploadDropzone = {
+  acceptedFiles: "application/json",
+  autoProcessQueue: false,
+  disablePreviews: false,
+  maxFiles:1,
+  dictDefaultMessage: "Arraste os arquivos para carregar",
+  init: function() {
+        this.on("maxfilesexceeded", function(file) {
+              this.removeAllFiles();
+              this.addFile(file);
+        });
+        this.on("addedfile", file => {
+          document.getElementById('loading').style.display = 'block';
+
+          var reader = new FileReader();
+          reader.addEventListener("loadend", function(event) {
+            try {
+                let json = JSON.parse(event.target.result);
+                console.log(json);
+
+                /*
+
+                validarUploadJSON(json,(valido,mensagem)=>{
+                  validarUploadMensagem(mensagem);
+                  if (valido) {
+
+                    salvarJsonServidor(json,(valido,retorno)=>{
+                      document.getElementById('loading').style.display = 'none';
+                      MicroModal.close('modal-upload-arquivo');
+
+                      if (valido) {
+                        document.getElementById('label_id_modelo').value = retorno.identificador;
+                        document.getElementById('label_hash_modelo').value = retorno.hash;
+                        document.getElementById('label_id_short_modelo').value = retorno.identificador_short;
+                        let str_timestamp = moment(retorno.timestamp).format('DD/MM/YYYY HH:mm:ss.SSS');
+                        document.getElementById('label_date_modelo').value = str_timestamp;
+                        SUCCESS('Modelo carregado com sucesso!');
+                      } else {
+                        ERROR('Erro ao carregar o modelo!');
+                      }
+                    });
+                  }
+                });
+                */
+
+
+            } catch(e) {
+              ERROR(e);
+              //validarUploadMensagem(getErrorMessage('error_message2'));
+            }
+          });
+          reader.readAsText(file);
+        });
+        this.on('success', function(file, json) {
+        });
+  },
+  accept: function(file, done) {
+    //done('Não enviado');
+    done();
+  }
+};
+
+/*-----------------------------------------------------------------------------------------*/
+
+function renderTelaFicha(personagem) {
+  preencherSelectOcupacoes(()=>{
+    let PERSONAGEM_TRABALHO = personagem;
+    preencherTela(PERSONAGEM_TRABALHO);
+  });
+}
+
+function renderTelaListaInvestigadores() {
+  document.getElementById('form-jogador').value = bancoObterMetadata().jogador;
+  let PERSONAGEM_TRABALHO = null;
+  listarInvestigadores();
+}
+
+function renderModalMessage(id) {
+  let innerHTML = `
+  <div class="form-modal">
+    <span class="texto">Este investigador será excluído!<br>Deseja continuar?</span>
+    <button class="marrom" type="button" id="modal-button-voltar">
+      <img src="img/arrow-left-solid.svg">
+      <span>Não excluir</span>
+    </button>
+    <button class="vermelho" type="button" id="modal-button-apagar">
+      <img src="img/trash-solid.svg">
+      <span>Excluir</span>
+    </button>
+  </div>
+  `;
+
+  let modal = document.getElementById('modal-mensagem');
+  modal.innerHTML = innerHTML;
+  modal.style.display = 'block';
+
+  document.getElementById('modal-button-voltar').addEventListener('click',(event)=>{
+    event.preventDefault();
+    modal.innerHTML = '';
+    modal.style.display = 'none';
+  });
+
+  document.getElementById('modal-button-apagar').addEventListener('click',(event)=>{
+    event.preventDefault();
+    bancoExcluirPersonagem(id);
+    document.getElementById(id).remove();
+    modal.innerHTML = '';
+    modal.style.display = 'none';
+  });
+}
+
 function listarInvestigadores() {
   document.getElementById('loading').style.display = 'block';
+
+  document.getElementById('form-consultar').style.display = 'block';
+  document.getElementById('lista-investigadores').style.display = 'block';
+  document.getElementById('form-gerar').style.display = 'none';
+  document.getElementById('form-ficha').style.display = 'none';
+
   let personagens = bancoObterPersonagens();
   let array_personagens = Object.keys(personagens);
   let innerHTML = '';
@@ -405,8 +534,8 @@ function listarInvestigadores() {
   array_personagens.forEach((id, index) => {
     let personagem = personagens[id];
     selectors_imagens.push({
+      id: personagem['Metadados']['UUID'],
       url: personagem['Informações']['Imagem'],
-      selector: `foto-${personagem['Metadados']['UUID']}`,
     });
 
     innerHTML += `
@@ -425,14 +554,14 @@ function listarInvestigadores() {
           <label class="valor">${personagem['Informações']['Ocupação']}</label>
         </div>
 
-        <button class="vermelho" type="button">
-					<img class="excluir" src="img/trash-solid.svg">					
+        <button class="vermelho" type="button" id="excluir-${personagem['Metadados']['UUID']}">
+					<img class="excluir" src="img/trash-solid.svg">
 				</button>
-        <button class="verde" type="button">
+        <button class="verde" type="button" id="editar-${personagem['Metadados']['UUID']}">
 					<img class="exportar" src="img/person-circle-check-solid.svg">
 					<span>Editar</span>
 				</button>
-        <button class="marrom" type="button">
+        <button class="marrom" type="button" id="exportar-${personagem['Metadados']['UUID']}">
 					<img class="exportar" src="img/person-arrow-down-to-line-solid.svg">
 					<span>Exportar</span>
 				</button>
@@ -445,7 +574,35 @@ function listarInvestigadores() {
 
       selectors_imagens.forEach((entry, index_imagem) => {
 
-        carregarImagem(entry.selector,entry.url,()=>{
+        /* Clicar no personagem */
+        document.getElementById(entry.id).addEventListener('click',event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          renderTelaFicha(personagens[entry.id]);
+        });
+
+        /* Botão editar */
+        document.getElementById(`editar-${entry.id}`).addEventListener('click',event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          renderTelaFicha(personagens[entry.id]);
+        });
+
+        /* Botão excluir */
+        document.getElementById(`excluir-${entry.id}`).addEventListener('click',event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          renderModalMessage(entry.id);
+        });
+
+        /* Botão exportar */
+        document.getElementById(`exportar-${entry.id}`).addEventListener('click',event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          exportarPersonagem(entry.id);
+        });
+
+        carregarImagem(`foto-${entry.id}`,entry.url,()=>{
 
           if (index_imagem == (selectors_imagens.length - 1)) {
             document.getElementById('loading').style.display = 'none';
@@ -462,7 +619,7 @@ function listarInvestigadores() {
 
 let LISTENERS_FICHA = [];
 
-function personagemFoiAlterado(alterado) {
+function personagemPrecisaAlterar(alterado) {
   if (alterado) {
     document.getElementById('form-salvar').style.display = 'block';
     document.getElementById('form-salvar-fab').style.display = 'block';
@@ -472,10 +629,37 @@ function personagemFoiAlterado(alterado) {
   }
 }
 
+function gerarOuAlterarPersonagem(jahCriado) {
+  document.getElementById('form-consultar').style.display = 'none';
+  document.getElementById('lista-investigadores').style.display = 'none';
+  document.getElementById('form-gerar').style.display = 'block';
+  document.getElementById('form-ficha').style.display = 'block';
+
+  if (jahCriado) {
+    document.getElementById('form-render-titulo-dados').style.display = 'block';
+    document.getElementById('form-render-titulo-criar').style.display = 'none';
+    document.getElementById('form-render-ocupacao').style.display = 'none';
+    document.getElementById('form-render-check-incomum').style.display = 'none';
+    document.getElementById('form-render-check-mythos').style.display = 'none';
+    document.getElementById('form-render-check-antecedentes').style.display = 'none';
+    document.getElementById('form-render-check-dicas').style.display = 'none';
+    document.getElementById('form-rolar').style.display = 'none';
+  } else {
+    document.getElementById('form-render-titulo-dados').style.display = 'none';
+    document.getElementById('form-render-titulo-criar').style.display = 'block';
+    document.getElementById('form-render-ocupacao').style.display = 'block';
+    document.getElementById('form-render-check-incomum').style.display = 'block';
+    document.getElementById('form-render-check-mythos').style.display = 'block';
+    document.getElementById('form-render-check-antecedentes').style.display = 'block';
+    document.getElementById('form-render-check-dicas').style.display = 'block';
+    document.getElementById('form-rolar').style.display = 'block';
+  }
+}
+
 const FUNCAO = (event) => {
   event.preventDefault();
   definirPropriedadePersonagem(event,PERSONAGEM_TRABALHO,()=>{
-    personagemFoiAlterado(true);
+    personagemPrecisaAlterar(true);
     if (!bancoObterMetadata().mensagemExibida) {
       renderInfoToast('Clique em SALVAR para salvar este personagem!');
       bancoMarcarMensagemExibida();
@@ -499,8 +683,6 @@ function limparListaListeners(callback) {
 }
 
 function definirListeners(personagem,callback) {
-  PERSONAGEM_TRABALHO = personagem;
-
   limparListaListeners(()=>{
     let tag_ficha = document.querySelector('div.ficha');
 
@@ -525,20 +707,21 @@ function definirListeners(personagem,callback) {
 /*-----------------------------------------------------------------------------------------*/
 
 function preencherTela(personagem_salvo) {
-  console.log(VERSAO);
   document.getElementById('loading').style.display = 'block';
 
   if (LOG) {
     document.getElementById('form-mythos').checked = true;
   }
 
-  let jogador = '';
+  let jogador = bancoObterMetadata().jogador;
 
   rolarPersonagem(personagem_salvo,jogador,personagem=>{
 
-    if (!personagem['Metadados']['Salvo']) {
-      personagemFoiAlterado(true);
-    }
+    /* Variável local de trabalho */
+    PERSONAGEM_TRABALHO = personagem;
+
+    personagemPrecisaAlterar(!PERSONAGEM_TRABALHO['Metadados']['Salvo']);
+    gerarOuAlterarPersonagem(PERSONAGEM_TRABALHO['Metadados']['Salvo']);
 
     carregarImagem('atributo|fotografia',personagem['Informações']['Imagem'],()=>{
 
@@ -630,9 +813,46 @@ function preencherTela(personagem_salvo) {
 
 /* ----------------------------------------------------------- */
 
+/*
 preencherSelectOcupacoes(()=>{
-  let personagem_salvo = null;
+  document.getElementById('form-jogador').value = bancoObterMetadata().jogador;
+  let PERSONAGEM_TRABALHO = null;
+  listarInvestigadores();
   preencherTela(personagem_salvo);
 });
+*/
 
-listarInvestigadores();
+document.getElementById('form-jogador').addEventListener('input',event=>{
+  event.preventDefault();
+  bancoSalvarJogador(event.target.value);
+});
+
+document.getElementById('form-criar').addEventListener('click',event=>{
+  event.preventDefault();
+  PERSONAGEM_TRABALHO = null;
+  renderTelaFicha(PERSONAGEM_TRABALHO);
+});
+
+document.getElementById('form-rolar').addEventListener('click',event=>{
+  event.preventDefault();
+  PERSONAGEM_TRABALHO = null;
+  preencherTela(PERSONAGEM_TRABALHO);
+});
+
+document.getElementById('form-voltar').addEventListener('click',event=>{
+  event.preventDefault();
+  renderTelaListaInvestigadores();
+});
+
+document.getElementById('form-salvar').addEventListener('click',event=>{
+  event.preventDefault();
+  salvarPersonagem();
+});
+
+document.getElementById('form-salvar-fab').addEventListener('click',event=>{
+  event.preventDefault();
+  salvarPersonagem();
+});
+
+console.log(VERSAO);
+renderTelaListaInvestigadores();

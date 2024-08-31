@@ -5,6 +5,7 @@
 		<title>Call of Cthulhu</title>
 		<link rel="icon" href="img/favicon.png">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/dropzone.min.css" />
     <link rel="stylesheet" type="text/css" href="css/vanilla-toast.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
@@ -16,6 +17,12 @@
 		<main id="form-consultar">
 			<div class="botoes botoes-cima">
         <h4>Meus Investigadores</h4>
+      </div>
+
+			<div class="texto">
+        <bold>Como usar este rolador?</bold> Clique no botão <dica>Criar Personagem</dica> para acessar a tela de rolar novos personagens. Role até encontrar algum personagem que esteja alinhado com sua perspectiva de jogo, observando detalhes indicados pelo Guardião.
+				<br><menor>&nbsp;</menor>
+				<bold>Como meus personagens ficam salvos?</bold> Os dados de seus personagens ficam salvos apenas neste navegador (seja do computador ou celular). Caso você queira copiar os personagens entre navegadores, utilize os botões <dica>Exportar</dica> e <dica>Importar Personagem</dica> Lembre-se de clicar em <dica>Salvar</dica> sempre que alterar os dados da ficha (do contrário eles não serão salvos).
       </div>
 
 			<span class="text">
@@ -41,58 +48,38 @@
 				Nenhum investigador salvo!
 			</div>
 
-			<!--
-			<div class="investigador">
-				<div class="fotografia">
-				  <div class="fotografia-interna moldura"></div>
-				  <div id="atributo|fotografia" class="fotografia-interna foto"></div>
-				</div>
-				<div class="container">
-					<div class="informacoes">
-						<label class="sobrecampo jogador">Jogador</label>
-						<label class="valor"></label>
-					</div>
-					<div class="informacoes">
-						<label class="sobrecampo personagem">Personagem</label>
-						<label class="valor"></label>
-					</div>
-					<div class="informacoes">
-						<label class="sobrecampo ocupacao">Ocupação</label>
-						<label class="valor"></label>
-					</div>
-				</div>
-			</div>
-			-->
-
 		</div>
 
 		<main id="form-gerar">
-			<div class="botoes botoes-cima">
+			<div class="botoes botoes-cima" id="form-render-titulo-criar">
         <h4>Criar Investigador</h4>
       </div>
+			<div class="botoes botoes-cima" id="form-render-titulo-dados">
+        <h4>Ficha do Investigador</h4>
+      </div>
 
-			<span class="text">
+			<span class="text" id="form-render-ocupacao">
 				<label>Ocupação</label>
 				<select id="opcao">
 	      </select>
 			</span>
 
-			<span class="checkbox">
+			<span class="checkbox" id="form-render-check-incomum">
 				<input type="checkbox" checked id="form-incomum" name="form-incomum">
 				<label for="form-incomum">Perícias Incomuns</label>
 			</span>
 
-			<span class="checkbox">
+			<span class="checkbox" id="form-render-check-mythos">
 				<input type="checkbox" id="form-mythos" name="form-mythos">
 				<label for="form-mythos">Perícias Conhecimento sobre os Mythos</label>
 			</span>
 
-			<span class="checkbox">
+			<span class="checkbox" id="form-render-check-antecedentes">
 				<input type="checkbox" checked id="form-antecedentes" name="form-antecedentes">
 				<label for="form-antecedentes">Gerar Antecedentes do Investigador</label>
 			</span>
 
-			<span class="checkbox">
+			<span class="checkbox" id="form-render-check-dicas">
 				<input type="checkbox" checked id="form-dicas" name="form-dicas">
 				<label for="form-dicas">Exibir dicas no final da ficha</label>
 			</span>
@@ -113,7 +100,7 @@
       </div>
     </main>
 
-		<div class="ficha">
+		<div class="ficha" id="form-ficha">
 			<input type="hidden" id="atributo|Informações_UUID" value="">
 
 			<div class="bloco50">
@@ -685,6 +672,28 @@
 
 		<button class="floating-action-button" id="form-salvar-fab"></button>
 
+		<div class="modal" id="modal-mensagem">
+			<!--
+			<div class="form-modal">
+				<span class="texto">Este investigador será excluído!<br>Deseja continuar?</span>
+				<button class="marrom" type="button" id="modal-button-voltar">
+					<img src="img/arrow-left-solid.svg">
+					<span>Não excluir</span>
+				</button>
+				<button class="vermelho" type="button" id="modal-button-apagar">
+					<img src="img/trash-solid.svg">
+					<span>Excluir</span>
+				</button>
+			</div>
+		-->
+
+			<div class="upload-modal">
+				<form action="/file-upload" class="dropzone" id="upload-dropzone"></form>
+			</div>
+
+		</div>
+
+		<script type="text/javascript" src="scripts/dropzone.min.js"></script>
 		<script type="text/javascript" src="scripts/vanilla-toast.js"></script>
 		<script type="text/javascript" src="scripts/nomes.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
