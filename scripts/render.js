@@ -3,6 +3,10 @@ function renderInfoToast(msg) {
   vanillaToast.default(msg,{ duration:3000 });
 }
 
+function renderErrorToast(msg) {
+  vanillaToast.error(msg,{ duration:3000 });
+}
+
 function createOption(select,value) {
   let option = document.createElement('option');
   option.value = value;
@@ -394,7 +398,7 @@ function salvarPersonagem() {
 function exportarPersonagem(id) {
     let contentType = 'application/json';
     let personagem = bancoObterPersonagem(id);
-    let fileName = `${bancoObterMetadata().jogador} - ${personagem['Informações']['Nome']} - ${personagem['Informações']['Ocupação']}.ficha`;
+    let fileName = `${bancoObterMetadata().jogador} - ${personagem['Informações']['Nome']} - ${personagem['Informações']['Ocupação']}.json`;
     let content = JSON.stringify(personagem, null, "\t");
 
     var a = document.createElement("a");
@@ -412,20 +416,28 @@ Dropzone.options.uploadDropzone = {
   autoProcessQueue: false,
   disablePreviews: false,
   maxFiles:1,
-  dictDefaultMessage: "Arraste os arquivos para carregar",
+  dictDefaultMessage: "Clique ou arraste os arquivos para carregar",
   init: function() {
         this.on("maxfilesexceeded", function(file) {
               this.removeAllFiles();
               this.addFile(file);
         });
         this.on("addedfile", file => {
-          document.getElementById('loading').style.display = 'block';
+          document.getElementById('modal-upload').style.display = 'none';
 
           var reader = new FileReader();
           reader.addEventListener("loadend", function(event) {
             try {
                 let json = JSON.parse(event.target.result);
-                console.log(json);
+                Dropzone.forElement('#upload-dropzone').removeAllFiles(true);
+
+                VALIDACOES['1.0.1'](json,valido=>{
+                  if (valido) {
+
+                  } else {
+                    renderErrorToast('Arquivo de personagem inválido!');
+                  }
+                });
 
                 /*
 
@@ -454,8 +466,8 @@ Dropzone.options.uploadDropzone = {
 
 
             } catch(e) {
-              ERROR(e);
-              //validarUploadMensagem(getErrorMessage('error_message2'));
+              Dropzone.forElement('#upload-dropzone').removeAllFiles(true);
+              renderErrorToast('Formato do arquivo de personagem inválido!');
             }
           });
           reader.readAsText(file);
@@ -821,6 +833,22 @@ preencherSelectOcupacoes(()=>{
   preencherTela(personagem_salvo);
 });
 */
+
+document.getElementById('modal-mensagem').addEventListener('click',event=>{
+  event.preventDefault();
+  event.target.style.display = 'none';
+  event.target.innerHTML = '';
+});
+
+document.getElementById('modal-upload').addEventListener('click',event=>{
+  event.preventDefault();
+  event.target.style.display = 'none';
+});
+
+document.getElementById('form-importar').addEventListener('click',event=>{
+  event.preventDefault();
+  document.getElementById('modal-upload').style.display = 'block';
+});
 
 document.getElementById('form-jogador').addEventListener('input',event=>{
   event.preventDefault();

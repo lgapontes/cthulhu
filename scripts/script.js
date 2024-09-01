@@ -1,7 +1,7 @@
 
 const LOG = false;
 const LOG_PERSONAGEM = false;
-const VERSAO = `1.0.1 ${LOG ? '(debug)' : '(beta)'}`;
+const VERSAO = '1.0.1';
 
 function logger(msg) {
   if ( LOG ) console.log(msg);
