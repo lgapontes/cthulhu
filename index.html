@@ -8,6 +8,14 @@
 		<link rel="stylesheet" type="text/css" href="css/dropzone.min.css" />
     <link rel="stylesheet" type="text/css" href="css/vanilla-toast.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+		<meta property="og:title" content="Call of Cthulhu"/>
+    <meta property="og:image" content="img/og-image.jpg"/>
+    <meta property="og:description" content="Rolador de Investigadores de Call of Cthulhu"/>
+    <meta property="og:url" content="https://flechamagica.com.br/cthulhu/"/>
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />
+    <meta property="og:type" content="website"/>
   </head>
   <body>
 		<div class="loading" id="loading"></div>
@@ -89,13 +97,17 @@
 					<img src="img/dice-solid.svg">
 					<span>Gerar</span>
 				</button>
+				<button class="vermelho" type="button" id="form-imprimir">
+					<img class="imprimir" src="img/print-solid.svg">
+					<span>Imprimir</span>
+				</button>
         <button class="primary verde esconder" type="button" id="form-salvar">
 					<img src="img/person-circle-check-solid.svg">
 					<span>Salvar</span>
 				</button>
 				<button class="marrom" type="button" id="form-voltar">
 					<img class="lista" src="img/table-list-solid.svg">
-					<span>Meus Investigadores</span>
+					<span>Lista</span>
 				</button>
       </div>
     </main>
@@ -690,6 +702,7 @@
 
 		<div class="modal" id="modal-upload">
 			<div class="upload-modal">
+				<span class="texto">Clique ou arraste os arquivos para carregar</span>
 				<form action="/file-upload" class="dropzone" id="upload-dropzone"></form>
 			</div>
 		</div>

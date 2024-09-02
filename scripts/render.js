@@ -375,8 +375,6 @@ function bancoSalvarPersonagem(personagem) {
   let personagens = bancoObterPersonagens();
   personagens[personagem['Metadados']['UUID']] = personagem;
   localStorage.setItem(LOCAL_STORAGE_PERSONAGENS,JSON.stringify(personagens));
-
-  PERSONAGEM_TRABALHO = personagem;
 }
 
 function bancoExcluirPersonagem(id) {
@@ -390,6 +388,7 @@ function bancoExcluirPersonagem(id) {
 
 function salvarPersonagem() {
   bancoSalvarPersonagem(PERSONAGEM_TRABALHO);
+
   personagemPrecisaAlterar(false);
   gerarOuAlterarPersonagem(PERSONAGEM_TRABALHO['Metadados']['Salvo']);
   renderInfoToast('Personagem salvo com sucesso!');
@@ -431,39 +430,22 @@ Dropzone.options.uploadDropzone = {
                 let json = JSON.parse(event.target.result);
                 Dropzone.forElement('#upload-dropzone').removeAllFiles(true);
 
-                VALIDACOES['1.0.1'](json,valido=>{
+                validarPersonagem(json,valido=>{
                   if (valido) {
+
+                    criarUUIDSeguro((uuid)=>{
+                      /* Cria novo ID */
+                      json['Metadados']['UUID'] = uuid;
+
+                      bancoSalvarPersonagem(json);
+                      renderInfoToast('Personagem importado com sucesso!');
+                      renderTelaListaInvestigadores();
+                    });
 
                   } else {
                     renderErrorToast('Arquivo de personagem inválido!');
                   }
                 });
-
-                /*
-
-                validarUploadJSON(json,(valido,mensagem)=>{
-                  validarUploadMensagem(mensagem);
-                  if (valido) {
-
-                    salvarJsonServidor(json,(valido,retorno)=>{
-                      document.getElementById('loading').style.display = 'none';
-                      MicroModal.close('modal-upload-arquivo');
-
-                      if (valido) {
-                        document.getElementById('label_id_modelo').value = retorno.identificador;
-                        document.getElementById('label_hash_modelo').value = retorno.hash;
-                        document.getElementById('label_id_short_modelo').value = retorno.identificador_short;
-                        let str_timestamp = moment(retorno.timestamp).format('DD/MM/YYYY HH:mm:ss.SSS');
-                        document.getElementById('label_date_modelo').value = str_timestamp;
-                        SUCCESS('Modelo carregado com sucesso!');
-                      } else {
-                        ERROR('Erro ao carregar o modelo!');
-                      }
-                    });
-                  }
-                });
-                */
-
 
             } catch(e) {
               Dropzone.forElement('#upload-dropzone').removeAllFiles(true);
@@ -524,10 +506,31 @@ function renderModalMessage(id) {
   document.getElementById('modal-button-apagar').addEventListener('click',(event)=>{
     event.preventDefault();
     bancoExcluirPersonagem(id);
-    document.getElementById(id).remove();
     modal.innerHTML = '';
     modal.style.display = 'none';
+    renderTelaListaInvestigadores();
   });
+}
+
+function verificarSeExisteInvestigadores(callback) {
+  let personagens = bancoObterPersonagens();
+  let array_personagens = Object.keys(personagens);
+
+  if (array_personagens.length === 0) {
+
+    let innerHTML = `
+    <div class="carregando-lista">
+      Nenhum investigador salvo!
+    </div>
+    `;
+    document.getElementById('lista-investigadores').innerHTML = innerHTML;
+    document.getElementById('loading').style.display = 'none';
+
+    callback(personagens,array_personagens,false);
+
+  } else {
+    callback(personagens,array_personagens,true);
+  }
 }
 
 function listarInvestigadores() {
@@ -538,92 +541,96 @@ function listarInvestigadores() {
   document.getElementById('form-gerar').style.display = 'none';
   document.getElementById('form-ficha').style.display = 'none';
 
-  let personagens = bancoObterPersonagens();
-  let array_personagens = Object.keys(personagens);
-  let innerHTML = '';
-  let selectors_imagens = [];
+  verificarSeExisteInvestigadores((personagens,array_personagens,contemInvestigadores) => {
 
-  array_personagens.forEach((id, index) => {
-    let personagem = personagens[id];
-    selectors_imagens.push({
-      id: personagem['Metadados']['UUID'],
-      url: personagem['Informações']['Imagem'],
-    });
+    if (contemInvestigadores) {
+      let innerHTML = '';
+      let selectors_imagens = [];
 
-    innerHTML += `
-    <div class="investigador" id="${personagem['Metadados']['UUID']}">
-      <div class="fotografia">
-        <div class="fotografia-interna moldura"></div>
-        <div id="foto-${personagem['Metadados']['UUID']}" class="fotografia-interna foto"></div>
-      </div>
-      <div class="container">
-        <div class="informacoes">
-          <label class="sobrecampo personagem">Personagem</label>
-          <label class="valor">${personagem['Informações']['Nome']}</label>
+      array_personagens.forEach((id, index) => {
+        let personagem = personagens[id];
+        selectors_imagens.push({
+          id: personagem['Metadados']['UUID'],
+          url: personagem['Informações']['Imagem'],
+        });
+
+        innerHTML += `
+        <div class="investigador" id="${personagem['Metadados']['UUID']}">
+          <div class="fotografia">
+            <div class="fotografia-interna moldura"></div>
+            <div id="foto-${personagem['Metadados']['UUID']}" class="fotografia-interna foto"></div>
+          </div>
+          <div class="container">
+            <div class="informacoes">
+              <label class="sobrecampo personagem">Personagem</label>
+              <label class="valor">${personagem['Informações']['Nome']}</label>
+            </div>
+            <div class="informacoes">
+              <label class="sobrecampo ocupacao">Ocupação</label>
+              <label class="valor">${personagem['Informações']['Ocupação']}</label>
+            </div>
+
+            <button class="vermelho" type="button" id="excluir-${personagem['Metadados']['UUID']}">
+    					<img class="excluir" src="img/trash-solid.svg">
+    				</button>
+            <button class="verde" type="button" id="editar-${personagem['Metadados']['UUID']}">
+    					<img class="exportar" src="img/person-circle-check-solid.svg">
+    					<span>Editar</span>
+    				</button>
+            <button class="marrom" type="button" id="exportar-${personagem['Metadados']['UUID']}">
+    					<img class="exportar" src="img/person-arrow-down-to-line-solid.svg">
+    					<span>Exportar</span>
+    				</button>
+          </div>
         </div>
-        <div class="informacoes">
-          <label class="sobrecampo ocupacao">Ocupação</label>
-          <label class="valor">${personagem['Informações']['Ocupação']}</label>
-        </div>
+        `;
 
-        <button class="vermelho" type="button" id="excluir-${personagem['Metadados']['UUID']}">
-					<img class="excluir" src="img/trash-solid.svg">
-				</button>
-        <button class="verde" type="button" id="editar-${personagem['Metadados']['UUID']}">
-					<img class="exportar" src="img/person-circle-check-solid.svg">
-					<span>Editar</span>
-				</button>
-        <button class="marrom" type="button" id="exportar-${personagem['Metadados']['UUID']}">
-					<img class="exportar" src="img/person-arrow-down-to-line-solid.svg">
-					<span>Exportar</span>
-				</button>
-      </div>
-    </div>
-    `;
+        if (index == (array_personagens.length - 1)) {
+          document.getElementById('lista-investigadores').innerHTML = innerHTML;
 
-    if (index == (array_personagens.length - 1)) {
-      document.getElementById('lista-investigadores').innerHTML = innerHTML;
+          selectors_imagens.forEach((entry, index_imagem) => {
 
-      selectors_imagens.forEach((entry, index_imagem) => {
+            /* Clicar no personagem */
+            document.getElementById(entry.id).addEventListener('click',event=>{
+              event.preventDefault();
+              event.stopPropagation();
+              renderTelaFicha(personagens[entry.id]);
+            });
 
-        /* Clicar no personagem */
-        document.getElementById(entry.id).addEventListener('click',event=>{
-          event.preventDefault();
-          event.stopPropagation();
-          renderTelaFicha(personagens[entry.id]);
-        });
+            /* Botão editar */
+            document.getElementById(`editar-${entry.id}`).addEventListener('click',event=>{
+              event.preventDefault();
+              event.stopPropagation();
+              renderTelaFicha(personagens[entry.id]);
+            });
 
-        /* Botão editar */
-        document.getElementById(`editar-${entry.id}`).addEventListener('click',event=>{
-          event.preventDefault();
-          event.stopPropagation();
-          renderTelaFicha(personagens[entry.id]);
-        });
+            /* Botão excluir */
+            document.getElementById(`excluir-${entry.id}`).addEventListener('click',event=>{
+              event.preventDefault();
+              event.stopPropagation();
+              renderModalMessage(entry.id);
+            });
 
-        /* Botão excluir */
-        document.getElementById(`excluir-${entry.id}`).addEventListener('click',event=>{
-          event.preventDefault();
-          event.stopPropagation();
-          renderModalMessage(entry.id);
-        });
+            /* Botão exportar */
+            document.getElementById(`exportar-${entry.id}`).addEventListener('click',event=>{
+              event.preventDefault();
+              event.stopPropagation();
+              exportarPersonagem(entry.id);
+            });
 
-        /* Botão exportar */
-        document.getElementById(`exportar-${entry.id}`).addEventListener('click',event=>{
-          event.preventDefault();
-          event.stopPropagation();
-          exportarPersonagem(entry.id);
-        });
+            carregarImagem(`foto-${entry.id}`,entry.url,()=>{
 
-        carregarImagem(`foto-${entry.id}`,entry.url,()=>{
+              if (index_imagem == (selectors_imagens.length - 1)) {
+                document.getElementById('loading').style.display = 'none';
+              }
 
-          if (index_imagem == (selectors_imagens.length - 1)) {
-            document.getElementById('loading').style.display = 'none';
-          }
+            });
+          });
 
-        });
+        }
       });
-
     }
+
   });
 }
 
@@ -842,7 +849,11 @@ document.getElementById('modal-mensagem').addEventListener('click',event=>{
 
 document.getElementById('modal-upload').addEventListener('click',event=>{
   event.preventDefault();
-  event.target.style.display = 'none';
+  if(event.target.tagName.toLowerCase() === 'div') {
+    if (event.target.id == 'modal-upload') {
+      event.target.style.display = 'none';
+    }
+  }
 });
 
 document.getElementById('form-importar').addEventListener('click',event=>{
@@ -880,6 +891,37 @@ document.getElementById('form-salvar').addEventListener('click',event=>{
 document.getElementById('form-salvar-fab').addEventListener('click',event=>{
   event.preventDefault();
   salvarPersonagem();
+});
+
+document.getElementById('form-imprimir').addEventListener('click',event=>{
+  event.preventDefault();
+  window.print();
+
+  /*
+  var css = `
+    @page {
+      size: 210mm 297mm;
+      size: auto;
+      margin: 10mm;
+    }
+  `,
+    head = document.head || document.getElementsByTagName('head')[0],
+    style = document.createElement('style');
+
+  style.type = 'text/css';
+  style.media = 'print';
+
+  if (style.styleSheet){
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+
+  head.appendChild(style);
+
+  window.print();
+  */
+
 });
 
 console.log(VERSAO);

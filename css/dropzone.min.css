@@ -280,6 +280,8 @@
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+
+  display: none;
 }
 
 .dropzone .dz-preview {

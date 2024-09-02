@@ -159,6 +159,11 @@ main button > img.lista {
   width: 17px;
 }
 
+main button > img.imprimir {
+  margin-top: 2px;
+  width: 15px;
+}
+
 main button > img.importar {
   margin-top: 1px;
 }
@@ -1973,8 +1978,34 @@ div.modal > div.upload-modal {
 }
 
 div.modal > div.upload-modal > form {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  padding: 0;
+  box-sizing: border-box;
   width: 100%;
-  height: 100px;
+  height: 100%;
+
+  z-index: 3;
+}
+
+div.modal > div.upload-modal > span.texto {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+  padding-top: 45px;
+
+  z-index: 2;
 }
 
 div.modal > div.form-modal {
@@ -2178,5 +2209,119 @@ div.loading {
 
   div.ficha div.bloco100-outros div.bloco > div.container > textarea.anotacoes {
     height: 70px;
+  }
+}
+
+@media print {
+  * {
+      -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+      color-adjust: exact !important;                 /* Firefox 48 – 96 */
+      print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+  }
+
+  @page {
+    size: A3;
+  }
+
+  header {
+    display: none !important;
+  }
+
+  #form-gerar {
+    display: none !important;
+  }
+
+  #atributo_dicas {
+    display: none !important;
+  }
+
+  main > span.text {
+    width: 100%;
+  }
+
+  main > span.text > label {
+    width: 15%;
+  }
+
+  main > span.text > input[type=text] {
+    width: 85%;
+  }
+
+  main > span.text > select {
+    width: 85%;
+  }
+
+  div.lista-investigadores > div.investigador {
+    width: 48%;
+    margin: 1%;
+  }
+
+  div.ficha {
+    padding: 14px;
+  }
+
+  div.ficha div.fotografia {
+    width: 182px;
+    height: 184px;
+  }
+
+  div.bloco50 {
+    width: 26%;
+    float: left;
+  }
+
+  div.bloco100 {
+    width: 48%;
+    float: left;
+    margin-left: 2%;
+  }
+
+  div.bloco100 div.container {
+    min-height: 167px;
+  }
+
+  div.bloco100-fluido {
+    width: 49%;
+  }
+
+  div.bloco100-fluido-right {
+    float: right;
+  }
+
+  div.bloco66 {
+    width: 29%;
+  }
+
+  div.bloco33 {
+    float: left;
+    margin-left: 1%;
+    width: 19%;
+  }
+
+  div.ficha div.bloco100-pericias div.bloco > div.container > div.campo {
+    width: 23%;
+    margin: 1%;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > div.arma {
+    width: 48%;
+    margin: 1%;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > textarea.equipamentos {
+    height: 70px;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > div.antecedente {
+    width: 48%;
+    margin: 1%;
+  }
+
+  div.ficha div.bloco100-outros div.bloco > div.container > textarea.anotacoes {
+    height: 70px;
+  }
+
+  #carregando-pericias {
+    page-break-after: always;
   }
 }
