@@ -1718,6 +1718,8 @@ div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte {
   margin-bottom: 1%;
   padding: 0;
   box-sizing: border-box;
+
+  min-height: 43px;
 }
 
 div.ficha div.bloco100-outros div.bloco > div.container > div.arma > div.parte-nome {
