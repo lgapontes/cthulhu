@@ -286,6 +286,12 @@ div.texto > dica {
   color: #726E54;
 }
 
+div.texto > a {
+  font-weight: bold;
+  color: #00897b;
+  text-decoration: underline;
+}
+
 div.texto > menor {
   display: block;
   float: left;
@@ -2321,6 +2327,10 @@ div.loading {
 
   div.ficha div.bloco100-outros div.bloco > div.container > textarea.anotacoes {
     height: 70px;
+  }
+
+  #form-salvar-fab {
+    display: none !important;
   }
 
   #carregando-pericias {
