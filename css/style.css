@@ -398,7 +398,7 @@ div.lista-investigadores > div.investigador button > img.exportar {
 
 div.lista-investigadores > div.investigador button > img.excluir {
   width: 15px;
-  margin-right: 1px;
+  margin: 1px 1px 1px 0;
 }
 
 div.lista-investigadores > div.investigador button.vermelho {
