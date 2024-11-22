@@ -2588,12 +2588,12 @@ function modificarAtributosPorIdade(idade,atributos,callback) {
       }
       callback(atributosAjustados);
     });
-  } else if ( (idade == 20) && (idade <= 39) ) {
+  } else if (idade <= 39) {
     verificacaoMelhoria(1,atributosAjustados['EDU (Educação)'],atributoSomado=>{
       atributosAjustados['EDU (Educação)'] = atributoSomado;
       callback(atributosAjustados);
     });
-  } else if ( (idade == 40) && (idade <= 49) ) {
+  } else if (idade <= 49) {
     verificacaoMelhoria(2,atributosAjustados['EDU (Educação)'],atributoSomado=>{
       atributosAjustados['EDU (Educação)'] = atributoSomado;
 
@@ -2607,7 +2607,7 @@ function modificarAtributosPorIdade(idade,atributos,callback) {
 
       callback(atributosAjustados);
     });
-  } else if ( (idade == 50) && (idade <= 59) ) {
+  } else if (idade <= 59) {
     verificacaoMelhoria(3,atributosAjustados['EDU (Educação)'],atributoSomado=>{
       atributosAjustados['EDU (Educação)'] = atributoSomado;
 
@@ -2621,7 +2621,7 @@ function modificarAtributosPorIdade(idade,atributos,callback) {
 
       callback(atributosAjustados);
     });
-  } else if ( (idade == 60) && (idade <= 69) ) {
+  } else if (idade <= 69) {
     verificacaoMelhoria(4,atributosAjustados['EDU (Educação)'],atributoSomado=>{
       atributosAjustados['EDU (Educação)'] = atributoSomado;
 
@@ -2635,7 +2635,7 @@ function modificarAtributosPorIdade(idade,atributos,callback) {
 
       callback(atributosAjustados);
     });
-  } else if ( (idade == 70) && (idade <= 79) ) {
+  } else if (idade <= 79) {
     verificacaoMelhoria(4,atributosAjustados['EDU (Educação)'],atributoSomado=>{
       atributosAjustados['EDU (Educação)'] = atributoSomado;
 
@@ -2650,6 +2650,7 @@ function modificarAtributosPorIdade(idade,atributos,callback) {
       callback(atributosAjustados);
     });
   } else { // 80 e 90
+    console.error('Exceção de idade! Se a ideia for inferior à 80, há um erro nos ajustes.');
     verificacaoMelhoria(4,atributosAjustados['EDU (Educação)'],atributoSomado=>{
       atributosAjustados['EDU (Educação)'] = atributoSomado;
 
@@ -2740,13 +2741,13 @@ function rolarAtributosSemIdade(callback) {
 
   ATRIBUTOS.forEach((entry, index) => {
     rolarDadosSeisLados(entry.qtde_dados,resultadoRolagem=>{
-        atributos[entry.atributo] = (resultadoRolagem + entry.somar) * entry.multiplicar;
+      atributos[entry.atributo] = (resultadoRolagem + entry.somar) * entry.multiplicar;
 
-        if (index == (ATRIBUTOS.length - 1)) {
-          atributos['Idade'] = (Math.floor(Math.random() * 75) + 15);
+      if (index == (ATRIBUTOS.length - 1)) {
+        atributos['Idade'] = (Math.floor(Math.random() * 75) + 15);
 
-          callback(atributos);
-        }
+        callback(atributos);
+      }
     });
   });
 }
